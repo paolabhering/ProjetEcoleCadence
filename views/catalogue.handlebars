@@ -1,0 +1,38 @@
+ 
+ 
+ <div class="entete">
+        <img src="/static/img/logoNoir.png" alt="logo" id="logo">
+        <img src="/static/img/imageEntete.jpeg">
+        <nav class="navbar navbar-expand-sm" id="barreNavig">
+    <div class="container-fluid justify-content-end">
+        <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="/">Menu Administrateur</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/">Mon compte</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Costumes</a>
+                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown" id="choix">
+					  <li><a class="dropdown-item" href="#"></a>Tous</li>
+					  <li><a class="dropdown-item" href="#"></a>Filtre</li>
+                </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/">Déconnexion</a>
+        </li>
+        </ul>
+    </div>
+        </nav>
+
+<div class="grid-container">
+    {{#each listeCostumes}}
+        <div class="grid-item">
+            <ul>
+            </ul>
+        </div>
+    {{/each}}
+</div>
+    
