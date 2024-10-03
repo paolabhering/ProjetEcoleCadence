@@ -1,11 +1,16 @@
 const express = require('express');
 const { engine } = require('express-handlebars');
-
+const hbs = require('express-handlebars');
+const db = require("./db");
 const app = express();
 
-app.engine('handlebars', engine());
+const path = require('path');
+
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.set('views', './views');
+
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
 app.get('/', function (req, res) {
 res.render('catalogue')
