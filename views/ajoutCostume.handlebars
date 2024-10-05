@@ -1,0 +1,148 @@
+{{> headerAd}}
+
+
+
+
+<form action="/ajout" enctype="multipart/form-data" method="POST" id="ajoutCostume">
+    <h2>Formulaire d'ajout de costume</h2><br>
+        <div class="flex-container">
+                <div class="flex-item">
+                    <label for="titre">Titre:</label>
+                    <input type="text" id="titre" name="titre" bind:value={titre} required><br><br>
+                </div>
+    <div class="flex-item">
+    <label for="categorie">Catégorie:</label>
+        <input type="text" id="categorie" name="categorie"><br><br>
+    </div>
+    <div class="flex-item">
+    Couleur(s):<br>
+    <input type="checkbox" name="brun" id="brun" class="color-checkbox">
+    <label for="brun" class="color-label brun"></label>
+
+    <input type="checkbox" name="rouge" id="rouge" class="color-checkbox">
+    <label for="rouge" class="color-label rouge"></label>
+
+    <input type="checkbox" name="rose" id="rose" class="color-checkbox">
+    <label for="rose" class="color-label rose"></label>
+
+    <input type="checkbox" name="mauve" id="mauve" class="color-checkbox">
+    <label for="mauve" class="color-label mauve"></label>
+
+    <input type="checkbox" name="bleu" id="bleu" class="color-checkbox">
+    <label for="bleu" class="color-label bleu"></label>
+
+    <input type="checkbox" name="vert" id="vert" class="color-checkbox">
+    <label for="vert" class="color-label vert"></label><br>
+
+    <input type="checkbox" name="jaune" id="jaune" class="color-checkbox">
+    <label for="jaune" class="color-label jaune"></label>
+
+    <input type="checkbox" name="orange" id="orange" class="color-checkbox">
+    <label for="orange" class="color-label orange"></label>
+
+    <input type="checkbox" name="noir" id="noir" class="color-checkbox">
+    <label for="noir" class="color-label noir"></label>
+
+    <input type="checkbox" name="gris" id="gris" class="color-checkbox">
+    <label for="gris" class="color-label gris"></label>
+
+    <input type="checkbox" name="blanc" id="blanc" class="color-checkbox">
+    <label for="blanc" class="color-label blanc"></label>
+
+    <input type="checkbox" name="multi" id="multi" class="color-checkbox">
+    <label for="multi" class="color-label multi"></label><br>
+</div>
+    <div class="flex-item">
+    <label for="age_group">Catégorie d'âge:</label>
+        <select name="age_group" id="age_group" required>
+            <option value="">Choisir une catégorie</option>
+            <option value="enfant">Enfant</option>
+            <option value="ado">Adolescent</option>
+            <option value="adulte">Adulte</option>
+            <option value="no_age">N/A</option>
+        </select><br>
+    </div>
+    <div class="flex-item">
+    <label for="note">Note:</label><br>
+        <textarea id="note" name="note" rows="5" cols="40"></textarea><br><br>
+    </div>
+    <div class="flex-item">
+        Grandeur(s):
+        <table border="1">
+            <tr>
+                <th>grandeur</th>
+                <th>enfant</th>
+                <th>adulte</th>
+                <th>N/A</th>
+            </tr>
+            <tr>
+                <td>XX-petit</td>
+                <td><input type="number" class="bte_tableau" id="XXp_enfant"></td>
+                <td><input type="number" class="bte_tableau" id="XXp_adulte"></td>
+            </tr>
+            <tr>
+                <td>X-petit</td>
+                <td><input type="number" class="bte_tableau" id="Xp_enfant"></td>
+                <td><input type="number" class="bte_tableau" id="Xp_adulte"></td>
+            </tr>
+            <tr>
+                <td>petit</td>
+                <td><input type="number" class="bte_tableau" id="p_enfant"></td>
+                <td><input type="number" class="bte_tableau" id="p_adulte"></td>
+            </tr>
+            <tr>
+                <td>moyen</td>
+                <td><input type="number" class="bte_tableau" id="moyen_enfant"></td>
+                <td><input type="number" class="bte_tableau" id="moyen_adulte"></td>
+            </tr>
+            <tr>
+                <td>grand</td>
+                <td><input type="number" class="bte_tableau" id="grand_enfant"></td>
+                <td><input type="number" class="bte_tableau" id="grand_adulte"></td>
+            </tr>
+            <tr>
+                <td>X-grand</td>
+                <td><input type="number" class="bte_tableau" id="Xgrand_enfant"></td>
+                <td><input type="number" class="bte_tableau" id="Xgrand_adulte"></td>
+            </tr>
+            <tr>
+                <td>XX-grand</td>
+                <td><input type="number" class="bte_tableau" id="XXgrand_enfant"></td>
+                <td><input type="number" class="bte_tableau" id="XXgrand_adulte"></td>
+            </tr>
+            <tr>
+                <td>sans grandeur</td>
+                <td><input type="number" class="bte_tableau" id="oneSize_enfant"></td>
+                <td><input type="number" class="bte_tableau" id="oneSize_adulte"></td>
+                <td><input type="number" class="bte_tableau" id="oneSize"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="flex-item">
+    <label for="localisation">Localisation:</label>
+        <input type="text" id="localisation" name="localisation"><br><br>
+    </div>
+    <div class="flex-item">
+    <label for="quantity">Quantité totale:</label>
+        <b><input type="text" id="quantity" name="quantity" readonly></b><br><br>
+    </div>
+    <div class="flex-item">
+    <label for="boite">Boîte:</label>
+        <input type="text" id="boite" name="boite"><br><br>
+    </div>
+    <div class="flex-item">
+    <label for="upload_photo">Photo :</label>
+    <input type="file" id="upload_photo"  name="upload_photo" class="form-control"><br><br>
+    </div>
+    </div>
+    <div class="flex-item">
+    <button type="submit" class="btn" id="btn_roseFonce" id="button">ENREGISTRER</button>
+    </div>
+
+</form>
+
+
+
+

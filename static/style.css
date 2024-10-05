@@ -1,5 +1,7 @@
 
 
+/* CSS pour l'entete */
+
 .entete{
     width: 100%;
     height: 400px;
@@ -61,4 +63,231 @@ ul.navbar-nav {
 
 #btn_rose:active {
     background-color: #ffffff;
+}
+
+
+/*reste du document*/
+
+#btn_roseFonce{
+    background-color: #e84170;
+}
+
+form {
+    background-color: lightgrey;
+    margin-top: 20px;
+    margin-left: 80px;
+    margin-right: 80px;
+    padding: 20px;
+    text-align: center;
+    border-radius: 20px;
+  }
+
+  input, textarea, select{
+    border-radius: 15px;
+    border-color: #ffffff;
+  }
+
+
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne suivante si nécessaire */
+    justify-content: space-between; /* Espacement entre les éléments */
+    text-align: left;
+    padding: 10px;
+}
+
+.flex-item {
+    flex: 1 1 calc(50% - 20px); /* Chaque item prend 50% de la largeur - 20px de marge */
+    padding: 10px; 
+    box-sizing: border-box; /* Inclure le rembourrage et la bordure dans les dimensions */
+}
+
+
+
+table{
+    width: 200px;
+    height: fit-content;
+    background-color: #ffffff; 
+    border: 1px solid black;
+    font-size: smaller;  
+    column-width: 10px;
+}
+tr{
+    border: 1px solid black;
+}
+
+th{
+    background-color: #7a7a7a;
+}
+
+td:nth-child(1){
+    background-color: #7a7a7a;
+}
+
+
+.entete{
+    width: 100%;
+    height: 400px;
+    background-color: white;
+    position: relative;
+  }
+
+.imageEntete {
+    width: 100%;
+    height: 100%;
+}
+
+.logoNoir{
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+#barreNavig{
+    background-color: #e84170;
+    width: 100%;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 30px;
+}
+
+ul.navbar-nav {
+    display: flex; 
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.nav-item {
+    margin: 0 80px; /* Espacement horizontal entre les boutons */
+}
+
+.nav-item:first-child {
+    margin-right: auto;
+}
+
+.btn {
+    border-radius: 15px;
+    padding: 10px 20px;
+}
+
+#btn_rose {
+    background-color: #f0b8c8; 
+    border: none; 
+    color: black;
+    cursor: pointer; 
+}
+
+#btn_rose:hover {
+    background-color: #d3d3d3; 
+}
+
+#btn_rose:active {
+    background-color: #ffffff;
+}
+
+#btn_roseFonce{
+    background-color: #e84170;
+}
+
+form {
+    background-color: lightgrey;
+    margin-top: 20px;
+    margin-left: 80px;
+    margin-right: 80px;
+    padding: 20px;
+    text-align: center;
+    border-radius: 20px;
+  }
+
+  input, textarea, select{
+    border-radius: 15px;
+    border-color: #ffffff;
+  }
+
+
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne suivante si nécessaire */
+    justify-content: space-between; /* Espacement entre les éléments */
+    text-align: left;
+    padding: 10px;
+}
+
+.flex-item {
+    width: 450px;
+    flex: 1 1 calc(50% - 20px); /* Chaque item prend 50% de la largeur - 20px de marge */
+    padding: 10px; 
+    box-sizing: border-box; /* Inclure le rembourrage et la bordure dans les dimensions */
+} 
+
+.flex-item input{
+    margin-right:2px;
+    margin-left:auto;
+}
+
+
+
+
+table{
+    background-color: #ffffff; 
+    border: 1px solid black;
+    font-size: smaller;  
+    column-width: 10px;
+}
+td{
+    border: 1px solid black;
+}
+
+th{
+    background-color: #7a7a7a;
+    border: 1px solid black;
+}
+
+td:nth-child(1){
+    background-color: #7a7a7a;
+}
+.bte_tableau{
+    width: 100px;
+}
+
+input:read-only{
+    background-color: #f0b8c8;
+}
+
+#brun{
+    background-color: rgb(56, 31, 1);
+}
+
+.color-checkbox {
+    display: none; /* Cacher la case à cocher d'origine */
+}
+
+.color-label {
+    display: inline-block;
+    padding: 20px 20px;
+    border: 1px solid black;
+    cursor: pointer;
+    margin-right: 10px; /* Espacement entre les couleurs */
+}
+
+/* Couleurs personnalisées pour chaque case */
+.brun { background-color: rgb(56, 31, 1); }
+.rouge { background-color: red; }
+.rose { background-color: pink; }
+.mauve { background-color: purple; }
+.bleu { background-color: blue; }
+.vert { background-color: green; }
+.jaune { background-color: yellow; }
+.orange { background-color: orange; }
+.noir { background-color: black; color: white; }
+.gris { background-color: gray; }
+.blanc { background-color: white; }
+.multi { background-image: url('img/multi2.jpg'); } /* Pour multi, vous pouvez jouer avec un gradient ou le laisser blanc */
+
+.color-checkbox:checked + .color-label {
+    /* Style la case à cocher lorsqu'elle est sélectionnée */
+    border: 2px solid darkgray; /* Par exemple, border pour indiquer sélection */
 }
