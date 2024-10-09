@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require('multer'); // pour télécharger des fichiers
-const {createClient} = require ("@libsql/client");
+const db = require("./db");
 
 const router = express.Router();
 
@@ -20,14 +20,12 @@ const upload = multer({storage : storage});
 
 router.use(express.urlencoded({extended: true}));
 
-const db = createClient({
-    url: "file:catalogue.db"
-})
- 
-
-
 router.get("/ajout", function (req, res) {    
     res.render("ajoutCostume");
+});
+
+router.get("/modif", function (req, res) {    
+    res.render("modifCostume");
 });
 
 router.post("/ajout", upload.single('upload_photo'), function(req,res) {

@@ -12,26 +12,13 @@ app.use('/static', express.static(path.join(__dirname, 'static')));
 
 // pour lier les routers
 const routerAjoutCostume = require("./routerAjoutCostume");
+const routerCostume = require("./routerCostume");
 
 // pour utiliser les routers
-app.use("/", routerAjoutCostume);
+app.use("/ajout", routerAjoutCostume);
+app.use("/modif", routerAjoutCostume);
+app.use("/catalogue", routerCostume);
 
-// pour envoyer la liste des produits à la page catalogue.handlebars
-// app.get("/", async function(req,res) {
-//     const {rows} = await db.execute ("SELECT * FROM costumes")
-//    res.render("catalogue", {listeCostumes: rows});
-//    console.log(rows);
-// })
-
-
-
-// router.get("/ajout", function (req, res) {    
-//     res.render("ajoutCostume");
-// });
-
-//  app.get('/', function (req, res) {
-//  res.render('ajoutCostume');
-//  });
 
 
 app.listen(3001, function() {
