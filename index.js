@@ -14,13 +14,17 @@ app.use('/static', express.static(path.join(__dirname, 'static')));
 const routerAjoutCostume = require("./routerAjoutCostume");
 const routerCostume = require("./routerCostume");
 
+app.use("/", routerAjoutCostume);
+app.use("/", routerCostume);
 // pour utiliser les routers
 app.use("/ajout", routerAjoutCostume);
 app.use("/modif", routerAjoutCostume);
+app.use("/confirmation", routerAjoutCostume);
 app.use("/catalogue", routerCostume);
 
 
 
-app.listen(3001, function() {
-console.log(`Serveur sur le port 3001`);
+
+app.listen(3000, function() {
+console.log(`Serveur sur le port 3000`);
 });

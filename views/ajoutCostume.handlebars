@@ -28,7 +28,7 @@
 
         document.getElementById("quantity").value = grandTotal;
     }
-</script>
+</script> 
 
 {{> headerAd}}
 
@@ -71,8 +71,8 @@
                             <label for="multi" class="color-label multi"></label><br>
                 </div>
                 <div class="flex-item">
-                    <b><label for="note">Note:</label></b><br>
-                        <textarea id="note" name="note" rows="2" cols="40"></textarea><br><br>
+                    <b><label for="notes">Notes:</label></b><br>
+                        <textarea id="notes" name="notes" rows="2" cols="40"></textarea><br><br>
                 </div>
                 <div class="flex-item">
                     <b>Grandeur(s):</b><br>
@@ -139,7 +139,7 @@
                 <div class="flex-item">
                     <b><label for="quantity">Quantité totale:</label></b>
                         <b><input type="text" id="quantity" name="quantity" readonly>{{grandTotal}}</b>
-                        <button type="button" class="btn btn_roseFonce2" onclick="additionner()">Calculer</button>  
+                        <button type="button" class="btn btn_roseFonce2" onclick="additionner()">Calculer</button>
                 </div>
                 <div class="flex-item">
                     <b><label for="upload_photo">Photo:</label></b>
