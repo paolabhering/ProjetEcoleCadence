@@ -21,7 +21,7 @@ const upload = multer({storage : storage});
 router.use(express.urlencoded({extended: true}));
 
 router.get("/ajout", function (req, res) {    
-    res.render("confirmation");
+    res.render("ajoutCostume");
 });
 
  router.get("/modif", function (req, res) {    
