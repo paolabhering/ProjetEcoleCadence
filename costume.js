@@ -1,5 +1,6 @@
 class groupeCostume {
-    constructor(titre, category, color, age_group, notes, localisation, boite, image) {
+    constructor(id, titre, category, color, age_group, notes, localisation, boite, image) {
+        this.id = costume_id;
         this.titre = titre;
         this.category = category;
         this.color = color;

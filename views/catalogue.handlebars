@@ -1,13 +1,33 @@
- 
+
+
 {{> headerAd}} 
 
-<div class="grid-container">
-    {{#each listeCostumes}}
+ <div class="grid-container">
+    {{#each groupeCostume}}
         <div class="grid-item">
             <ul>
-                <li>{{this.image}}</li>
+                <img src="/static/img/{{this.image}}"  alt="{{this.titre}}" class="imageCatalogue">
+                <div class="info-container">
+                        <h3>{{this.titre}}</h3>
+                        <p>Quantité : {{this.quantite}}</p>
+                        <p>Localisation : {{this.localisation}}</p>
+                    </div>
+                {{!-- <a href="/detailsCostume/{{this.id}}">Détails</a></li> --}}
             </ul>
         </div>
     {{/each}}
 </div>
     
+ <script>
+
+    document.querySelectorAll('.grid-item').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+        item.querySelector('.info-container').style.display = 'block';
+    });
+
+    item.addEventListener('mouseleave', () => {
+        item.querySelector('.info-container').style.display = 'none';
+    });
+});
+
+ </script>

@@ -1,4 +1,13 @@
 
+<script>
+
+  function rediriger() {
+    window.location.href = "/modif/:id_costume";
+  }
+  
+</script>
+
+
 <div class="grid-container-costume">
     <div class="grid-item-costume">
       <img src="{{costume.image}}" style="width:400px; height:400px"><br>
@@ -7,7 +16,7 @@
   <div class="grid-item-costume">
     <h3>{{costume.titre}}</h3><br>
     Catégorie:{{costume.category}}<br><br>
-    Couleur: {{costume.couleur}}<br><br>
+    Couleur: {{costume.color}}<br><br>
     Quantité par grandeur:<br>
         <table>
             <tr>
@@ -21,9 +30,9 @@
             </tr>
         </table>
     Quantité totale: {{!--  addition des quantités par la table grandeur --}} <br><br>
-    Note: {{costume.note}} <br><br>
+    Notes: {{costume.notes}} <br><br>
     Localisation: {{costume.localisation}}      Boîte: {{costume.boite}}
 
-    <button type="button" class="btn btn_roseFonce" href="/modif/:id_costume">MODIFIER</button>
+    <button type="button" class="btn btn_roseFonce" onclick=rediriger()>MODIFIER</button>
   </div>
 </div>
