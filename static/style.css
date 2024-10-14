@@ -38,6 +38,9 @@ ul.navbar-nav {
 .nav-item {
     margin: 0 25px; /* Espacement horizontal entre les boutons */   
 }
+.nav-item:first-child {
+    margin-right: auto;
+}
 
 
 .btn {
@@ -50,6 +53,7 @@ ul.navbar-nav {
 .btn-rose {
     background-color: #f0b8c8; 
 }
+
 .btn-rose:hover {
     background-color: #7a7a7a; 
 }
@@ -71,6 +75,12 @@ ul.navbar-nav {
     color:white;
     font-family:Verdana, Geneva, Tahoma, sans-serif;     
 }
+.btn_roseFonce:hover{
+    background-color: #7a7a7a;
+    color:white;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;     
+}
+
 
 .btn_roseFonce2{
     background-color: #d44687;
@@ -184,7 +194,7 @@ input:read-only{
 .noir { background-color: black; color: white; }
 .gris { background-color: gray; }
 .blanc { background-color: white; }
-.multi { background-image: url('img/multi2.jpg'); } /* Pour multi, vous pouvez jouer avec un gradient ou le laisser blanc */
+.multi { background-image: url('img/multi2.jpg'); } 
 
 .color-checkbox:checked + .color-label {
     /* Style la case à cocher lorsqu'elle est sélectionnée */
@@ -196,7 +206,7 @@ input:read-only{
 }
 
 @media (max-width: 480px) {
-    /* Instructions pour écrans de taille moyenne et petits */
+      /* Instructions pour petits écrans */
     .nav-item {
         margin: 0 5px; 
         flex-basis: 100%;
@@ -213,6 +223,53 @@ input:read-only{
         flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
     }
 
+}
+.grid-container {
+    margin: 10px auto; 
+    padding: 10px;
+    max-width: 1600px; 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 20px; 
+    justify-items:center;
+}
+.grid-item {
+    position: relative; 
+}
+
+.grid-item img{
+    border: 1px solid black;
+    width: 100%; 
+    height: auto; 
+    border-radius: 15px; 
+    margin: 0;
+    position:relative;
+}
+
+.grid-item:hover .info-container{
+    display:block;
+}
+
+.imageCatalogue:hover{
+    opacity: 0.5;
+}
+
+.container-confirmation {
+    background-color: lightgrey;
+    margin: 20px auto; 
+    padding: 20px;
+    border-radius: 20px;
+    max-width: 400px; 
+    display: grid;
+    justify-items: center;
+}
+
+.info-container {
+    display: none; /* Cacher par défaut */
+    position: absolute; /* Positionner par rapport au conteneur */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .container-fluid {
@@ -248,17 +305,13 @@ h1 {
     font-size: 16px;
 }
 
-.btn-rose {
-    background-color: #f0b8c8;
-    border: none;
-    color: white;
-    padding: 10px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
 
-.btn-rose:hover {
-    background-color: #d44687;
-}
+/* Media query pour les petits écrans (mobiles) */
+@media (max-width: 480px) {
 
+.grid-container {
+    grid-template-columns: 1fr; 
+    padding-left: 10px; 
+    padding-right: 10px; 
+}
+}
