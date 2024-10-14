@@ -10,23 +10,21 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
+app.use(express.urlencoded({extended: true}));
+
 // pour lier les routers
 const routerAjoutCostume = require("./routerAjoutCostume");
 const routerCostume = require("./routerCostume");
-const routerAccueil = require("./routerAccueil");
+//const routerAccueil = require("./routerAccueil");
 const routerConnexion = require("./routerConnexion");
 const routerCreerCompte = require("./routerCreerCompte");
 
-app.use("/", routerAccueil);
+//app.use("/", routerAccueil);
 app.use("/", routerConnexion);
 app.use("/", routerCreerCompte);
 app.use("/", routerAjoutCostume);
-app.use("/", routerCostume);
-// pour utiliser les routers
-app.use("/ajout", routerAjoutCostume);
-app.use("/modif", routerAjoutCostume);
-app.use("/confirmation", routerAjoutCostume);
 app.use("/catalogue", routerCostume);
+
 
 
 
