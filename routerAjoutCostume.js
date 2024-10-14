@@ -18,15 +18,17 @@ const storage =  multer.diskStorage({
 
 const upload = multer({storage : storage});
 
-router.use(express.urlencoded({extended: true}));
-
-router.get("/ajout", function (req, res) {    
+router.get("/ajout", function (req, res) {   
     res.render("ajoutCostume");
 });
 
  router.get("/modif", function (req, res) {    
     res.render("modifCostume");
  });
+
+router.get("/confirmation", function (req,res) {
+    res.render("confirmation")
+ })
 
 router.post("/ajout", upload.single('upload_photo'), function(req,res) {
     let couleurs = [];
@@ -50,7 +52,7 @@ router.post("/ajout", upload.single('upload_photo'), function(req,res) {
         notes: req.body.notes,
         localisation: req.body.localisation,
         boite: req.body.boite,
-        image: "/img" + req.file.filename,
+        image: req.file.filename,
     })
     db.execute({
         sql: "INSERT INTO costumes(titre, category, age_group, color, notes, localisation, boite, image) VALUES(:titre, :category, :age_group, :couleurs, :notes, :localisation, :boite,:image)",
@@ -62,10 +64,49 @@ router.post("/ajout", upload.single('upload_photo'), function(req,res) {
             notes: req.body.notes,
             localisation: req.body.localisation,
             boite: req.body.boite,
-            image: "/img" + req.file.filename,
+            image: req.file.filename,
         },
-    })
-    res.redirect("/confirmation");
-})
+    }).then(async(result) => {
+        const costumeId = result.lastInsertRowid;
+
+        const grandeurs = [
+            { taille: "XX-petitE", quantite: req.body.XXp_enfant || 0, type: "enfant" },
+            { taille: "X-petitE", quantite: req.body.Xp_enfant || 0, type: "enfant" },
+            { taille: "petitE", quantite: req.body.p_enfant || 0, type: "enfant" },
+            { taille: "moyenE", quantite: req.body.m_enfant || 0, type: "enfant" },
+            { taille: "grandE", quantite: req.body.g_enfant || 0, type: "enfant" },
+            { taille: "X-grandE", quantite: req.body.Xg_enfant || 0, type: "enfant" },
+            { taille: "XX-grandE", quantite: req.body.XXg_enfant || 0, type: "enfant" },
+            { taille: "sans grandeurE", quantite: req.body.oneSize_enfant || 0, type: "enfant" },
+            { taille: "XX-petitA", quantite: req.body.XXp_adulte || 0, type: "adulte" },
+            { taille: "X-petitA", quantite: req.body.Xp_adulte || 0, type: "adulte" },
+            { taille: "petitA", quantite: req.body.p_adulte || 0, type: "adulte" },
+            { taille: "moyenA", quantite: req.body.m_adulte || 0, type: "adulte" },
+            { taille: "grandA", quantite: req.body.g_adulte || 0, type: "adulte" },
+            { taille: "X-grandA", quantite: req.body.Xg_adulte || 0, type: "adulte" },
+            { taille: "XX-grandA", quantite: req.body.XXg_adulte || 0, type: "adulte" },
+            { taille: "sans grandeurA", quantite: req.body.oneSize_adulte || 0, type: "adulte" },
+            { taille: "sans grandeur", quantite: req.body.oneSize|| 0, type: "N/A" },         
+        ];
+
+        for (const grandeur of grandeurs) {
+            if (grandeur.quantity > 0) { 
+                await db.execute({
+                    sql: "INSERT INTO grandeurs(costume_id, grandeur, quantity) VALUES(:costume_id, :grandeur, :quantity)",
+                    args: {
+                        costume_id: costumeId,
+                        grandeur: grandeur.taille,
+                        quantity: grandeur.quantity
+                    },
+                });
+            }
+        }
+
+        res.redirect("/confirmation");
+    }).catch(error => {
+        console.error(error);
+        res.status(500).send("Erreur lors de l'ajout du costume");
+    });
+});
 
 module.exports = router;
