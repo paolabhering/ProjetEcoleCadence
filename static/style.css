@@ -73,6 +73,11 @@ ul.navbar-nav {
     color:white;
     font-family:Verdana, Geneva, Tahoma, sans-serif;     
 }
+.btn_roseFonce:hover{
+    background-color: #7a7a7a;
+    color:white;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;     
+}
 
 .btn_roseFonce2{
     background-color: #d44687;
@@ -186,11 +191,11 @@ input:read-only{
 .noir { background-color: black; color: white; }
 .gris { background-color: gray; }
 .blanc { background-color: white; }
-.multi { background-image: url('img/multi2.jpg'); } /* Pour multi, vous pouvez jouer avec un gradient ou le laisser blanc */
+.multi { background-image: url('img/multi2.jpg'); } 
 
 .color-checkbox:checked + .color-label {
     /* Style la case à cocher lorsqu'elle est sélectionnée */
-    border: 10px solid white; /* Par exemple, border pour indiquer sélection */
+    border: 10px solid white; 
 }
 
 #age_group{
@@ -198,7 +203,7 @@ input:read-only{
 }
 
 @media (max-width: 480px) {
-    /* Instructions pour écrans de taille moyenne et petits */
+    /* Instructions pour petits écrans */
     .nav-item {
         margin: 0 5px; 
         flex-basis: 100%;
@@ -216,3 +221,71 @@ input:read-only{
     }
 
 }
+.grid-container {
+    margin: 10px auto; 
+    padding: 10px;
+    max-width: 1600px; 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 20px; 
+    justify-items:center;
+}
+.grid-item {
+    position: relative; 
+}
+
+.grid-item img{
+    border: 1px solid black;
+    width: 100%; 
+    height: auto; 
+    border-radius: 15px; 
+    margin: 0;
+    position:relative;
+}
+
+.grid-item:hover .info-container{
+    display:block;
+}
+
+.imageCatalogue:hover{
+    opacity: 0.5;
+}
+
+
+.container-confirmation {
+    background-color: lightgrey;
+    margin: 20px auto; 
+    padding: 20px;
+    border-radius: 20px;
+    max-width: 400px; 
+    display: grid;
+    justify-items: center;
+}
+
+.info-container {
+    display: none; /* Cacher par défaut */
+    position: absolute; /* Positionner par rapport au conteneur */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f0b8c8;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px;
+    z-index: 10; /* Assurez-vous que cela apparaît au-dessus */
+}
+
+
+/* Media query pour les petits écrans (mobiles) */
+@media (max-width: 480px) {
+    .grid-container {
+        grid-template-columns: 1fr; 
+        padding-left: 10px; 
+        padding-right: 10px; 
+    }
+
+    .grid-item {
+        margin-bottom: 10px; 
+    }
+}
+
