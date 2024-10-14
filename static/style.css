@@ -38,9 +38,7 @@ ul.navbar-nav {
 .nav-item {
     margin: 0 25px; /* Espacement horizontal entre les boutons */   
 }
-.nav-item:first-child {
-    margin-right: auto;
-}
+
 
 .btn {
     border-radius: 20px;
@@ -70,11 +68,6 @@ ul.navbar-nav {
 
 .btn_roseFonce{
     background-color: #d44687;
-    color:white;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;     
-}
-.btn_roseFonce:hover{
-    background-color: #7a7a7a;
     color:white;
     font-family:Verdana, Geneva, Tahoma, sans-serif;     
 }
@@ -191,11 +184,11 @@ input:read-only{
 .noir { background-color: black; color: white; }
 .gris { background-color: gray; }
 .blanc { background-color: white; }
-.multi { background-image: url('img/multi2.jpg'); } 
+.multi { background-image: url('img/multi2.jpg'); } /* Pour multi, vous pouvez jouer avec un gradient ou le laisser blanc */
 
 .color-checkbox:checked + .color-label {
     /* Style la case à cocher lorsqu'elle est sélectionnée */
-    border: 10px solid white; 
+    border: 10px solid white; /* Par exemple, border pour indiquer sélection */
 }
 
 #age_group{
@@ -203,7 +196,7 @@ input:read-only{
 }
 
 @media (max-width: 480px) {
-    /* Instructions pour petits écrans */
+    /* Instructions pour écrans de taille moyenne et petits */
     .nav-item {
         margin: 0 5px; 
         flex-basis: 100%;
@@ -221,71 +214,51 @@ input:read-only{
     }
 
 }
-.grid-container {
-    margin: 10px auto; 
+
+.container-fluid {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the content horizontally */
+    justify-content: center; /* Centers the content vertically */
+    text-align: center;
+    margin-top: 20px; /* Adjust as needed for spacing below the header */
+}
+
+
+h1 {
+    font-family: 'Verdana', 'Geneva', 'Tahoma', sans-serif;
+    color: #333;
+}
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
     padding: 10px;
-    max-width: 1600px; 
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-    gap: 20px; 
-    justify-items:center;
-}
-.grid-item {
-    position: relative; 
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
 }
 
-.grid-item img{
-    border: 1px solid black;
-    width: 100%; 
-    height: auto; 
-    border-radius: 15px; 
-    margin: 0;
-    position:relative;
-}
-
-.grid-item:hover .info-container{
-    display:block;
-}
-
-.imageCatalogue:hover{
-    opacity: 0.5;
-}
-
-
-.container-confirmation {
-    background-color: lightgrey;
-    margin: 20px auto; 
-    padding: 20px;
-    border-radius: 20px;
-    max-width: 400px; 
-    display: grid;
-    justify-items: center;
-}
-
-.info-container {
-    display: none; /* Cacher par défaut */
-    position: absolute; /* Positionner par rapport au conteneur */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.btn-rose {
     background-color: #f0b8c8;
-    border: 1px solid black;
-    border-radius: 15px;
+    border: none;
+    color: white;
     padding: 10px;
-    z-index: 10; /* Assurez-vous que cela apparaît au-dessus */
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-
-/* Media query pour les petits écrans (mobiles) */
-@media (max-width: 480px) {
-    .grid-container {
-        grid-template-columns: 1fr; 
-        padding-left: 10px; 
-        padding-right: 10px; 
-    }
-
-    .grid-item {
-        margin-bottom: 10px; 
-    }
+.btn-rose:hover {
+    background-color: #d44687;
 }
 

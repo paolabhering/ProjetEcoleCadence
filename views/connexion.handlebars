@@ -1,0 +1,83 @@
+{{> header}}
+
+<div class="form-container">
+    <h2>Connexion</h2>
+    <form action="/login" method="POST" class="connexion-form">
+        <div class="form-group">
+            <label for="username">Nom d'utilisateur</label>
+            <input type="text" id="username" name="username" placeholder="Entrez votre nom d'utilisateur" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
+        </div>
+        <button type="submit" class="btn btn-rose">Se connecter</button>
+    </form>
+</div>
+
+<style>
+
+    h2 {
+        text-align: center;
+    }
+    .form-container {
+        background-color: lightgrey;
+        margin: 20px auto;
+        padding: 30px; /* Vous pouvez ajuster cette valeur */
+        width: 40%; /* Ajustez la largeur selon vos besoins */
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        flex: 0 0 150px; /* Largeur du label */
+        text-align: left; /* Alignement à gauche */
+        margin-right: 10px;
+    }
+
+    .radio-group {
+        display: flex;
+        gap: 15px; /* Espacement entre les boutons radio */
+        align-items: center;
+        margin-left: 10px; /* Alignement avec le champ précédent */
+    }
+
+    .connexion-form input[type="text"],
+    .connexion-form input[type="email"],
+    .connexion-form input[type="password"] {
+        flex: 1;
+        padding: 10px; /* Ajoutez du padding pour le champ de texte */
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+
+    .btn {
+        display: block;
+        margin: 0 auto; /* Centrer le bouton */
+        border-radius: 20px;
+        padding: 10px 20px;
+        background-color: #f0b8c8;
+        cursor: pointer;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    .btn:hover {
+        background-color: #7a7a7a;
+        color: white;
+    }
+</style>
+
+<script>
+    // Check if the URL contains the query parameter `userCreated=true`
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('userCreated') === 'true') {
+        alert("Utilisateur créé avec succès!");
+    }
+</script>
