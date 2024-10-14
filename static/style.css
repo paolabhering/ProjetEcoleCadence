@@ -38,9 +38,7 @@ ul.navbar-nav {
 .nav-item {
     margin: 0 25px; /* Espacement horizontal entre les boutons */   
 }
-.nav-item:first-child {
-    margin-right: auto;
-}
+
 
 .btn {
     border-radius: 20px;
@@ -216,3 +214,51 @@ input:read-only{
     }
 
 }
+
+.container-fluid {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the content horizontally */
+    justify-content: center; /* Centers the content vertically */
+    text-align: center;
+    margin-top: 20px; /* Adjust as needed for spacing below the header */
+}
+
+
+h1 {
+    font-family: 'Verdana', 'Geneva', 'Tahoma', sans-serif;
+    color: #333;
+}
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.btn-rose {
+    background-color: #f0b8c8;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-rose:hover {
+    background-color: #d44687;
+}
+
