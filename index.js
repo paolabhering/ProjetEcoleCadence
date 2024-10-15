@@ -12,6 +12,8 @@ app.use('/static', express.static(path.join(__dirname, 'static')));
 
 app.use(express.urlencoded({extended: true}));
 
+app.use(express.urlencoded({extended: true}));
+
 // pour lier les routers
 const routerAjoutCostume = require("./routerAjoutCostume");
 const routerCostume = require("./routerCostume");

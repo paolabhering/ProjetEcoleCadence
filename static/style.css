@@ -36,8 +36,8 @@ ul.navbar-nav {
     list-style: none;
 }
 .nav-item {
-    margin: 0 25px; /* Espacement horizontal entre les boutons */   
-    margin-top: -20px;
+    margin: 0 25px; /* Espacement horizontal entre les boutons */  
+    margin-top: -20px; 
 }
 .nav-item:first-child {
     margin-right: auto;
