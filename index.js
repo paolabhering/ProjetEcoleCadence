@@ -23,7 +23,7 @@ const routerCreerCompte = require("./routerCreerCompte");
 app.use("/", routerConnexion);
 app.use("/", routerCreerCompte);
 app.use("/", routerAjoutCostume);
-app.use("/catalogue", routerCostume);
+app.use("/", routerCostume);
 
 
 

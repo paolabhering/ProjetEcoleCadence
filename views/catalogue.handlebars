@@ -2,22 +2,36 @@
 
 {{> headerAd}} 
 
+ <form action="/choixProf" method="post" id="preferenceCostume">
  <div class="grid-container">
     {{#each groupeCostume}}
         <div class="grid-item">
             <ul>
                 <img src="/static/img/{{this.image}}"  alt="{{this.titre}}" class="imageCatalogue">
+                <img src="/static/img/plusBlanc.png" alt="plus" id="plusB">  {{!--ajouter un lien avec costume_id --}}
+                <img src="/static/img/plusRose.png" alt="plus" id="plusR" hidden >
+                <img src="/static/img/coeurBlanc.png" alt="coeur" id="coeurB">  {{!--ajouter un lien avec costume_id --}}
+                <img src="/static/img/coeurRose.png" alt="coeur" id="coeurR" hidden>
                 <div class="info-container">
-                        <h3>{{this.titre}}</h3>
-                        <p>Quantité : {{this.quantite}}</p>
-                        <p>Localisation : {{this.localisation}}</p>
-                    </div>
+                        <h4>{{this.titre}}</h4>
+                        Quantité : {{this.quantite}}
+                        Localisation : {{#if this.localisation}}{{this.localisation}}{{else}}N/A{{/if}}
+                </div>
+                <div class="container-ajoutFavori" hidden>
+                    <label for="groupes">Choisir le groupe à mettre pour le favori</label>
+                        <select name="groupes" class="select-group">
+                            <option value="">Sélectionner</option>
+                            {{#each groupe}}
+                                <option value="{{groupe.nom}}"</option>
+                            {{/each}}
+                        </select>
+                </div>
                 {{!-- <a href="/detailsCostume/{{this.id}}">Détails</a></li> --}}
             </ul>
         </div>
     {{/each}}
 </div>
-    
+</form>
  <script>
 
     document.querySelectorAll('.grid-item').forEach(item => {
@@ -28,6 +42,39 @@
     item.addEventListener('mouseleave', () => {
         item.querySelector('.info-container').style.display = 'none';
     });
+
+    const plusBlanc = item.querySelector('#plusB');
+    const plusRose = item.querySelector('#plusR');
+    const ajoutFavori = item.querySelector(".container-ajoutFavori");
+
+    plusBlanc.addEventListener('click', () => {
+        plusBlanc.hidden = true;  // Cacher le plus blanc
+        plusRose.hidden = false;   // Afficher le plus rose
+        ajoutFavori.hidden = false; //Afficher le choix de groupe
+        //ajouter l'ajout aux favoris de l'utilisateur
+    });
+    plusRose.addEventListener('click', () => {
+        plusRose.hidden = true;  // Cacher le plus rose
+        plusBlanc.hidden = false;   // Afficher le plus blanc
+        ajoutFavori.hidden = true; //Cacher le choix de groupe
+        //enlever des favoris de l'utilisateur
+    });
+
+    const coeurBlanc = item.querySelector('#coeurB');
+    const coeurRose = item.querySelector('#coeurR');
+
+    coeurBlanc.addEventListener('click', () => {
+        coeurBlanc.hidden = true;  // Cacher le coeur blanc
+        coeurRose.hidden = false;   // Afficher le coeur rose
+        //ajouter l'ajout aux J'aime de l'utilisateur
+    });
+    coeurRose.addEventListener('click', () => {
+        coeurRose.hidden = true;  // Cacher le coeur rose
+        coeurBlanc.hidden = false;   // Afficher le coeur blanc
+        //enlever des J'aime de l'utilisateur
+    });
 });
+
+
 
  </script>

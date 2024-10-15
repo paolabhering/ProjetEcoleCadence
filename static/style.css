@@ -37,6 +37,7 @@ ul.navbar-nav {
 }
 .nav-item {
     margin: 0 25px; /* Espacement horizontal entre les boutons */   
+    margin-top: -20px;
 }
 .nav-item:first-child {
     margin-right: auto;
@@ -44,8 +45,8 @@ ul.navbar-nav {
 
 
 .btn {
-    border-radius: 20px;
-    padding: 10px 20px;
+    border-radius: 15px;
+    padding: 5px 5px;
     font-family:Verdana, Geneva, Tahoma, sans-serif;  
     cursor: pointer; 
 }
@@ -67,6 +68,12 @@ ul.navbar-nav {
 #navbarScrollingDropdown:hover{
     background-color: #7a7a7a;
 }
+.dropdown-item{
+    background-color: #f0b8c8;
+}
+.dropdown-item:hover{
+    background-color: #7a7a7a;
+}
 
 /*reste du document*/
 
@@ -80,7 +87,6 @@ ul.navbar-nav {
     color:white;
     font-family:Verdana, Geneva, Tahoma, sans-serif;     
 }
-
 
 .btn_roseFonce2{
     background-color: #d44687;
@@ -254,6 +260,40 @@ input:read-only{
     opacity: 0.5;
 }
 
+#plusB{
+    position: relative;
+    width: 50px;
+    height: auto;
+    margin-top: -120px;
+    margin-left: 1%;
+    border: none;
+}
+#plusR{
+    position: relative;
+    width: 50px;
+    height: auto;
+    margin-top: -120px;
+    margin-left: 1%;
+    border: none;
+}
+#coeurB{
+    position: relative;
+    width: 50px;
+    height: auto;
+    margin-top: -165px;
+    margin-left: 77%;
+    border: none;
+}
+#coeurR{
+    position: relative;
+    width: 50px;
+    height: auto;
+    margin-top: -165px;
+    margin-left: 77%;
+    border: none;
+}
+
+
 .container-confirmation {
     background-color: lightgrey;
     margin: 20px auto; 
@@ -265,11 +305,26 @@ input:read-only{
 }
 
 .info-container {
+    background-color: #f0b8c8;
+    border: 1px solid black;
+    border-radius: 15px;
     display: none; /* Cacher par défaut */
     position: absolute; /* Positionner par rapport au conteneur */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    padding: 20px;
+    text-align: center;
+}
+.container-ajoutFavori{   
+    position: relative;
+    background-color: #f0b8c8;
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    margin-top: -50px;
 }
 
 .container-fluid {
@@ -314,4 +369,10 @@ h1 {
     padding-left: 10px; 
     padding-right: 10px; 
 }
+}
+
+#preferenceCostume{
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
 }

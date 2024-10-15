@@ -30,7 +30,7 @@ router.get("/confirmation", function (req,res) {
     res.render("confirmation")
  })
 
-router.post("/ajout", upload.single('upload_photo'), function(req,res) {
+router.post("/ajout", upload.single('upload_photo'), async function(req,res) {
     let couleurs = [];
         if (req.body.brun) couleurs.push("brun");
         if (req.body.rouge) couleurs.push("rouge");
@@ -44,64 +44,77 @@ router.post("/ajout", upload.single('upload_photo'), function(req,res) {
         if (req.body.gris) couleurs.push("gris");
         if (req.body.blanc) couleurs.push("blanc");
         if (req.body.multi) couleurs.push("multi");
+
+    let colorString = couleurs.length > 0 ? couleurs.join(", "): null;
+
     console.log({
         titre: req.body.titre, 
         category: req.body.category,
         age_group: req.body.age_group,
-        couleurs: couleurs.join(", "),
+        couleurs: colorString,
         notes: req.body.notes,
         localisation: req.body.localisation,
         boite: req.body.boite,
         image: req.file.filename,
     })
-    db.execute({
-        sql: "INSERT INTO costumes(titre, category, age_group, color, notes, localisation, boite, image) VALUES(:titre, :category, :age_group, :couleurs, :notes, :localisation, :boite,:image)",
+    const result = await db.execute({
+        sql: "INSERT INTO costumes(titre, category, age_group, color, notes, localisation, boite, image) VALUES(:titre, :category, :age_group, :color, :notes, :localisation, :boite,:image)",
         args:{
             titre: req.body.titre, 
             category: req.body.category,
             age_group: req.body.age_group,
-            color: couleurs.join(", "),
+            color: colorString,
             notes: req.body.notes,
             localisation: req.body.localisation,
             boite: req.body.boite,
             image: req.file.filename,
         },
     }).then(async(result) => {
+
         const costumeId = result.lastInsertRowid;
+        console.log(costumeId);
 
         const grandeurs = [
-            { taille: "XX-petitE", quantite: req.body.XXp_enfant || 0, type: "enfant" },
-            { taille: "X-petitE", quantite: req.body.Xp_enfant || 0, type: "enfant" },
-            { taille: "petitE", quantite: req.body.p_enfant || 0, type: "enfant" },
-            { taille: "moyenE", quantite: req.body.m_enfant || 0, type: "enfant" },
-            { taille: "grandE", quantite: req.body.g_enfant || 0, type: "enfant" },
-            { taille: "X-grandE", quantite: req.body.Xg_enfant || 0, type: "enfant" },
-            { taille: "XX-grandE", quantite: req.body.XXg_enfant || 0, type: "enfant" },
-            { taille: "sans grandeurE", quantite: req.body.oneSize_enfant || 0, type: "enfant" },
-            { taille: "XX-petitA", quantite: req.body.XXp_adulte || 0, type: "adulte" },
-            { taille: "X-petitA", quantite: req.body.Xp_adulte || 0, type: "adulte" },
-            { taille: "petitA", quantite: req.body.p_adulte || 0, type: "adulte" },
-            { taille: "moyenA", quantite: req.body.m_adulte || 0, type: "adulte" },
-            { taille: "grandA", quantite: req.body.g_adulte || 0, type: "adulte" },
-            { taille: "X-grandA", quantite: req.body.Xg_adulte || 0, type: "adulte" },
-            { taille: "XX-grandA", quantite: req.body.XXg_adulte || 0, type: "adulte" },
-            { taille: "sans grandeurA", quantite: req.body.oneSize_adulte || 0, type: "adulte" },
-            { taille: "sans grandeur", quantite: req.body.oneSize|| 0, type: "N/A" },         
+            { taille: "XXp_enfant", quantite: req.body.XXp_enfant || 0 },
+            { taille: "Xp_enfant", quantite: req.body.Xp_enfant || 0},
+            { taille: "p_enfant", quantite: req.body.p_enfant || 0},
+            { taille: "m_enfant", quantite: req.body.m_enfant || 0},
+            { taille: "g_enfant", quantite: req.body.g_enfant || 0},
+            { taille: "Xg_enfant", quantite: req.body.Xg_enfant || 0},
+            { taille: "XXg_enfant", quantite: req.body.XXg_enfant || 0},
+            { taille: "oneSize_enfant", quantite: req.body.oneSize_enfant || 0},
+            { taille: "XXp_adulte", quantite: req.body.XXp_adulte || 0},
+            { taille: "Xp_adulte", quantite: req.body.Xp_adulte || 0},
+            { taille: "p_adulte", quantite: req.body.p_adulte || 0},
+            { taille: "m_adulte", quantite: req.body.m_adulte || 0 },
+            { taille: "g_adulte", quantite: req.body.g_adulte || 0},
+            { taille: "Xg_adulte", quantite: req.body.Xg_adulte || 0},
+            { taille: "XXg_adulte", quantite: req.body.XXg_adulte || 0},
+            { taille: "oneSize_adulte", quantite: req.body.oneSize_adulte || 0 },
+            { taille: "oneSize", quantite: req.body.oneSize|| 0},         
         ];
 
-        for (const grandeur of grandeurs) {
-            if (grandeur.quantity > 0) { 
-                await db.execute({
-                    sql: "INSERT INTO grandeurs(costume_id, grandeur, quantity) VALUES(:costume_id, :grandeur, :quantity)",
-                    args: {
-                        costume_id: costumeId,
-                        grandeur: grandeur.taille,
-                        quantity: grandeur.quantity
-                    },
-                });
+        for (const taille of grandeurs) {
+            if (Number.isInteger(taille.quantite) && taille.quantite > 0) { 
+                console.log({
+                    costume_id: costumeId, 
+                    grandeur: taille.taille,
+                   quantity: taille.quantite,
+                })
+                try{
+                    await db.execute({
+                        sql: "INSERT INTO grandeurs(costume_id, grandeur, quantity) VALUES(:costumeId, :grandeur, :quantity)",
+                        args: {
+                            costume_id: costumeId,
+                            grandeur: taille.taille,
+                            quantity: taille.quantite
+                        },
+                    });
+                }catch (error) {
+                    console.error(`Erreur lors de l'insertion de la grandeur: ${error.message}`);
+                }
             }
-        }
-
+        }   
         res.redirect("/confirmation");
     }).catch(error => {
         console.error(error);

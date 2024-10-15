@@ -1,28 +1,28 @@
 <script>
     function additionner(){
-        let XXp_enfant = parseInt(document.getElementById("XXp_enfant").value) || 0;
-        let Xp_enfant = parseInt(document.getElementById("Xp_enfant").value) || 0;
-        let p_enfant = parseInt(document.getElementById("p_enfant").value) || 0;
-        let m_enfant = parseInt(document.getElementById("m_enfant").value) || 0;
-        let g_enfant = parseInt(document.getElementById("g_enfant").value) || 0;
-        let Xg_enfant = parseInt(document.getElementById("Xg_enfant").value) || 0;
-        let XXg_enfant = parseInt(document.getElementById("XXg_enfant").value) || 0;
+        let XXpetit_enfant = parseInt(document.getElementById("XXp_enfant").value) || 0;
+        let Xpetit_enfant = parseInt(document.getElementById("Xp_enfant").value) || 0;
+        let petit_enfant = parseInt(document.getElementById("p_enfant").value) || 0;
+        let moyen_enfant = parseInt(document.getElementById("m_enfant").value) || 0;
+        let grand_enfant = parseInt(document.getElementById("g_enfant").value) || 0;
+        let Xgrand_enfant = parseInt(document.getElementById("Xg_enfant").value) || 0;
+        let XXgrand_enfant = parseInt(document.getElementById("XXg_enfant").value) || 0;
 
-        let XXp_adulte = parseInt(document.getElementById("XXp_adulte").value) || 0;
-        let Xp_adulte = parseInt(document.getElementById("Xp_adulte").value) || 0;
-        let p_adulte = parseInt(document.getElementById("p_adulte").value) || 0;
-        let m_adulte = parseInt(document.getElementById("m_adulte").value) || 0;
-        let g_adulte = parseInt(document.getElementById("g_adulte").value) || 0;
-        let Xg_adulte = parseInt(document.getElementById("Xg_adulte").value) || 0;
-        let XXg_adulte = parseInt(document.getElementById("XXg_adulte").value) || 0;
+        let XXpetit_adulte = parseInt(document.getElementById("XXp_adulte").value) || 0;
+        let Xpetit_adulte = parseInt(document.getElementById("Xp_adulte").value) || 0;
+        let petit_adulte = parseInt(document.getElementById("p_adulte").value) || 0;
+        let moyen_adulte = parseInt(document.getElementById("m_adulte").value) || 0;
+        let grand_adulte = parseInt(document.getElementById("g_adulte").value) || 0;
+        let Xgrand_adulte = parseInt(document.getElementById("Xg_adulte").value) || 0;
+        let XXgrand_adulte = parseInt(document.getElementById("XXg_adulte").value) || 0;
 
-        let oneSize_enfant = parseInt(document.getElementById("oneSize_enfant").value) || 0;
-        let oneSize_adulte = parseInt(document.getElementById("oneSize_adulte").value) || 0;
-        let oneSize = parseInt(document.getElementById("oneSize").value) || 0;
+        let sansGrandeur_enfant = parseInt(document.getElementById("oneSize_enfant").value) || 0;
+        let sansGrandeur_adulte = parseInt(document.getElementById("oneSize_adulte").value) || 0;
+        let sansGrandeur = parseInt(document.getElementById("oneSize").value) || 0;
 
-        let totalEnfant = XXp_enfant + Xp_enfant + p_enfant + m_enfant + g_enfant + Xg_enfant + XXg_enfant;
-        let totalAdulte = XXp_adulte + Xp_adulte + p_adulte + m_adulte + g_adulte + Xg_adulte + XXg_adulte;
-        let totalSans =  oneSize_enfant + oneSize_adulte + oneSize;
+        let totalEnfant = XXpetit_enfant + Xpetit_enfant + petit_enfant + moyen_enfant + grand_enfant + Xgrand_enfant + XXgrand_enfant;
+        let totalAdulte = XXpetit_adulte + Xpetit_adulte + petit_adulte + moyen_adulte + grand_adulte + Xgrand_adulte + XXgrand_adulte;
+        let totalSans =  sansGrandeur_enfant + sansGrandeur_adulte + sansGrandeur;
 
         let grandTotal = totalEnfant + totalAdulte + totalSans;
 
