@@ -71,8 +71,10 @@ router.post("/ajout", upload.single('upload_photo'), async function(req,res) {
         },
     }).then(async(result) => {
 
-        const costumeId = result.lastInsertRowid;
+        const costumeId = Number(result.lastInsertRowid);
+    
         console.log(costumeId);
+        console.log("bob");
 
         const grandeurs = [
             { taille: "XXp_enfant", quantite: req.body.XXp_enfant || 0 },
@@ -95,12 +97,15 @@ router.post("/ajout", upload.single('upload_photo'), async function(req,res) {
         ];
 
         for (const taille of grandeurs) {
-            if (Number.isInteger(taille.quantite) && taille.quantite > 0) { 
+            console.log(taille.quantite > 0)
+            if (taille.quantite > 0) { 
+
                 console.log({
                     costume_id: costumeId, 
                     grandeur: taille.taille,
-                   quantity: taille.quantite,
+                    quantity: taille.quantite,
                 })
+                console.log(costumeId);
                 try{
                     await db.execute({
                         sql: "INSERT INTO grandeurs(costume_id, grandeur, quantity) VALUES(:costumeId, :grandeur, :quantity)",
