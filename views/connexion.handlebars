@@ -1,17 +1,31 @@
-{{> header}}
+
+<div>
+{{> headerConnexion}}
+</div>
+
+<h2><bold>COSTUMIER/COSTUME INVENTORY</bold></h2>
 
 <div class="form-container">
-    <h2>Connexion</h2>
+    
     <form action="/login" method="POST" class="connexion-form">
+
         <div class="form-group">
-            <label for="username">Nom d'utilisateur</label>
+            <h3 id="userLabel">NOM D'UTILISATEUR</h3>
+            
+        </div>
+        <div class="form-group">
+
             <input type="text" id="username" name="username" placeholder="Entrez votre nom d'utilisateur" required>
         </div>
         <div class="form-group">
-            <label for="password">Mot de passe</label>
+            <h3 id="mdp">MOT DE PASSE</h3>
+            
+        </div>
+        <div class="form-group">
+
             <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
         </div>
-        <button type="submit" class="btn btn-rose">Se connecter</button>
+        <button type="submit" class="btn btn-rose">ENTRER</button>
     </form>
 </div>
 
@@ -19,6 +33,22 @@
 
     h2 {
         text-align: center;
+  
+    }
+    #userLabel {
+        text-align: center;
+        padding-left: 20%;
+        color: #F9429E;
+    }
+
+    #mdp {
+         text-align: center;
+        padding-left: 30%;
+        color: #F9429E;
+    }
+
+    #usernameLabel {
+        margin-left: 35%;
     }
     .form-container {
         background-color: lightgrey;
@@ -33,6 +63,7 @@
         display: flex;
         align-items: center;
         margin-bottom: 20px;
+        text-align: center;
     }
 
     .form-group label {
@@ -46,6 +77,10 @@
         gap: 15px; /* Espacement entre les boutons radio */
         align-items: center;
         margin-left: 10px; /* Alignement avec le champ précédent */
+    }
+
+    label {
+        text-align: center;
     }
 
     .connexion-form input[type="text"],
@@ -72,6 +107,17 @@
         background-color: #7a7a7a;
         color: white;
     }
+
+    .btn-rose {
+    background-color: #f0b8c8; 
+}
+
+.btn-rose:hover {
+    background-color: #7a7a7a; 
+}
+.btn-rose:active {
+    background-color: #ffffff;
+}
 </style>
 
 <script>
