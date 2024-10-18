@@ -9,6 +9,7 @@ class groupeCostume {
         this.localisation = localisation;
         this.boite = boite;
         this.image = image;
+        this.quantite.totale = quantite.totale;
     }
 }
 
