@@ -13,13 +13,13 @@
     height: auto;
 }
 
-.logoNoir{
+ .logoNoir{
     position: absolute;
-    top: 20px;
+    top: 5px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
-}
+} 
 
 #barreNavig{
     background-color: #d44687;
@@ -74,6 +74,84 @@ ul.navbar-nav {
 .dropdown-item:hover{
     background-color: #7a7a7a;
 }
+
+
+
+/* Styles pour petits écrans */
+@media (max-width: 780px) {
+    /* Ajustez le flex-item pour tenir compte de la nouvelle disposition */
+    .entete {
+        display: flex;
+        flex-direction: column; /* Empile les éléments verticalement */
+        align-items: center; /* Centrage horizontal */
+    }
+
+    /* .logoNoir {
+        margin-bottom: 0px; 
+        width: 100px; 
+        height: auto;
+    } */
+
+    .nav-item:first-child {
+        margin-left: 5px;
+        margin-top: 5px;
+    }
+    .nav-item {
+        margin: 5px 40%;  /* Espacement vertical entre les boutons */
+        /* Suppression de flex-basis pour que les éléments se comportent comme des liens */
+        flex-basis: auto; 
+    }
+
+    /* Assurez-vous que le conteneur de navigation utilise le flex-direction en colonne */
+    #n_bar {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centrer les éléments de navigation */
+    }
+
+    .flex-item {
+        flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
+    }
+}
+
+
+/* Styles pour petits écrans */
+@media (max-width: 480px) {
+    /* Ajustez le flex-item pour tenir compte de la nouvelle disposition */
+    .entete {
+        display: flex;
+        flex-direction: column; /* Empile les éléments verticalement */
+        align-items: center; /* Centrage horizontal */
+    }
+
+    /* .logoNoir {
+        margin-bottom: 0px;
+        width: 100px; 
+        height: auto;
+    } */
+
+    .nav-item:first-child {
+        margin-left: 5px;
+        width: 30px;
+        margin-top: -50px;
+    }
+    .nav-item {
+        margin: 100px 45%; /* Espacement vertical entre les boutons */
+        flex-basis: 100%; /* Chaque bouton occupera 100% de la largeur */
+    }
+
+    /* Assurez-vous que le conteneur de navigation utilise le flex-direction en colonne */
+    #n_bar {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centrer les éléments de navigation */
+    }
+
+    .flex-item {
+        flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
+    }
+}
+
 
 /*reste du document*/
 

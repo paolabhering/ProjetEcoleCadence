@@ -28,6 +28,15 @@
 
         document.getElementById("quantity").value = grandTotal;
     }
+     // Fonction pour ajouter des écouteurs d'événements à chaque champ de saisie
+    function addEventListeners() {
+        const inputs = document.querySelectorAll('.bte_tableau');
+        inputs.forEach(input => {
+            input.addEventListener('input', additionner); // Écouteur d'événement sur chaque champ d'entrée
+        });
+    }
+    // Appeler la fonction pour ajouter les écouteurs d'événements après le chargement de la page
+    window.onload = addEventListeners;
 </script> 
 
 {{> headerAd}}
@@ -139,7 +148,6 @@
                 <div class="flex-item">
                     <b><label for="quantity">Quantité totale:</label></b>
                         <b><input type="text" id="quantity" name="quantity" readonly>{{grandTotal}}</b>
-                        <button type="button" class="btn btn_roseFonce2" onclick="additionner()">Calculer</button>
                 </div>
                 <div class="flex-item">
                     <b><label for="upload_photo">Photo:</label></b>

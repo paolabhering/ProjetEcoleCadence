@@ -1,12 +1,15 @@
  
  <div class="entete"> 
-        <img src="../../static/img/imageEntete.jpeg" alt="Logo" class="imageEntete">  
-        <img src="../../static/img/logoNoir.png" alt="Logo" class="logoNoir" width="140" height="140">  
+        <img src="../../static/img/imageEnteteLogo.png" alt="Logo" class="imageEntete">  
+        <img src="../../static/img/logoNoir.png" alt="Logo" class="logoNoir" width="190" height="140" hidden>
  </div>  
 
     <nav class="navbar navbar-expand-sm" id="barreNavig">
         <div class="container-fluid">
-            <ul class="navbar-nav">
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#n_bar" aria-controls="navbarNavAltMarkup" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            <ul class="navbar-nav collapse navbar-collapse" id="n_bar">
                 <li class="nav-item">
                     <a class="btn btn-rose" id="btn-admin" href="/">Menu Administrateur</a>
                 </li>
@@ -17,7 +20,7 @@
                     <button type="button" class="btn btn-rose nav-link dropdown-toggle active" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Costumes</button>
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-					        <li><a class="dropdown-item" href="/">Tous</a></li>
+					        <li><a class="dropdown-item" href="/catalogue">Tous</a></li>
 					        <li><a class="dropdown-item" href="#">Filtre</a></li>
                         </ul>
                 </li>
