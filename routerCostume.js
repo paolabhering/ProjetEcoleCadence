@@ -7,15 +7,21 @@ const { groupeCostume } = require('./costume');
 
 
 
-router.get("/", async function(req,res) {
+router.get("/catalogue", async function(req,res) {
   try{
-      const {rows} = await db.execute ("SELECT * FROM costumes")
+      const {rows} = await db.execute (`
+       SELECT c.*, SUM(g.quantity) AS quantite_totale 
+        FROM costumes c
+        LEFT JOIN grandeurs g ON c.costume_id = g.costume_id
+        GROUP BY c.costume_id`)
       res.render("catalogue", {groupeCostume: rows});
   } catch (error) {
       console.error(error);
       res.status(500).send("Erreur interne du serveur");
   }
 })
+
+
 
 // pour afficher les détails de chaque costume
 // router.get("/detailsCostume/:id", async function (req, res) {
