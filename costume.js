@@ -11,7 +11,7 @@ class groupeCostume {
         this.localisation = localisation;
         this.boite = boite;
         this.image = image;
-        this.quantite_totale = quantite_totale;
+        this.quantite.totale = quantite.totale;
     }
 }
 

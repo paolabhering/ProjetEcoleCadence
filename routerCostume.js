@@ -19,9 +19,7 @@ router.get("/catalogue", async function(req,res) {
       console.error(error);
       res.status(500).send("Erreur interne du serveur");
   }
-})
-
-
+});
 
 // pour afficher les détails de chaque costume
 // router.get("/detailsCostume/:id", async function (req, res) {
