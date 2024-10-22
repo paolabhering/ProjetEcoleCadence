@@ -75,7 +75,12 @@ ul.navbar-nav {
     background-color: #7a7a7a;
 }
 
+ 
 
+/* Styles pour les placeholders */
+input::placeholder {
+    opacity: 0; /* Rendre le placeholder invisible par défaut */
+}
 
 /* Styles pour petits écrans */
 @media (max-width: 780px) {
@@ -230,7 +235,9 @@ form {
 }
 
 table{
-    width: 90%;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
     background-color: #ffffff; 
     border: 1px solid black;
     font-size: smaller; 
@@ -257,12 +264,25 @@ input:read-only{
 .color-checkbox {
     display: none; /* Cacher la case à cocher d'origine */
 }
+ 
 .color-label {
+    position: relative; /* Ajouté pour positionner le pseudo-élément */
     display: inline-block;
     padding: 15px 15px;
     border: 1px solid black;
     cursor: pointer;
     margin-right: 60px; /* Espacement entre les couleurs */
+}
+
+.color-checkbox:checked + .color-label::after {
+    content: '✔'; /* Utiliser un caractère de crochet */
+    position: absolute; /* Positionne le crochet */
+    top: 50%; /* Centré verticalement */
+    left: 50%; /* Centré horizontalement */
+    transform: translate(-50%, -50%); /* Ajustement pour le centrage parfait */
+    font-size: 20px; /* Taille du crochet */
+    color: white; /* Couleur du crochet */
+    z-index: 1; /* Met le crochet au-dessus de la couleur de fond */
 }
 
 
@@ -279,11 +299,6 @@ input:read-only{
 .gris { background-color: gray; }
 .blanc { background-color: white; }
 .multi { background-image: url('img/multi2.jpg'); } 
-
-.color-checkbox:checked + .color-label {
-    /* Style la case à cocher lorsqu'elle est sélectionnée */
-    border: 10px solid white; /* Par exemple, border pour indiquer sélection */
-}
 
 #age_group{
     text-align: center;
@@ -453,4 +468,54 @@ h1 {
     background-color: transparent;
     margin: 0;
     padding: 0;
+}
+
+/* Styles pour petits écrans */
+@media (max-width: 480px) {
+    form{
+        margin:5px;
+    }
+    /* Modifiez le tableau pour qu'il s'affiche en bloc plutôt que sous forme de tableau */
+    table {
+        display: block;
+        overflow-x: auto; /* Permet le défilement horizontal si nécessaire */
+        width: 100%;
+        border: none; /* Enlevez les bordures externes */
+    }
+    
+    /* Modifiez les lignes du tableau pour avoir un affichage en colonne */
+    tr {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 5%; /* Espacement entre les lignes */
+        border: 1px solid #ccc; /* Bordure sur chaque ligne */
+        padding: 10px; /* Rembourrage interne */
+    }
+
+    /* Les cellules prennent toute la largeur disponible */
+    td {
+        display: block;
+        width: 100%;
+        text-align: center; 
+        margin: 2px 0; /* Espacement vertical entre cellules */
+    }
+
+    /* Gardez le style du th similaire mais avec ajustement */
+    th {
+        text-align: center;
+        font-weight: bold; /* Gras pour la visibilité */
+    }
+
+    /* Réduisez la taille de la police si nécessaire */
+    table, th, td {
+        font-size: 13=4px; /* Ajuster la taille de police pour petit écran */
+    }
+    input[type="number"], input[type="text"] {
+        width: 90%; /* Largeur de 90% pour une meilleure visibilité */
+        font-size: 1.2em; /* Augmente la taille de la police pour les inputs */
+    }
+    input::placeholder {
+        opacity: 1; /* Rendre le placeholder visible sur petits écrans */
+    }
+}
 }

@@ -46,7 +46,8 @@ router.post("/ajout", upload.single('upload_photo'), async function(req,res) {
         if (req.body.multi) couleurs.push("multi");
 
     let colorString = couleurs.length > 0 ? couleurs.join(", "): null;
-
+    console.log("Couleurs sélectionnées:", colorString);
+    
     console.log({
         titre: req.body.titre, 
         category: req.body.category,

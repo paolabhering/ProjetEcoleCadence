@@ -1,16 +1,17 @@
 
 
-{{> header}} 
+{{> headerAd}} 
 
  <form action="/choixProf" method="post" id="preferenceCostume">
  <div class="grid-container">
     {{#each groupeCostume}}
         <div class="grid-item">
             <ul>
-                <img src="/static/img/{{this.image}}"  alt="{{this.titre}}" class="imageCatalogue">
-                <img src="/static/img/plusBlanc.png" alt="plus" id="plusB">  {{!--ajouter un lien avec costume_id --}}
+                <a href="/detailsCostume/{{this.costume_id}}">
+                <img src="/static/img/{{this.image}}"  alt="{{this.titre}}" class="imageCatalogue"></a>
+                <img src="/static/img/plusBlanc.png" alt="plus" id="plusB"> 
                 <img src="/static/img/plusRose.png" alt="plus" id="plusR" hidden >
-                <img src="/static/img/coeurBlanc.png" alt="coeur" id="coeurB">  {{!--ajouter un lien avec costume_id --}}
+                <img src="/static/img/coeurBlanc.png" alt="coeur" id="coeurB">  
                 <img src="/static/img/coeurRose.png" alt="coeur" id="coeurR" hidden>
                 <div class="info-container">
                         <h4>{{this.titre}}</h4>
