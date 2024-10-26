@@ -6,7 +6,6 @@ const db = require("./db");
 const { groupeCostume } = require('./costume');
 
 
-
 router.get("/catalogue", async function(req,res) {
   try{
       const {rows} = await db.execute (`
@@ -22,18 +21,37 @@ router.get("/catalogue", async function(req,res) {
 });
 
 // pour afficher les détails de chaque costume
- router.get("/detailsCostume/:costume_id", async function (req, res) {
-  const result = await db.execute({
+router.get("/detailsCostume/:costume_id", async function (req, res) {
+  try {
+    const { rows: costume } = await db.execute(`
+      SELECT c.*, 
+             g.grandeur AS grandeur, 
+             g.quantity AS quantite 
+      FROM costumes c
+      LEFT JOIN grandeurs g ON c.costume_id = g.costume_id
+      WHERE c.costume_id = :costume_id
+    `, { costume_id: req.params.costume_id });
 
-    sql:"SELECT * FROM cotumes WHERE costume_id = :costume_id",
-     args: {costume_id: req.params.costume_id} });
+    console.log(costume);
+   
+    if (costume.length === 0) {
+      res.status(404).send("Costume non trouvé");
+      return;
+    }
 
-   const costume = result[0]?.rows[0];
-   if (!costume) {
-     res.status(404).send("Costume non trouvé");
-     return;
-   }
-   res.render("detailsCostumes", { costume: costume });
- });  
+    // Séparez les grandeurs et quantités pour le rendu
+    const quantitesParGrandeur = {};
+    costume.forEach(item => {
+      if (item.grandeur) {
+        quantitesParGrandeur[item.grandeur] = item.quantite;
+      }
+    });
+
+    res.render("detailsCostume", { costume: costume[0], quantites: quantitesParGrandeur });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Erreur lors de la récupération du costume");
+  }
+});
 
 module.exports = router;

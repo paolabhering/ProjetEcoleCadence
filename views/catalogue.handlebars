@@ -1,6 +1,6 @@
 
 
-{{> headerAd}} 
+{{> header}} 
 
  <form action="/choixProf" method="post" id="preferenceCostume">
  <div class="grid-container">
@@ -8,7 +8,8 @@
         <div class="grid-item">
             <ul>
                 <a href="/detailsCostume/{{this.costume_id}}">
-                <img src="/static/img/{{this.image}}"  alt="{{this.titre}}" class="imageCatalogue"></a>
+                    <img src="/static/img/{{this.image}}"  alt="{{this.titre}}" class="imageCatalogue">
+                </a>
                 <img src="/static/img/plusBlanc.png" alt="plus" id="plusB"> 
                 <img src="/static/img/plusRose.png" alt="plus" id="plusR" hidden >
                 <img src="/static/img/coeurBlanc.png" alt="coeur" id="coeurB">  

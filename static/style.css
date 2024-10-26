@@ -12,14 +12,14 @@
     width: 100%;
     height: auto;
 }
-
- .logoNoir{
+/* 
+.logoNoir{
     position: absolute;
-    top: 5px;
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
-} 
+} */
 
 #barreNavig{
     background-color: #d44687;
@@ -28,21 +28,20 @@
 
 ul.navbar-nav {
     display: flex; 
-    justify-content:center;
+    justify-content:space-between;
     flex-wrap: wrap;
     padding: 0;
     margin: 0;
     width: 100%;
-    list-style: none;
+    list-style: none; 
 }
 .nav-item {
-    margin: 0 25px; /* Espacement horizontal entre les boutons */  
-    margin-top: -20px; 
+    margin: 0 65px; /* Espacement horizontal entre les boutons */ 
+    margin-top: -20px;  
 }
 .nav-item:first-child {
     margin-right: auto;
 }
-
 
 .btn {
     border-radius: 15px;
@@ -54,7 +53,6 @@ ul.navbar-nav {
 .btn-rose {
     background-color: #f0b8c8; 
 }
-
 .btn-rose:hover {
     background-color: #7a7a7a; 
 }
@@ -75,86 +73,45 @@ ul.navbar-nav {
     background-color: #7a7a7a;
 }
 
- 
 
-/* Styles pour les placeholders */
-input::placeholder {
-    opacity: 0; /* Rendre le placeholder invisible par défaut */
+/*Styles pour les placeholders*/
+input::placeholder { 
+opacity: 0; 
 }
 
-/* Styles pour petits écrans */
+ /*Styles pour petits écrans */ 
 @media (max-width: 780px) {
-    /* Ajustez le flex-item pour tenir compte de la nouvelle disposition */
-    .entete {
-        display: flex;
-        flex-direction: column; /* Empile les éléments verticalement */
-        align-items: center; /* Centrage horizontal */
-    }
+ /*Ajustez le flex-item pour tenir compte de la nouvelle disposition */
+ .entete { 
+ display: flex; 
+ flex-direction: column; /* Empile les éléments verticalement */ 
+ align-items: center; /* Centrage horizontal*/ 
+}
+ .logoNoir {
+    margin-bottom: 0px; 
+    width: 100px; 
+    height: auto;
+} 
 
-    /* .logoNoir {
-        margin-bottom: 0px; 
-        width: 100px; 
-        height: auto;
-    } */
-
-    .nav-item:first-child {
-        margin-left: 5px;
-        margin-top: 5px;
-    }
-    .nav-item {
-        margin: 5px 40%;  /* Espacement vertical entre les boutons */
-        /* Suppression de flex-basis pour que les éléments se comportent comme des liens */
-        flex-basis: auto; 
-    }
-
-    /* Assurez-vous que le conteneur de navigation utilise le flex-direction en colonne */
-    #n_bar {
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Centrer les éléments de navigation */
-    }
-
-    .flex-item {
-        flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
-    }
+.nav-item:first-child {
+    margin-left: 5px;
+    margin-top: 5px;
+}
+.nav-item {
+    margin: 5px 40%;  /* Espacement vertical entre les boutons */
 }
 
 
-/* Styles pour petits écrans */
-@media (max-width: 480px) {
-    /* Ajustez le flex-item pour tenir compte de la nouvelle disposition */
-    .entete {
-        display: flex;
-        flex-direction: column; /* Empile les éléments verticalement */
-        align-items: center; /* Centrage horizontal */
-    }
+/* Assurez-vous que le conteneur de navigation utilise le flex-direction en colonne */
+#n_bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrer les éléments de navigation */
+}
 
-    /* .logoNoir {
-        margin-bottom: 0px;
-        width: 100px; 
-        height: auto;
-    } */
-
-    .nav-item:first-child {
-        margin-left: 5px;
-        width: 30px;
-        margin-top: -50px;
-    }
-    .nav-item {
-        margin: 100px 45%; /* Espacement vertical entre les boutons */
-        flex-basis: 100%; /* Chaque bouton occupera 100% de la largeur */
-    }
-
-    /* Assurez-vous que le conteneur de navigation utilise le flex-direction en colonne */
-    #n_bar {
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Centrer les éléments de navigation */
-    }
-
-    .flex-item {
-        flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
-    }
+.flex-item {
+    flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
+}
 }
 
 
@@ -235,9 +192,7 @@ form {
 }
 
 table{
-    width: 100%;
-    max-width: 600px;
-    margin: 20px auto;
+    width: 90%;
     background-color: #ffffff; 
     border: 1px solid black;
     font-size: smaller; 
@@ -264,7 +219,6 @@ input:read-only{
 .color-checkbox {
     display: none; /* Cacher la case à cocher d'origine */
 }
- 
 .color-label {
     position: relative; /* Ajouté pour positionner le pseudo-élément */
     display: inline-block;
@@ -273,20 +227,18 @@ input:read-only{
     cursor: pointer;
     margin-right: 60px; /* Espacement entre les couleurs */
 }
-
+/*cette partie est validée*/
 .color-checkbox:checked + .color-label::after {
     content: '✔'; /* Utiliser un caractère de crochet */
     position: absolute; /* Positionne le crochet */
     top: 50%; /* Centré verticalement */
     left: 50%; /* Centré horizontalement */
     transform: translate(-50%, -50%); /* Ajustement pour le centrage parfait */
-    font-size: 20px; /* Taille du crochet */
-    color: white; /* Couleur du crochet */
+    font-size: 25px; /* Taille du crochet */
+    color:  #d44687; /* Couleur du crochet */
     z-index: 1; /* Met le crochet au-dessus de la couleur de fond */
 }
 
-
-/* Couleurs personnalisées pour chaque case */
 .brun { background-color: rgb(56, 31, 1); }
 .rouge { background-color: red; }
 .rose { background-color: pink; }
@@ -298,7 +250,8 @@ input:read-only{
 .noir { background-color: black; color: white; }
 .gris { background-color: gray; }
 .blanc { background-color: white; }
-.multi { background-image: url('img/multi2.jpg'); } 
+.multicolore { background-image: url('img/multi2.jpg'); } 
+/*fin de la partie validée*/
 
 #age_group{
     text-align: center;
@@ -321,8 +274,8 @@ input:read-only{
     .flex-item {
         flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
     }
-
 }
+
 .grid-container {
     margin: 10px auto; 
     padding: 10px;
@@ -470,52 +423,38 @@ h1 {
     padding: 0;
 }
 
-/* Styles pour petits écrans */
-@media (max-width: 480px) {
-    form{
-        margin:5px;
-    }
-    /* Modifiez le tableau pour qu'il s'affiche en bloc plutôt que sous forme de tableau */
-    table {
-        display: block;
-        overflow-x: auto; /* Permet le défilement horizontal si nécessaire */
-        width: 100%;
-        border: none; /* Enlevez les bordures externes */
+.grid-container-detail{
+    background-color:#ccc;
+    border-radius: 20px;
+    margin: 2% auto;
+    padding: 5%;
+    max-width: 1200px; 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2%;  
+}
+.grid-item-detail img{
+    border: 1px solid black;
+    max-width: 100%; 
+    height: auto; 
+    border-radius: 15px; 
+}
+
+
+.grid-item-detail {
+    flex: 1 1 calc(50% - 20px); /* Prend 50% de l'espace avec un espacement */
+    box-sizing: border-box; /* Inclure le rembourrage et la bordure dans les dimensions */
+}
+
+/* Pour les petits écrans */
+@media (max-width: 600px) {
+    .grid-container-detail {
+        flex-direction: column; /* Empiler les éléments pour les petits écrans */
     }
     
-    /* Modifiez les lignes du tableau pour avoir un affichage en colonne */
-    tr {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 5%; /* Espacement entre les lignes */
-        border: 1px solid #ccc; /* Bordure sur chaque ligne */
-        padding: 10px; /* Rembourrage interne */
+    /* Si tu souhaites que le texte soit centré par exemple */
+    .grid-item-detail {
+        flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
+        text-align: center; /* Centrage du contenu textuel */
     }
-
-    /* Les cellules prennent toute la largeur disponible */
-    td {
-        display: block;
-        width: 100%;
-        text-align: center; 
-        margin: 2px 0; /* Espacement vertical entre cellules */
-    }
-
-    /* Gardez le style du th similaire mais avec ajustement */
-    th {
-        text-align: center;
-        font-weight: bold; /* Gras pour la visibilité */
-    }
-
-    /* Réduisez la taille de la police si nécessaire */
-    table, th, td {
-        font-size: 13=4px; /* Ajuster la taille de police pour petit écran */
-    }
-    input[type="number"], input[type="text"] {
-        width: 90%; /* Largeur de 90% pour une meilleure visibilité */
-        font-size: 1.2em; /* Augmente la taille de la police pour les inputs */
-    }
-    input::placeholder {
-        opacity: 1; /* Rendre le placeholder visible sur petits écrans */
-    }
-}
 }

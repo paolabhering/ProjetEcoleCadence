@@ -4,7 +4,18 @@ const db = require("./db");
 const app = express();
 const path = require('path');
 
-app.engine('handlebars', engine());
+
+app.engine('handlebars', engine({
+  helpers: {
+      split: function(string, delimiter) {
+          return string.split(delimiter);
+      },
+      eq: function(a, b) {
+          return a === b;
+      }
+  }
+}));
+
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
