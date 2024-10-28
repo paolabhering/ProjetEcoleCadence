@@ -5,6 +5,10 @@ const db = require("./db"); // Import the db client from db.js
 
 router.use(express.urlencoded({ extended: true }));
 
+
+
+
+
 // Route to render the login form
 router.get("/connexion", (req, res) => {
     res.render("connexion"); 
@@ -13,9 +17,7 @@ router.get("/connexion", (req, res) => {
 // Route to handle login
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
-
     try {
-        // Check if the user exists in the database
         const query = "SELECT * FROM users WHERE username = ?";
         const result = await db.execute(query, [username]);
 
@@ -24,19 +26,20 @@ router.post("/login", async (req, res) => {
         }
 
         const user = result.rows[0];
-
-        // Verify the password
         const match = await bcrypt.compare(password, user.password);
 
         if (!match) {
             return res.status(400).send("Nom d'utilisateur ou mot de passe incorrect");
         }
 
-        // Check the role and redirect accordingly
+        // Save the user role in the session
+        req.session.user = { role: user.role };
+        
+        // Redirect based on user role
         if (user.role === "administrateur") {
-            res.redirect("/"); // Redirect to admin page
+            res.redirect("/admin");
         } else if (user.role === "professeur") {
-            res.redirect("/professeur"); // Redirect to professor page
+            res.redirect("/professeur");
         } else {
             res.status(400).send("Role non reconnu");
         }
@@ -46,4 +49,9 @@ router.post("/login", async (req, res) => {
     }
 });
 
+
 module.exports = router;
+
+
+
+
