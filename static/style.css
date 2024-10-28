@@ -53,6 +53,12 @@ ul.navbar-nav {
 .btn-rose {
     background-color: #f0b8c8; 
 }
+
+.btn-dark {
+    background-color: black;
+    color: white;
+}
+
 .btn-rose:hover {
     background-color: #7a7a7a; 
 }
