@@ -45,6 +45,12 @@ ul.navbar-nav {
 .btn-rose {
     background-color: #f0b8c8; 
 }
+
+.btn-dark {
+    background-color: black;
+    color: white;
+}
+
 .btn-rose:hover {
     background-color: #7a7a7a; 
 }
@@ -661,4 +667,4 @@ h3{
         height: auto; /* Garder les proportions */
         pointer-events: none; /* L'image ne doit pas interférer avec les clics */
     }
-}   
+}
