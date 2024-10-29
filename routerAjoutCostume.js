@@ -22,9 +22,6 @@ router.get("/ajout", function (req, res) {
     res.render("ajoutCostume");
 });
 
- router.get("/modif", function (req, res) {    
-    res.render("modifCostume");
- });
 
 router.get("/confirmation", function (req,res) {
     res.render("confirmation")
@@ -75,23 +72,23 @@ router.post("/ajout", upload.single('upload_photo'), async function(req,res) {
         const costumeId = Number(result.lastInsertRowid);
     
         const grandeurs = [
-            { taille: "XXp_enfant", quantite: req.body.XXp_enfant || 0 },
-            { taille: "Xp_enfant", quantite: req.body.Xp_enfant || 0},
-            { taille: "p_enfant", quantite: req.body.p_enfant || 0},
-            { taille: "m_enfant", quantite: req.body.m_enfant || 0},
-            { taille: "g_enfant", quantite: req.body.g_enfant || 0},
-            { taille: "Xg_enfant", quantite: req.body.Xg_enfant || 0},
-            { taille: "XXg_enfant", quantite: req.body.XXg_enfant || 0},
-            { taille: "oneSize_enfant", quantite: req.body.oneSize_enfant || 0},
-            { taille: "XXp_adulte", quantite: req.body.XXp_adulte || 0},
-            { taille: "Xp_adulte", quantite: req.body.Xp_adulte || 0},
-            { taille: "p_adulte", quantite: req.body.p_adulte || 0},
-            { taille: "m_adulte", quantite: req.body.m_adulte || 0 },
-            { taille: "g_adulte", quantite: req.body.g_adulte || 0},
-            { taille: "Xg_adulte", quantite: req.body.Xg_adulte || 0},
-            { taille: "XXg_adulte", quantite: req.body.XXg_adulte || 0},
-            { taille: "oneSize_adulte", quantite: req.body.oneSize_adulte || 0 },
-            { taille: "oneSize", quantite: req.body.oneSize|| 0},         
+            { taille: "XXpetit_enfant", quantite: req.body.XXpetit_enfant || 0 },
+            { taille: "Xpetit_enfant", quantite: req.body.Xpetit_enfant || 0},
+            { taille: "petit_enfant", quantite: req.body.petit_enfant || 0},
+            { taille: "moyen_enfant", quantite: req.body.moyen_enfant || 0},
+            { taille: "grand_enfant", quantite: req.body.grand_enfant || 0},
+            { taille: "Xgrand_enfant", quantite: req.body.Xgrand_enfant || 0},
+            { taille: "XXgrand_enfant", quantite: req.body.XXgrand_enfant || 0},
+            { taille: "sansGrandeur_enfant", quantite: req.body.sansGrandeur_enfant || 0},
+            { taille: "XXpetit_adulte", quantite: req.body.XXpetit_adulte || 0},
+            { taille: "Xpetit_adulte", quantite: req.body.Xpetit_adulte || 0},
+            { taille: "petit_adulte", quantite: req.body.petit_adulte || 0},
+            { taille: "moyen_adulte", quantite: req.body.moyen_adulte || 0 },
+            { taille: "grand_adulte", quantite: req.body.grand_adulte || 0},
+            { taille: "Xgrand_adulte", quantite: req.body.Xgrand_adulte || 0},
+            { taille: "XXgrand_adulte", quantite: req.body.XXgrand_adulte || 0},
+            { taille: "sansGrandeur_adulte", quantite: req.body.sansGrandeur_adulte || 0 },
+            { taille: "sansGrandeur", quantite: req.body.sansGrandeur|| 0},         
         ];
 
         for (const taille of grandeurs) {

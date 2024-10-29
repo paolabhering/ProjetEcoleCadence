@@ -1,6 +1,16 @@
+ {{!-- Formulaire en stand by pour l'instant 
+ Il n'est peut-être pas pertinent
+ Donc je ne met pas plus d'énergie dessus pour l'instantIl n'est pas encore fonctionnel --}}
+
 {{> headerAd}}
 
-<form action="/modif/{{costume.costume_id}}" enctype="multipart/form-data" method="POST" id="modifCostume">
+<form action="/modif2" method="GET" id="searchCostume">
+    <h3>Rechercher un costume par titre</h3>
+    <input type="text" name="titre" required placeholder="Titre du costume">
+    <button type="submit">Rechercher</button>
+</form>
+
+ <form action="/modif2/{{costume.costume_id}}" enctype="multipart/form-data" method="POST" id="modif2Costume"></form>
     <h3>Formulaire de modification ou suppression de costume</h3>
         <div class="flex-container">
                 <div class="flex-item">
@@ -9,13 +19,7 @@
                 </div>
                 <div class="flex-item">
                     <b><label for="category">Catégorie:</label></b><br>
-                        <select name="category" id="category" required>
-                            <option value="">Choisir la catégorie</option>
-                            <option value="Casse-noisette" {{#if (eq costume.category "Casse-noisette")}}selected{{/if}}>Casse-noisette</option>
-                            <option value="Jupe" {{#if (eq costume.category "Jupe")}}selected{{/if}}>Jupe</option>
-                            <option value="Maillot" {{#if (eq costume.category "Maillot")}}selected{{/if}}>Maillot</option>
-                            <option value="Haut de corps" {{#if (eq costume.category "Haut de corps")}}selected{{/if}}>Haut de corps</option>
-                        </select><br>
+                        <input type="text" id="category" name="category" value="{{costume.category}}" required><br><br>
                 </div>
                 <div class="flex-item">
                     <b>Couleur(s):</b><br>
@@ -134,20 +138,10 @@
                     <input type="file" id="upload_photo" name="upload_photo" class="form-control"><br><br>
                 </div>
             <div class="flex-item">
-                <button type="button" class="btn btn_grisFonce" id="buttonSupprimer" onclick="confirmSuppression()">SUPPRIMER LE COSTUME</button>
+                <button type="submit" class="btn btn_grisFonce" id="btnSupprimer" value="delete">SUPPRIMER LE COSTUME</button>
             </div>
             <div class="flex-item">
-               <button type="submit" class="btn btn_roseFonce" id="buttonEngModif" value="save">ENREGISTRER MODIFICATIONS</button>
-            </div>
-            <!-- Modal -->
-            <div id="deleteModal" class="modal">
-                <div class="modal-content">
-                    <span class="close" id="modalClose">&times;</span>
-                    <h2>Confirmation de Suppression</h2>
-                    <p>Êtes-vous certain de vouloir supprimer ce costume définitivement?</p>
-                    <button id="confirmDelete" class="btn btn_roseFonce">Oui, supprimer</button><br>
-                    <button id="cancelDelete" class="btn btn_grisFonce">Non, annuler</button>
-                </div>
+               <button type="submit" class="btn btn_roseFonce" id="btnEngModif" value="save">ENREGISTRER MODIFICATIONS</button>
             </div>
         </div>
 </form>
@@ -168,38 +162,5 @@
     });
 
     calculerQuantiteTotale();
-
-
-    function confirmSuppression() {
-        const modal = document.getElementById("deleteModal");
-        modal.style.display = "block"; // Affiche le modal
-
-        const confirmButton = document.getElementById("confirmDelete");
-        const cancelButton = document.getElementById("cancelDelete");
-        const modalClose = document.getElementById("modalClose");
-
-        confirmButton.onclick = function() {
-            const costume_id = document.querySelector('input[name="costume_id"]').value;
-            document.getElementById('modifCostume').action = `/delete/${costume_id}`;
-            document.getElementById('modifCostume').submit();
-        }
-
-        cancelButton.onclick = function() {
-            modal.style.display = "none"; // Ferme le modal
-        }
-
-        modalClose.onclick = function() {
-            modal.style.display = "none"; // Ferme le modal si l'utilisateur clique sur la croix
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none"; // Ferme le modal si l'utilisateur clique à l'extérieur
-            }
-        }
-    }
-
 </script>
-
-
 

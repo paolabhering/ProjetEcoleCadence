@@ -1,0 +1,71 @@
+{{> headerAd}}
+
+<form action="/filtre" method="POST" id="filtreCatalogue">
+    <h3>Ajouter des filtres</h3>
+        <div class="flex-container">
+                <div class="flex-item">
+                    <b><label for="category">Catégorie:</label></b><br>
+                        <select name="category" id="category">
+                            <option value="">Choisir la catégorie</option>
+                            <option value="Casse-noisette">Casse-noisette</option>
+                            <option value="Jupe">Jupe</option>
+                            <option value="Maillot">Maillot</option>
+                            <option value="Haut de corps">Haut de corps</option>
+                        </select>
+                </div>
+                <div class="flex-item">
+                    <b><label for="quantity">Quantité minimum:</label></b><br>
+                        <b><input type="number" id="quantityMin" name="quantityMin" min="0"></b>
+                </div>
+                <div class="flex-item">
+                    <b><label for="age_group">Catégorie d'âge:</label></b><br>
+                        <select name="age_group" id="age_group">
+                            <option value="">Choisir la catégorie</option>
+                            <option value="enfant">Enfant</option>
+                            <option value="ado">Adolescent</option>
+                            <option value="adulte">Adulte</option>
+                            <option value="N/A">N/A</option>
+                        </select>
+                </div>
+                <div class="flex-item">
+                    <label for="filtreMot" hidden></label><br>
+                        <div class="input-with-placeholder">
+                            <input type="text" id="filtreMot" name="filtreMot" class="input-with-placeholder" placeholder="Filtre par mot clé">
+                            <img class="placeholder-image" src="../static/img/loupeRose.png" alt="Loupe">
+                        </div>
+                </div>
+                <div class="flex-item">
+                    <b>Couleur(s):</b><br><br>
+                        <input type="checkbox" name="couleurs[]" value="brun" id="brun" class="color-checkbox">
+                            <label for="brun" class="color-label brun"></label>
+                        <input type="checkbox" name="couleurs[]" value="rouge" id="rouge" class="color-checkbox">
+                            <label for="rouge" class="color-label rouge"></label>
+                        <input type="checkbox" name="couleurs[]" value="rose" id="rose" class="color-checkbox">
+                            <label for="rose" class="color-label rose"></label>
+                        <input type="checkbox" name="couleurs[]" value="mauve" id="mauve" class="color-checkbox">
+                            <label for="mauve" class="color-label mauve"></label>
+                        <input type="checkbox" name="couleurs[]" value="bleu" id="bleu" class="color-checkbox">
+                            <label for="bleu" class="color-label bleu"></label>
+                        <input type="checkbox" name="couleurs[]" value="vert" id="vert" class="color-checkbox">
+                            <label for="vert" class="color-label vert"></label><br>
+                        <input type="checkbox" name="couleurs[]" value="jaune" id="jaune" class="color-checkbox">
+                            <label for="jaune" class="color-label jaune"></label>
+                        <input type="checkbox" name="couleurs[]" value="orange" id="orange" class="color-checkbox">
+                            <label for="orange" class="color-label orange"></label>
+                        <input type="checkbox" name="couleurs[]" value="noir" id="noir" class="color-checkbox">
+                            <label for="noir" class="color-label noir"></label>
+                        <input type="checkbox" name="couleurs[]" value="gris" id="gris" class="color-checkbox">
+                            <label for="gris" class="color-label gris"></label>
+                        <input type="checkbox" name="couleurs[]" value="blanc" id="blanc" class="color-checkbox">
+                            <label for="blanc" class="color-label blanc"></label>
+                        <input type="checkbox" name="couleurs[]" value="multicolore" id="multicolore" class="color-checkbox">
+                            <label for="multicolore" class="color-label multicolore"></label><br>
+                </div>
+            <div class="flex-item btn">
+               <button type="submit" class="btn" id="buttonFiltre" value="recherche">FILTRER</button>
+            </div>
+</form>
+
+
+
+

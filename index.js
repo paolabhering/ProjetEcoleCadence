@@ -4,26 +4,29 @@ const db = require("./db");
 const app = express();
 const path = require('path');
 
+const exphbs = require('express-handlebars');
 
-app.engine('handlebars', engine({
-  helpers: {
-      split: function(string, delimiter) {
-          return string.split(delimiter);
-      },
-      eq: function(a, b) {
-          return a === b;
-      }
-  }
-}));
+// Ajout de tous les helpers
+const helpers = {
+    includes: function(array, value) {
+        return array.includes(value);
+    },
+    split: function(string, delimiter) {
+        return string.split(delimiter);
+    },
+    eq: function(a, b) {
+        return a === b;
+    }
+};
 
+// Configuration du moteur de rendu Handlebars avec les helpers
+app.engine('handlebars', engine({ helpers }));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use('/static', express.static(path.join(__dirname, 'static')));
-
 app.use(express.urlencoded({extended: true}));
 
-app.use(express.urlencoded({extended: true}));
 
 // pour lier les routers
 const routerAjoutCostume = require("./routerAjoutCostume");
@@ -31,15 +34,18 @@ const routerCostume = require("./routerCostume");
 //const routerAccueil = require("./routerAccueil");
 const routerConnexion = require("./routerConnexion");
 const routerCreerCompte = require("./routerCreerCompte");
+const routerModifCostume = require("./routerModifCostume");
+//const routerModif2Costume = require("./routermodif2Costume"); en standby
+const routerFiltreCatalogue = require("./routerFiltreCatalogue");
 
 //app.use("/", routerAccueil);
 app.use("/", routerConnexion);
 app.use("/", routerCreerCompte);
 app.use("/", routerAjoutCostume);
 app.use("/", routerCostume);
-
-
-
+app.use("/", routerModifCostume);
+//app.use("/", routerModif2Costume); en standby
+app.use("/", routerFiltreCatalogue);
 
 
 app.listen(3001, function() {

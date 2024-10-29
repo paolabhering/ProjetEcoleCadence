@@ -12,14 +12,6 @@
     width: 100%;
     height: auto;
 }
-/* 
-.logoNoir{
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-} */
 
 #barreNavig{
     background-color: #d44687;
@@ -73,12 +65,11 @@ ul.navbar-nav {
     background-color: #7a7a7a;
 }
 
-
-/*Styles pour les placeholders*/
-input::placeholder { 
-opacity: 0; 
-}
-
+/*
+///////////////////////////////////////////////////////////////////////////////////////////////
+/*pas fait cette partie*/
+/*//////////////////////////////////////////////////////////////////////////////////////////////
+*/
  /*Styles pour petits écrans */ 
 @media (max-width: 780px) {
  /*Ajustez le flex-item pour tenir compte de la nouvelle disposition */
@@ -113,7 +104,8 @@ opacity: 0;
     flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
 }
 }
-
+/*//////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 /*reste du document*/
 
@@ -123,35 +115,41 @@ opacity: 0;
     font-family:Verdana, Geneva, Tahoma, sans-serif;     
 }
 .btn_roseFonce:hover{
-    background-color: #7a7a7a;
+    background-color: black;
     color:white;
     font-family:Verdana, Geneva, Tahoma, sans-serif;     
-}
-
-.btn_roseFonce2{
-    background-color: #d44687;
-    color:white;
-    width: 80px;
-    height: 40px; 
-    text-align: center;  
-    font-size: smaller;
-    padding: 5px;
-}
-
-.btn_roseFonce2:hover{
-    background-color: #7a7a7a;
-    color:white;
-    width: 80px;
-    height: 40px; 
-    text-align: center;  
-    font-size: smaller;
-    padding: 5px;  
 }
 
 .btn_grisFonce{background-color: #7a7a7a;
     color:white;
     font-family:Verdana, Geneva, Tahoma, sans-serif;     
 }
+.btn_grisFonce:hover{background-color: black;
+    color:white;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;     
+}
+
+#buttonFiltre{
+    background-color: #d44687;
+    color:white;
+    width: 120px;
+    height: 60px; 
+    text-align: center;  
+    padding: 5px;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: auto;
+}
+
+#buttonFiltre:hover{
+    background-color: #7a7a7a;
+    color:white;
+    width: 120px;
+    height: 60px; 
+    text-align: center;  
+    padding: 5px;
+}
+/*reste du document*/
 
 form {
     background-color: lightgrey;
@@ -163,13 +161,13 @@ form {
     border-radius: 20px;
   }
   input, textarea, select{
-    width: 80%;
+    width: 100%;
     border-radius: 15px;
     border-color: #ffffff;
     text-align: center;
   }
   #upload_photo{
-    width: 80%;
+    width: 100%;
     border-radius: 15px;
     border-color: #ffffff;
   }
@@ -183,35 +181,101 @@ form {
     justify-content: space-between; 
     text-align: left;
     padding: 20px;
+    gap: 30px;
 }
 .flex-item {
-    flex: 1 1 calc(50% - 20px); 
-    margin: 10px;
-    padding: 10px; 
+    flex: 1 1 calc(50% - 30px); 
+    margin: 0px;
+    padding: 20px; 
     box-sizing: border-box; /* Inclure le rembourrage et la bordure dans les dimensions */
 }
 
+.flex-item img{
+    border-radius: 15px;
+    margin: 5%;
+}
+
 table{
-    width: 90%;
+    width: 100%;
+    border-collapse: collapse; /* Éliminer les espaces entre les cellules */
     background-color: #ffffff; 
     border: 1px solid black;
     font-size: smaller; 
     text-align: center; 
 }
-td{
+th, td {
+    padding: 10px; /* Ajoutez un peu d'espace autour du texte */
+    text-align: center; /* Centrer le texte dans les cellules */
     border: 1px solid black;
 }
 th{
     background-color: #7a7a7a;
     border: 1px solid black;
 }
+table ::placeholder{
+    opacity: 0%;
+}
+
 td:nth-child(1){
     background-color: #9a9a9a;
 }
+
+/* Instructions de mise en page pour les petits écrans */
+@media (max-width: 600px) {
+    .flex-container {
+        flex-direction: column; /* Empiler les éléments verticalement */
+        align-items: center; /* Centrer les éléments */
+    }
+  
+    .flex-item {
+        flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
+        margin-bottom: 10px; /* Marge pour la séparation */
+    }
+
+    table {
+        display: block; /* Affichage en bloc sur les écrans mobiles */
+        overflow-x: auto; /* Ajouter un défilement horizontal si nécessaire */
+        -webkit-overflow-scrolling: touch; /* Défilement fluide sur les appareils tactiles */
+    }
+
+    table th {
+        display: none; /* Masquer l'en-tête du tableau */
+    }
+
+    /* Utiliser des divs pour chaque ligne sur les petits écrans */
+    tr {
+        display: flex; /* Utilisation de flexbox */
+        flex-direction: column; /* Chaque ligne s'affiche comme un colonne */
+        border: 1px solid #ccc; /* Ajouter une bordure */
+        margin-bottom: 10px; /* Espacement entre les lignes */
+    }
+    
+    td {
+        display: block; /* Chaque cellule prendra toute la largeur */
+        text-align: left; /* Alignement à gauche pour les cellules */
+        padding: 5px; /* Espacement interne */
+        border: none; /* Supprimer les bordures des cellules */
+    }
+
+    td::before {
+        content: attr(data-label); /* Affiche l'étiquette pour chaque cellule */
+        font-weight: bold; /* Mettre en valeur l'étiquette */
+        display: inline-block; /* L'afficher comme un bloc en ligne */
+    }
+} 
+
 .bte_tableau{
-    width: 50%;
+    width: 100%;
     height: 50%;
 }
+input{
+    width: 100%;
+}
+
+#quantity {
+    width: 50%;
+}
+
 input:read-only{
     background-color: #9a9a9a;
 }
@@ -225,9 +289,9 @@ input:read-only{
     padding: 15px 15px;
     border: 1px solid black;
     cursor: pointer;
-    margin-right: 60px; /* Espacement entre les couleurs */
+    margin-right: 10%; /* Espacement entre les couleurs */
 }
-/*cette partie est validée*/
+
 .color-checkbox:checked + .color-label::after {
     content: '✔'; /* Utiliser un caractère de crochet */
     position: absolute; /* Positionne le crochet */
@@ -251,7 +315,7 @@ input:read-only{
 .gris { background-color: gray; }
 .blanc { background-color: white; }
 .multicolore { background-image: url('img/multi2.jpg'); } 
-/*fin de la partie validée*/
+
 
 #age_group{
     text-align: center;
@@ -410,6 +474,10 @@ h1 {
 /* Media query pour les petits écrans (mobiles) */
 @media (max-width: 480px) {
 
+h3{
+    text-align: center;
+    flex-wrap: wrap;
+}
 .grid-container {
     grid-template-columns: 1fr; 
     padding-left: 10px; 
@@ -431,19 +499,18 @@ h1 {
     max-width: 1200px; 
     display: flex;
     flex-wrap: wrap;
-    gap: 2%;  
+    gap: 8%;  
+    box-sizing: border-box;
 }
-.grid-item-detail img{
-    border: 1px solid black;
-    max-width: 100%; 
-    height: auto; 
-    border-radius: 15px; 
-}
-
 
 .grid-item-detail {
     flex: 1 1 calc(50% - 20px); /* Prend 50% de l'espace avec un espacement */
     box-sizing: border-box; /* Inclure le rembourrage et la bordure dans les dimensions */
+}
+
+.couleur-container{
+    width: 100%;
+    text-align: center;
 }
 
 /* Pour les petits écrans */
@@ -452,9 +519,146 @@ h1 {
         flex-direction: column; /* Empiler les éléments pour les petits écrans */
     }
     
-    /* Si tu souhaites que le texte soit centré par exemple */
     .grid-item-detail {
         flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
-        text-align: center; /* Centrage du contenu textuel */
+        text-align:center; /* Centrage du contenu textuel */
     }
+    .color-checkbox {
+        width: 10%; /* Ajuster la largeur pour 3 colonnes */
+        margin: 5px; /* Marge entre les cases */
+    }
+
+    .color-label {
+        width: 10%;
+        height: 10%; /*Pour donner une hauteur uniforme */
+        display:inline-block;  /*Permettre la disposition horizontal */
+    } 
 }
+
+.modal {
+    display: none; /* Masqué par défaut */
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    max-width: 400px; 
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/* container image page detailsCostume*/
+.image-container {
+    position: relative; 
+}
+
+.image-options {
+    display: flex; 
+    justify-content: space-between;
+    position: absolute; 
+    left: 0; 
+    right: 0; 
+    bottom: 58%; 
+    padding: 0 25px; 
+}
+
+.image-options img {
+    width: 45px; 
+    height: auto; 
+    cursor: pointer; 
+}
+
+.imgCostume{
+    border: 1px solid black;
+    max-width: 100%; 
+    height: auto; 
+    border-radius: 15px; 
+}
+
+#filtreMot {
+    background-color: #f0b8c8;
+    border: 1px solid #d44687;
+    height: 32px;
+}
+
+
+
+.input-with-placeholder {
+    position: relative; /* Positionner relativement pour le positionnement absolu des éléments enfants */
+}
+
+.input-with-placeholder input {
+    padding-left: 40px; /* Ajouter de l’espace à gauche pour l’image */
+    height: 40px; /* Hauteur de la zone de frappe */
+    border: 1px solid #d44687; 
+    border-radius: 15px; /* Coin arrondi */
+}
+
+.placeholder-image {
+    position: absolute;
+    left: 5px; /* Positionnement à gauche */
+    top: 0%; /* Centrer verticalement */
+    transform: translateY(-110%); /* Ajuster pour centrer vraiment l'image */
+    width: 22px; /* Largeur de l'image */
+    height: auto; /* Garder les proportions */
+    pointer-events: none; /* L'image ne doit pas interférer avec les clics */
+}
+
+/* Pour les petits écrans */
+@media (max-width: 1300px) {
+
+    .placeholder-image {
+        position: absolute;
+        left: 5px; /* Positionnement à gauche */
+        top: 10%; /* Centrer verticalement */
+        transform: translateY(-60%); /* Ajuster pour centrer vraiment l'image */
+        width: 22px; /* Largeur de l'image */
+        height: auto; /* Garder les proportions */
+        pointer-events: none; /* L'image ne doit pas interférer avec les clics */
+    }
+}   
+
+/* Pour les petits écrans */
+@media (max-width: 900px) {
+    table ::placeholder{
+        opacity: 100%;
+    }
+    .input-with-placeholder input {
+        font-size:smaller;
+    }
+    .placeholder-image {
+        position: absolute;
+        left: 5px; /* Positionnement à gauche */
+        top: 0%; /* Centrer verticalement */
+        transform: translateY(-15%); /* Ajuster pour centrer vraiment l'image */
+        width: 22px; /* Largeur de l'image */
+        height: auto; /* Garder les proportions */
+        pointer-events: none; /* L'image ne doit pas interférer avec les clics */
+    }
+}   

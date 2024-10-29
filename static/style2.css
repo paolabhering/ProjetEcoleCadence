@@ -1,0 +1,79 @@
+/* CSS pour l'entete */
+
+.entete{
+    width: 100%;
+    height: auto;
+    background-color: white;
+    position: relative;
+  }
+
+.imageEntete {
+    width: 100%;
+    height: auto;
+}
+
+#barreNavig{
+    background-color: #d44687;
+    width: 100%;
+}
+
+ul.navbar-nav {
+    display: flex; 
+    justify-content:space-between;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    list-style: none; 
+}
+.nav-item {
+    margin: 0 65px; /* Espacement horizontal entre les boutons */ 
+    margin-top: -20px;  
+}
+.nav-item:first-child {
+    margin-right: auto;
+}
+
+.btn {
+    border-radius: 15px;
+    padding: 5px 5px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;  
+    cursor: pointer; 
+}
+
+.btn-rose {
+    background-color: #f0b8c8; 
+}
+.btn-rose:hover {
+    background-color: #7a7a7a; 
+}
+.btn-rose:active {
+    background-color: #ffffff;
+}
+
+#navbarScrollingDropdown{
+    background-color: #f0b8c8;
+}
+#navbarScrollingDropdown:hover{
+    background-color: #7a7a7a;
+}
+.dropdown-item{
+    background-color: #f0b8c8;
+}
+.dropdown-item:hover{
+    background-color: #7a7a7a;
+}
+
+
+/*boutons autres que dans l'entête*/
+
+.btn_roseFonce{
+    background-color: #d44687;
+    color:white;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;     
+}
+.btn_roseFonce:hover{
+    background-color: black;
+    color:white;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;     
+}

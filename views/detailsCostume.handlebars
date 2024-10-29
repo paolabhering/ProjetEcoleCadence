@@ -1,8 +1,8 @@
 
 <script>
 
-  function rediriger() {
-    window.location.href = "/modif/:id_costume";
+  function rediriger(costume_id) {
+    window.location.href = `/modif/${costume_id}`;
   }
   
 </script>
@@ -10,14 +10,31 @@
 {{> headerAd}} 
 
 <div class="grid-container-detail">
-    <div class="grid-item-detail">
-      <img src="../static/img/{{costume.image}}" style="width:400px; height:400px"><br>
+    <div class="image-container">
+      <img src="../static/img/{{costume.image}}" style="width:400px; height:400px" class="imgCostume"><br>
+
+      <div class="image-options">
+        <img src="/static/img/plusBlanc.png" alt="plus" id="plusBlanc"> 
+        <img src="/static/img/plusRose.png" alt="plus" id="plusRpse" hidden >
+        <img src="/static/img/coeurBlanc.png" alt="coeur" id="coeurBlanc">  
+        <img src="/static/img/coeurRose.png" alt="coeur" id="coeurRose" hidden>
+      </div>    
+
+      <div class="container-ajoutFavori" hidden>
+        <label for="groupes">Choisir le groupe à mettre pour le favori</label>
+          <select name="groupes" class="select-group">
+            <option value="">Sélectionner</option>
+              {{#each groupe}}
+                <option value="{{groupe.nom}}"></option>
+              {{/each}}
+          </select>
+      </div>
     </div>
 
   <div class="grid-item-detail">
     <h3>{{costume.titre}}</h3><br>
-    <b>Catégorie:  </b>{{costume.category}}<br>
-    <b>Couleur: </b>
+    <b>Catégorie:  </b>{{costume.category}}<br><br>
+    <b>Couleurs: </b><br>
       <div class="couleur-container">
         {{#each (split costume.color ", ")}}
           {{#if (eq this "brun")}}<div class="color-label brun"></div>{{/if}}
@@ -33,7 +50,7 @@
           {{#if (eq this "blanc")}}<div class="color-label blanc"></div>{{/if}}
           {{#if (eq this "multicolore")}}<div class="color-label multicolore"></div>{{/if}}
         {{/each}}
-      </div>
+      </div><br>
     <b>Catégorie d'âge: </b>{{costume.age_group}}<br><br>
     <b>Quantité par grandeur:</b><br>
         <table>
@@ -91,12 +108,12 @@
                 <td>{{quantites.sansGrandeur_adulte}}</td>
                 <td>{{quantites.sansGrandeur}}</td>
             </tr>
-        </table>
-    <b>Quantité totale:  </b>{{costume.quantite_totale}}<br><br>
-    <b>Notes: </b>{{#if costume.notes}}{{costume.notes}}{{else}}N/A{{/if}}  <br>
+        </table><br>
+    <b>Quantité totale:  </b>{{quantiteTotale}}<br><br>
     <b>Localisation: </b>{{#if costume.localisation}}{{costume.localisation}}{{else}}N/A{{/if}}<br>
     <b>Boîte: </b>{{#if costume.boite}}{{costume.boite}}{{else}}N/A{{/if}} <br><br>
-    <button type="button" class="btn btn_roseFonce" onclick=rediriger()>MODIFIER</button>
+    <b>Notes: </b>{{#if costume.notes}}{{costume.notes}}{{else}}N/A{{/if}}  <br><br>
+    <button type="button" class="btn btn_roseFonce" onclick=rediriger({{costume.costume_id}})>MODIFIER</button>
   </div>
 </div>
 
