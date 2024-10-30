@@ -11,10 +11,17 @@
                     <b><label for="category">Catégorie:</label></b><br>
                         <select name="category" id="category" required>
                             <option value="">Choisir la catégorie</option>
+                            <option value="">Choisir la catégorie</option>
+                            <option value="Accessoires" {{#if (eq costume.category "Accessoires")}}selected{{/if}}>Accessoires</option>
+                            <option value="Bas du corps" {{#if (eq costume.category "Bas du corps")}}selected{{/if}}>Bas du corps</option>
                             <option value="Casse-noisette" {{#if (eq costume.category "Casse-noisette")}}selected{{/if}}>Casse-noisette</option>
+                            <option value="Haut de corps" {{#if (eq costume.category "Haut de corps")}}selected{{/if}}>Haut de corps</option>
                             <option value="Jupe" {{#if (eq costume.category "Jupe")}}selected{{/if}}>Jupe</option>
                             <option value="Maillot" {{#if (eq costume.category "Maillot")}}selected{{/if}}>Maillot</option>
-                            <option value="Haut de corps" {{#if (eq costume.category "Haut de corps")}}selected{{/if}}>Haut de corps</option>
+                            <option value="Pieds" {{#if (eq costume.category "Pieds")}}selected{{/if}}>Pieds</option>
+                            <option value="Robe" {{#if (eq costume.category "Robe")}}selected{{/if}}>Robe</option>
+                            <option value="Tête" {{#if (eq costume.category "Tête")}}selected{{/if}}>Tête</option>
+                            <option value="Autre" {{#if (eq costume.category "Autre")}}selected{{/if}}>Autre</option>
                         </select><br>
                 </div>
                 <div class="flex-item">
