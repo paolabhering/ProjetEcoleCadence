@@ -6,13 +6,13 @@ const db = require("./db");
 //const { groupeCostume } = require('./costume');
 
 router.get("/filtre", function (req,res) {
-    console.log("Formulaire de filtre affiché");
+    
     res.render("filtreCatalogue");
  });
 
  router.post("/filtre", async function(req, res) {
-    console.log("Requête de filtre reçue avec : ", req.body);
-    const { category, quantityMin, age_group, filtreMot, couleurs = [] } = req.body;
+    
+    const { category, quantityMin, age_group, filtreMot, color = [] } = req.body;
 
     let query = `SELECT c.*, 
         SUM(g.quantity) AS quantite_totale 
@@ -43,24 +43,30 @@ router.get("/filtre", function (req,res) {
         params.push('%' + filtreMot + '%');
     }
 
-    if (Array.isArray(couleurs) && couleurs.length > 0) {
-        // Vérifier si le costume a au moins toutes les couleurs cochées
-        query += ` AND c.costume_id IN (
-            SELECT costume_id 
-            FROM costumes 
-            WHERE color IN (${couleurs.map(() => "?").join(", ")}) 
-            GROUP BY costume_id 
-            HAVING COUNT(DISTINCT color) >= ?
-        )`;
+    // if (Array.isArray(color) && color.length > 0) {
         
-        params.push(...couleurs);
-        params.push(couleurs.length); // Vérifie que le costume a au moins le nombre de couleurs cochées
+    //     query += ` AND c.costume_id IN (
+    //         SELECT costume_id 
+    //         FROM costumes 
+    //         WHERE color IN (${color.map(() => "?").join(', ')}) 
+    //         GROUP BY costume_id 
+    //         HAVING COUNT(DISTINCT color) >= ?
+    //     )`;
+        
+    //     params.push(...color);
+    //     params.push(color.length); 
+    // }
+    if (Array.isArray(color) && color.length > 0) {
+        let colorConditions = color.map(c => `c.color LIKE ?`).join(' AND ');
+        
+        query += ` AND (${colorConditions})`;
+        params.push(...color.map(c => `%${c}%`));  // Cela recherchera les chaînes contenant les couleurs
+        console.log(colorConditions);
+        console.log(query);
     }
-
+    
     query += " GROUP BY c.costume_id";
-
-    console.log(query)
-
+    
     try {
         const { rows } = await db.execute(query, params);
         res.render("catalogue", { 
@@ -70,10 +76,11 @@ router.get("/filtre", function (req,res) {
                 quantityMin,
                 age_group,
                 filtreMot,
-                couleurs: couleurs.join(', ')
+                color: color.join(', ')
             },
             hasFilters: rows.length > 0
          });
+         console.log("SQL Params:", params);
     } catch (error) {
         console.error(error);
         res.status(500).send("Erreur interne du serveur");
