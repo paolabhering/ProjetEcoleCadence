@@ -2,9 +2,6 @@ const express = require("express");
 const router = express.Router();
 const db = require("./db");
 
-//pour importer la liste des costumes du fichier costume
-//const { groupeCostume } = require('./costume');
-
 router.get("/filtre", function (req,res) {
     
     res.render("filtreCatalogue");
@@ -22,7 +19,6 @@ router.get("/filtre", function (req,res) {
 
     let params = [];
 
-    // Validation de quantityMin
     if (quantityMin && !isNaN(quantityMin)) {
         query += " AND g.quantity >= ?";
         params.push(quantityMin);
@@ -43,24 +39,11 @@ router.get("/filtre", function (req,res) {
         params.push('%' + filtreMot + '%');
     }
 
-    // if (Array.isArray(color) && color.length > 0) {
-        
-    //     query += ` AND c.costume_id IN (
-    //         SELECT costume_id 
-    //         FROM costumes 
-    //         WHERE color IN (${color.map(() => "?").join(', ')}) 
-    //         GROUP BY costume_id 
-    //         HAVING COUNT(DISTINCT color) >= ?
-    //     )`;
-        
-    //     params.push(...color);
-    //     params.push(color.length); 
-    // }
     if (Array.isArray(color) && color.length > 0) {
         let colorConditions = color.map(c => `c.color LIKE ?`).join(' AND ');
         
         query += ` AND (${colorConditions})`;
-        params.push(...color.map(c => `%${c}%`));  // Cela recherchera les chaînes contenant les couleurs
+        params.push(...color.map(c => `%${c}%`));
         console.log(colorConditions);
         console.log(query);
     }
