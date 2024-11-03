@@ -42,9 +42,11 @@
 
  <script>
     const user_id = {{{userId}}};
+    const likedCostumeIds = {{{json likedCostumeIds}}};
+
     document.querySelectorAll('.grid-item').forEach(item => {
     
-        const costume_id = item.getAttribute('data-costume-id');
+        const costume_id = Number(item.getAttribute('data-costume-id'));
         
         item.addEventListener('mouseenter', () => {
             item.querySelector('.info-container').style.display = 'block';
@@ -71,15 +73,15 @@
 
         const coeurBlanc = item.querySelector('.coeurB');
         const coeurRose = item.querySelector('.coeurR');
-
+        
          // Vérifiez si le costume est aimé
-       /* if (likedCostumeIds.includes(parseInt(costume_id))) {
+        if (likedCostumeIds.includes(parseInt(costume_id))) {
             coeurBlanc.hidden = true;  
             coeurRose.hidden = false;   
         } else {
             coeurBlanc.hidden = false;  
             coeurRose.hidden = true;     
-        }*/
+        }
 
         coeurBlanc.addEventListener('click', () => {
             coeurBlanc.hidden = true;
@@ -99,6 +101,7 @@
             .then(data => {
                 console.log(data.message);
                 likedCostumeIds.push(costume_id);
+                console.log("bob");
             })
             .catch((error) => {
                 console.error('Erreur:', error);
@@ -122,6 +125,7 @@
             .then(data => {
                 console.log(data.message);
                 likedCostumeIds = likedCostumeIds.filter(id => id !== costume_id);
+                console.log("bob2");
             })
             .catch((error) => {
                 console.error('erreur:', error);
