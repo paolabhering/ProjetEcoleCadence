@@ -14,10 +14,10 @@
       <img src="../static/img/{{costume.image}}" style="width:400px; height:400px" class="imgCostume"><br>
 
       <div class="image-options">
-        <img src="/static/img/plusBlanc.png" alt="plus" id="plusBlanc"> 
-        <img src="/static/img/plusRose.png" alt="plus" id="plusRpse" hidden >
-        <img src="/static/img/coeurBlanc.png" alt="coeur" id="coeurBlanc">  
-        <img src="/static/img/coeurRose.png" alt="coeur" id="coeurRose" hidden>
+        <img src="/static/img/plusBlanc.png" alt="plus" class="plusB"> 
+        <img src="/static/img/plusRose.png" alt="plus" class="plusR" hidden >
+        <img src="/static/img/coeurBlanc.png" alt="coeur" class="coeurB">  
+        <img src="/static/img/coeurRose.png" alt="coeur" class="coeurR" hidden>
       </div>    
 
       <div class="container-ajoutFavori" hidden>
@@ -53,7 +53,7 @@
       </div><br>
     <b>Catégorie d'âge: </b>{{costume.age_group}}<br><br>
     <b>Quantité par grandeur:</b><br>
-        <table>
+        <table id="tableDetail">
             <tr>
                 <th></th>
                 <th>Enfant</th>
@@ -61,52 +61,52 @@
                 <th>N/A</th>
             </tr>
             <tr>
-                <td>XX-petit</td>
-                <td>{{quantites.XXpetit_enfant}}</td>
-                <td>{{quantites.XXpetit_adulte}}</td>
-                <td></td>
+                <td data-label="Grandeur">XX-petit</td>
+                <td data-label="Enfant">{{quantites.XXpetit_enfant}}</td>
+                <td data-label="Adulte">{{quantites.XXpetit_adulte}}</td>
+                <td data-label="N/A"></td>
             </tr>
             <tr>
-                <td>X-petit</td>
-                <td>{{quantites.Xpetit_enfant}}</td>
-                <td>{{quantites.Xpetit_adulte}}</td>
-                <td></td>
+                <td data-label="Grandeur">X-petit</td>
+                <td data-label="Enfant">{{quantites.Xpetit_enfant}}</td>
+                <td data-label="Adulte">{{quantites.Xpetit_adulte}}</td>
+                <td data-label="N/A"></td>
             </tr>
             <tr>
-                <td>Petit</td>
-                <td>{{quantites.petit_enfant}}</td>
-                <td>{{quantites.petit_adulte}}</td>
-                <td></td>
+                <td data-label="Grandeur">Petit</td>
+                <td data-label="Enfant">{{quantites.petit_enfant}}</td>
+                <td data-label="Adulte">{{quantites.petit_adulte}}</td>
+                <td data-label="N/A"></td>
             </tr>
             <tr>
-                <td>Moyen</td>
-                <td>{{quantites.moyen_enfant}}</td>
-                <td>{{quantites.moyen_adulte}}</td>
-                <td></td>
+                <td data-label="Grandeur">Moyen</td>
+                <td data-label="Enfant">{{quantites.moyen_enfant}}</td>
+                <td data-label="Adulte">{{quantites.moyen_adulte}}</td>
+                <td data-label="N/A"></td>
             </tr>
             <tr>
-                <td>Grand</td>
-                <td>{{quantites.grand_enfant}}</td>
-                <td>{{quantites.grand_adulte}}</td>
-                <td></td>
+                <td data-label="Grandeur">Grand</td>
+                <td data-label="Enfant">{{quantites.grand_enfant}}</td>
+                <td data-label="Adulte">{{quantites.grand_adulte}}</td>
+                <td data-label="N/A"></td>
             </tr>
             <tr>
-                <td>X-grand</td>
-                <td>{{quantites.Xgrand_enfant}}</td>
-                <td>{{quantites.Xgrand_adulte}}</td>
-                <td></td>
+                <td data-label="Grandeur">X-grand</td>
+                <td data-label="Enfant">{{quantites.Xgrand_enfant}}</td>
+                <td data-label="Adulte">{{quantites.Xgrand_adulte}}</td>
+                <td data-label="N/A"></td>
             </tr>
             <tr>
-                <td>XX-grand</td>
-                <td>{{quantites.XXgrand_enfant}}</td>
-                <td>{{quantites.XXgrand_adulte}}</td>
-                <td></td>
+                <td data-label="Grandeur">XX-grand</td>
+                <td data-label="Enfant">{{quantites.XXgrand_enfant}}</td>
+                <td data-label="Adulte">{{quantites.XXgrand_adulte}}</td>
+                <td data-label="N/A"></td>
             </tr>
             <tr>
-                <td>Sans grandeur</td>
-                <td>{{quantites.sansGrandeur_enfant}}</td>
-                <td>{{quantites.sansGrandeur_adulte}}</td>
-                <td>{{quantites.sansGrandeur}}</td>
+                <td data-label="Grandeur">Sans grandeur</td>
+                <td data-label="Enfant">{{quantites.sansGrandeur_enfant}}</td>
+                <td data-label="Adulte">{{quantites.sansGrandeur_adulte}}</td>
+                <td data-label="N/A">{{quantites.sansGrandeur}}</td>
             </tr>
         </table><br>
     <b>Quantité totale:  </b>{{quantiteTotale}}<br><br>

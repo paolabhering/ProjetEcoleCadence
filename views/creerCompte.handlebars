@@ -1,150 +1,52 @@
 {{> headerAd}}
 
-<div class="form-container">
+<form action="/add-user" method="POST" class="connexion-form">
     <h2>Formulaire d'ajout d'utilisateur</h2>
-    <form action="/add-user" method="POST" class="connexion-form">
-        <div class="form-group">
-            <label for="username">Nom :</label>
+    <div class="flex-container">
+        <div class="flex-item">
+            <label for="username"><b>Nom :</b></label>
             <input type="text" id="username" name="username" placeholder="Entrez le nom d'utilisateur" required>
         </div>
-        <div class="form-group">
-            <label for="email">Email :</label>
+        <div class="flex-item">
+            <label for="email"><b>Email :</b></label>
             <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
         </div>
-        <div class="form-group">
-            <label for="password">Mot de passe :</label>
+        <div class="flex-item colonneCache"></div>
+        <div class="flex-item">
+            <label for="password"><b>Mot de passe :</b></label>
             <input type="password" id="password" name="password" placeholder="Entrez le mot de passe" required>
         </div>
-         <div class="form-group">
-            <label for="groups">Groupe(s) :</label>
+         <div class="flex-item full-width">
+            <label for="groups"><b>Groupe(s) :</b></label>
             <div class="group-inputs">
                 <input type="text" id="groupName" name="groupName" placeholder="Entrez le nom du groupe" required>
+                <div id="groupFieldsContainer"></div>
+                <div class="button-container">
+                    <button type="button" class="add-group" onclick="addGroupField()">+</button>
+                </div>
             </div>
         </div>
-        <button type="button" class="add-group" onclick="addGroupField()">+</button>
-        <div class="form-group">
-            <label>Rôle :</label>
+        <div class="flex-item full-width">
+            <label for="role"><b>Rôle :</b></label>
             <div class="radio-group">
-                <label for="admin">
-                    <input type="radio" id="admin" name="role" value="administrateur" required> 
-                    <span>Administrateur</span>
-                </label>
-                <label for="professeur">
-                    <input type="radio" id="professeur" name="role" value="professeur" required>
-                    <span>Professeur</span>
-                </label>
+                    <input type="radio" id="admin" name="role" value="administrateur" required><b>Administrateur</b>
+                    <input type="radio" id="professeur" name="role" value="professeur" required><b>Professeur</b>
             </div>
         </div>
-        <div class="form-group">
-            <label>Langue :</label>
+        <div class="flex-item full-width">
+            <label for="language"><b>Langue :</b></label>
             <div class="radio-group">
-                <label for="french">
-                    <input type="radio" id="french" name="language" value="fr" required> 
-                    <span>Français</span>
-                </label>
-                <label for="english">
-                    <input type="radio" id="english" name="language" value="en" required>
-                    <span>Anglais</span>
-                </label>
+                    <input type="radio" id="french" name="language" value="fr" required><b>Français</b>
+                    <input type="radio" id="english" name="language" value="en" required><b>Anglais</b>
             </div>
         </div>
-        <button type="submit" class="btn btn-rose">Enregistrer</button>
+        <div class="flex-item full-width">
+            <button type="submit" class="btn btn_roseFonce" id="boutonCompte">Enregistrer</button>
+        </div>
+        
     </form>
 </div>
 
-<style>
-    /* Your existing styles */
-</style>
-
-<script>
-    function addGroupField() {
-        const groupInputsContainer = document.querySelector('.group-inputs');
-        const newGroupInput = document.createElement('input');
-        newGroupInput.type = 'text';
-        newGroupInput.placeholder = 'Entrez le nom du groupe';
-        newGroupInput.name = 'groups'; // Keep this name consistent for all group inputs
-        newGroupInput.required = true;
-
-        // Add the new input below the existing group input
-        groupInputsContainer.appendChild(newGroupInput);
-    }
-</script>
-
-
-<style>
-    h2 {
-        text-align: center;
-    }
-
-    .form-container {
-        background-color: lightgrey;
-        margin: 20px auto;
-        padding: 30px; /* Vous pouvez ajuster cette valeur */
-        width: 40%; /* Ajustez la largeur selon vos besoins */
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-group {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .form-group label {
-        flex: 0 0 150px; /* Largeur du label */
-        text-align: left; /* Alignement à gauche */
-        margin-right: 10px;
-    }
-
-    .form-group input[type="text"],
-    .form-group input[type="email"],
-    .form-group input[type="password"] {
-        flex: 1; /* Prendre tout l'espace disponible */
-        padding: 10px; /* Ajoutez du padding pour le champ de texte */
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        font-size: 16px;
-    }
-
-    .group-inputs {
-        display: flex;
-        flex-direction: column; /* Change to column layout for new group fields */
-        flex: 1; /* Prendre tout l'espace disponible */
-    }
-
-    .add-group {
-        margin-top: 10px; /* Space above the button */
-        background-color: #d44687;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        padding: 5px 10px;
-        font-size: 16px;
-    }
-
-    .radio-group {
-        display: flex;
-        gap: 15px; /* Espacement entre les boutons radio */
-        align-items: center;
-        margin-left: 10px; /* Alignement avec le champ précédent */
-    }
-
-    .btn {
-        display: block;
-        margin: 0 auto; /* Centrer le bouton */
-        border-radius: 20px;
-        padding: 10px 20px;
-        background-color: #d44687;
-        cursor: pointer;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-    }
-
-    .btn:hover {
-        background-color: #7a7a7a;
-        color: white;
-    }
-</style>
 
 <script>
     function addGroupField() {
@@ -155,7 +57,8 @@
         newGroupInput.name = 'groups';
         newGroupInput.required = true;
 
-        // Add the new input below the existing group input
-        groupInputsContainer.appendChild(newGroupInput);
+        
+    // Ajouter le nouvel input en premier dans le conteneur
+    groupFieldsContainer.insertBefore(newGroupInput, groupFieldsContainer.firstChild); // Ajoute en haut du conteneur
     }
 </script>

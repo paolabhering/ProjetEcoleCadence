@@ -33,7 +33,7 @@ router.post("/login", async (req, res) => {
         }
 
         // Save the user role in the session
-        req.session.user = { role: user.role };
+        req.session.user = { user_id: user.user_id, role: user.role }; //J'ai ajouté id:user.user_id ici pour pouvoir le récupérer
         
         // Redirect based on user role
         if (user.role === "administrateur") {

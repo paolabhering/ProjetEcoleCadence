@@ -1,5 +1,11 @@
-
+/*//////////////////////////////////////////////////////////*/
 /* CSS pour l'entete */
+/*//////////////////////////////////////////////////////////*/
+
+h1 {
+    font-family: 'Verdana', 'Geneva', 'Tahoma', sans-serif;
+    color: #333;
+}
 
 .entete{
     width: 100%;
@@ -11,6 +17,15 @@
 .imageEntete {
     width: 100%;
     height: auto;
+}
+
+.container-fluid {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the content horizontally */
+    justify-content: center; /* Centers the content vertically */
+    text-align: center;
+    margin-top: 20px; /* Adjust as needed for spacing below the header */
 }
 
 #barreNavig{
@@ -28,12 +43,12 @@ ul.navbar-nav {
     list-style: none; 
 }
 .nav-item {
-    margin: 0 65px; /* Espacement horizontal entre les boutons */ 
+    margin: 0 75px; /* Espacement horizontal entre les boutons */ 
     margin-top: -20px;  
 }
-.nav-item:first-child {
+/* .nav-item:first-child {
     margin-right: auto;
-}
+} */
 
 .btn {
     border-radius: 15px;
@@ -71,49 +86,10 @@ ul.navbar-nav {
     background-color: #7a7a7a;
 }
 
-/*
-///////////////////////////////////////////////////////////////////////////////////////////////
-/*pas fait cette partie*/
-/*//////////////////////////////////////////////////////////////////////////////////////////////
-*/
- /*Styles pour petits écrans */ 
-@media (max-width: 780px) {
- /*Ajustez le flex-item pour tenir compte de la nouvelle disposition */
- .entete { 
- display: flex; 
- flex-direction: column; /* Empile les éléments verticalement */ 
- align-items: center; /* Centrage horizontal*/ 
-}
- .logoNoir {
-    margin-bottom: 0px; 
-    width: 100px; 
-    height: auto;
-} 
 
-.nav-item:first-child {
-    margin-left: 5px;
-    margin-top: 5px;
-}
-.nav-item {
-    margin: 5px 40%;  /* Espacement vertical entre les boutons */
-}
-
-
-/* Assurez-vous que le conteneur de navigation utilise le flex-direction en colonne */
-#n_bar {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centrer les éléments de navigation */
-}
-
-.flex-item {
-    flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
-}
-}
-/*//////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////*/
-
-/*reste du document*/
+/*//////////////////////////////////////////////////////////*/
+/*reste du document: général*/
+/*//////////////////////////////////////////////////////////*/
 
 .btn_roseFonce{
     background-color: #d44687;
@@ -155,309 +131,40 @@ ul.navbar-nav {
     text-align: center;  
     padding: 5px;
 }
-/*reste du document*/
+
+.button-container {
+    text-align: center; 
+    margin-top: 15px; 
+}
+#boutonCompte {
+    text-align: center; 
+}
+
 
 form {
     background-color: lightgrey;
     margin-top: 20px;
-    margin-left: 80px;
-    margin-right: 80px;
-    padding: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 2%;
     text-align: center;
     border-radius: 20px;
-  }
-  input, textarea, select{
+}
+
+input, textarea, select{
     width: 100%;
     border-radius: 15px;
     border-color: #ffffff;
     text-align: center;
-  }
-  #upload_photo{
-    width: 100%;
-    border-radius: 15px;
-    border-color: #ffffff;
-  }
-  #quantity{
-    width: 20%;
-  }
-
-  .flex-container {
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: space-between; 
-    text-align: left;
-    padding: 20px;
-    gap: 30px;
 }
-.flex-item {
-    flex: 1 1 calc(50% - 30px); 
-    margin: 0px;
-    padding: 20px; 
-    box-sizing: border-box; /* Inclure le rembourrage et la bordure dans les dimensions */
-}
-
-.flex-item img{
-    border-radius: 15px;
-    margin: 5%;
-}
-
-table{
-    width: 100%;
-    border-collapse: collapse; /* Éliminer les espaces entre les cellules */
-    background-color: #ffffff; 
-    border: 1px solid black;
-    font-size: smaller; 
-    text-align: center; 
-}
-th, td {
-    padding: 10px; /* Ajoutez un peu d'espace autour du texte */
-    text-align: center; /* Centrer le texte dans les cellules */
-    border: 1px solid black;
-}
-th{
-    background-color: #7a7a7a;
-    border: 1px solid black;
-}
-table ::placeholder{
-    opacity: 0%;
-}
-
-td:nth-child(1){
-    background-color: #9a9a9a;
-}
-
-/* Instructions de mise en page pour les petits écrans */
-@media (max-width: 600px) {
-    .flex-container {
-        flex-direction: column; /* Empiler les éléments verticalement */
-        align-items: center; /* Centrer les éléments */
-    }
   
-    .flex-item {
-        flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
-        margin-bottom: 10px; /* Marge pour la séparation */
-    }
-
-    table {
-        display: block; /* Affichage en bloc sur les écrans mobiles */
-        overflow-x: auto; /* Ajouter un défilement horizontal si nécessaire */
-        -webkit-overflow-scrolling: touch; /* Défilement fluide sur les appareils tactiles */
-    }
-
-    table th {
-        display: none; /* Masquer l'en-tête du tableau */
-    }
-
-    /* Utiliser des divs pour chaque ligne sur les petits écrans */
-    tr {
-        display: flex; /* Utilisation de flexbox */
-        flex-direction: column; /* Chaque ligne s'affiche comme un colonne */
-        border: 1px solid #ccc; /* Ajouter une bordure */
-        margin-bottom: 10px; /* Espacement entre les lignes */
-    }
-    
-    td {
-        display: block; /* Chaque cellule prendra toute la largeur */
-        text-align: left; /* Alignement à gauche pour les cellules */
-        padding: 5px; /* Espacement interne */
-        border: none; /* Supprimer les bordures des cellules */
-    }
-
-    td::before {
-        content: attr(data-label); /* Affiche l'étiquette pour chaque cellule */
-        font-weight: bold; /* Mettre en valeur l'étiquette */
-        display: inline-block; /* L'afficher comme un bloc en ligne */
-    }
-} 
-
-.bte_tableau{
-    width: 100%;
-    height: 50%;
-}
-input{
-    width: 100%;
-}
-
-#quantity {
-    width: 50%;
-}
-
 input:read-only{
     background-color: #9a9a9a;
 }
 
-.color-checkbox {
-    display: none; /* Cacher la case à cocher d'origine */
-}
-.color-label {
-    position: relative; /* Ajouté pour positionner le pseudo-élément */
-    display: inline-block;
-    padding: 15px 15px;
-    border: 1px solid black;
-    cursor: pointer;
-    margin-right: 10%; /* Espacement entre les couleurs */
-}
-
-.color-checkbox:checked + .color-label::after {
-    content: '✔'; /* Utiliser un caractère de crochet */
-    position: absolute; /* Positionne le crochet */
-    top: 50%; /* Centré verticalement */
-    left: 50%; /* Centré horizontalement */
-    transform: translate(-50%, -50%); /* Ajustement pour le centrage parfait */
-    font-size: 25px; /* Taille du crochet */
-    color:  #d44687; /* Couleur du crochet */
-    z-index: 1; /* Met le crochet au-dessus de la couleur de fond */
-}
-
-.brun { background-color: rgb(56, 31, 1); }
-.rouge { background-color: red; }
-.rose { background-color: pink; }
-.mauve { background-color: purple; }
-.bleu { background-color: blue; }
-.vert { background-color: green; }
-.jaune { background-color: yellow; }
-.orange { background-color: orange; }
-.noir { background-color: black; color: white; }
-.gris { background-color: gray; }
-.blanc { background-color: white; }
-.multicolore { background-image: url('img/multi2.jpg'); } 
-
-
-#age_group{
-    text-align: center;
-}
-
-@media (max-width: 480px) {
-      /* Instructions pour petits écrans */
-    .nav-item {
-        margin: 0 5px; 
-        flex-basis: 100%;
-    }
-    .imageEntete{
-        height: auto;
-    }
-    .logoNoir{
-        width: 100px;
-        height: auto;
-    }
-
-    .flex-item {
-        flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
-    }
-}
-
-.grid-container {
-    margin: 10px auto; 
-    padding: 10px;
-    max-width: 1600px; 
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-    gap: 20px; 
-    justify-items:center;
-}
-.grid-item {
-    position: relative; 
-}
-
-.grid-item img{
-    border: 1px solid black;
-    width: 100%; 
-    height: auto; 
-    border-radius: 15px; 
-    margin: 0;
-    position:relative;
-}
-
-.grid-item:hover .info-container{
-    display:block;
-}
-
-.imageCatalogue:hover{
-    opacity: 0.5;
-}
-
-#plusB{
-    position: relative;
-    width: 50px;
-    height: auto;
-    margin-top: -120px;
-    margin-right: 65%;
-    border: none;
-}
-#plusR{
-    position: relative;
-    width: 50px;
-    height: auto;
-    margin-top: -120px;
-    margin-right:65%;
-    border: none;
-}
-#coeurB{
-    position: relative;
-    width: 50px;
-    height: auto;
-    margin-top: -165px;
-    margin-left: 65%;
-    border: none;
-}
-#coeurR{
-    position: relative;
-    width: 50px;
-    height: auto;
-    margin-top: -165px;
-    margin-left: 65%;
-    border: none;
-}
-
-
-.container-confirmation {
-    background-color: lightgrey;
-    margin: 20px auto; 
-    padding: 20px;
-    border-radius: 20px;
-    max-width: 400px; 
-    display: grid;
-    justify-items: center;
-}
-
-.info-container {
-    background-color: #f0b8c8;
-    border: 1px solid black;
-    border-radius: 15px;
-    display: none; /* Cacher par défaut */
-    position: absolute; /* Positionner par rapport au conteneur */
-    top: 40%;
-    left: 50%;
-    transform: translate(-40%, -50%);
-    padding: 20px;
-    text-align: center;
-}
-.container-ajoutFavori{   
-    position: relative;
-    background-color: #f0b8c8;
-    width: 100%;
-    height: auto;
-    border-radius: 15px;
-    padding: 10px;
-    text-align: center;
-    margin-top: -50px;
-}
-
-.container-fluid {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers the content horizontally */
-    justify-content: center; /* Centers the content vertically */
-    text-align: center;
-    margin-top: 20px; /* Adjust as needed for spacing below the header */
-}
-
-
-h1 {
-    font-family: 'Verdana', 'Geneva', 'Tahoma', sans-serif;
-    color: #333;
-}
-
+/*//////////////////////////////////////////////////////////*/
+/* pour le formulaire de connexion*/
+/*//////////////////////////////////////////////////////////*/
 
 .form-group {
     margin-bottom: 15px;
@@ -476,70 +183,47 @@ h1 {
     font-size: 16px;
 }
 
+/*//////////////////////////////////////////////////////////*/
+/* pour le formulaire créer compte*/
+/*//////////////////////////////////////////////////////////*/
 
-/* Media query pour les petits écrans (mobiles) */
-@media (max-width: 480px) {
-
-h3{
+.radio-group {
+    display:inline-flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    flex-wrap: wrap;
-}
-.grid-container {
-    grid-template-columns: 1fr; 
-    padding-left: 10px; 
-    padding-right: 10px; 
-}
+    margin: 10px 0; /* Ajoutez une marge pour l'espacement */
 }
 
-#preferenceCostume{
-    background-color: transparent;
-    margin: 0;
-    padding: 0;
+.radio-group input {
+    margin-left: 50px;  
 }
 
-.grid-container-detail{
-    background-color:#ccc;
-    border-radius: 20px;
-    margin: 2% auto;
-    padding: 5%;
-    max-width: 1200px; 
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8%;  
-    box-sizing: border-box;
+.radio-group b {
+    margin-left: 10px;
 }
 
-.grid-item-detail {
-    flex: 1 1 calc(50% - 20px); /* Prend 50% de l'espace avec un espacement */
-    box-sizing: border-box; /* Inclure le rembourrage et la bordure dans les dimensions */
-}
+/*//////////////////////////////////////////////////////////*/
+/* pour formulaires ajout et modif costume*/
+/*//////////////////////////////////////////////////////////*/
 
-.couleur-container{
+  #upload_photo{
     width: 100%;
-    text-align: center;
+    border-radius: 15px;
+    border-color: #ffffff;
+  }
+  #quantity{
+    width: 50%;
+  }
+  
+.bte_tableau{
+    width: 100%;
+    height: 50%;
 }
 
-/* Pour les petits écrans */
-@media (max-width: 600px) {
-    .grid-container-detail {
-        flex-direction: column; /* Empiler les éléments pour les petits écrans */
-    }
-    
-    .grid-item-detail {
-        flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
-        text-align:center; /* Centrage du contenu textuel */
-    }
-    .color-checkbox {
-        width: 10%; /* Ajuster la largeur pour 3 colonnes */
-        margin: 5px; /* Marge entre les cases */
-    }
-
-    .color-label {
-        width: 10%;
-        height: 10%; /*Pour donner une hauteur uniforme */
-        display:inline-block;  /*Permettre la disposition horizontal */
-    } 
-}
+/*//////////////////////////////////////////////////////////*/
+/*pour la page modif costume: confirmation pour suppression*/
+/*//////////////////////////////////////////////////////////*/
 
 .modal {
     display: none; /* Masqué par défaut */
@@ -578,13 +262,220 @@ h3{
     cursor: pointer;
 }
 
+/*//////////////////////////////////////////////////////////*/
+  /*pour plusieurs formulaires*/
+/*//////////////////////////////////////////////////////////*/
 
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+    text-align: left;
+    padding: 2%;
+    gap: 2%;
+}
+.flex-item {
+    flex: 1 1 calc(50% - 20px); 
+    margin: 0px;
+    padding: 2%; 
+    box-sizing: border-box; /* Inclure le rembourrage et la bordure dans les dimensions */
+}
+.flex-item.full-width {
+    margin-left: 15%;
+    margin-right: 15%;
+    flex: 1 1 100%; /* Fait en sorte que cet élément prenne la pleine largeur */
+    display:flexbox;
+    flex-direction: column; /* Organise les enfants verticalement */
+    align-items: center;
+    text-align: center;
+}
+
+.flex-item img{
+    border-radius: 15px;
+    margin: 5%;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse; /* Éliminer les espaces entre les cellules */
+    background-color: #ffffff; 
+    border: 1px solid black;
+    font-size: smaller; 
+    text-align: center; 
+}
+th, td {
+    padding: 10px; /* Ajoutez un peu d'espace autour du texte */
+    text-align: center; /* Centrer le texte dans les cellules */
+    border: 1px solid black;
+}
+th{
+    background-color: #7a7a7a;
+    border: 1px solid black;
+}
+table ::placeholder{
+    opacity: 0%;
+}
+
+td:nth-child(1){
+    background-color: #9a9a9a;
+}
+
+
+.color-checkbox {
+    display: none; /* Cacher la case à cocher d'origine */
+}
+.color-label {
+    position: relative; /* Ajouté pour positionner le pseudo-élément */
+    display: inline-block;
+    padding: 15px 15px;
+    border: 1px solid black;
+    cursor: pointer;
+    margin-right: 10%; /* Espacement entre les couleurs */
+}
+
+.color-checkbox:checked + .color-label::after {
+    content: '✔'; /* Utiliser un caractère de crochet */
+    position: absolute; /* Positionne le crochet */
+    top: 50%; /* Centré verticalement */
+    left: 50%; /* Centré horizontalement */
+    transform: translate(-50%, -50%); /* Ajustement pour le centrage parfait */
+    font-size: 25px; /* Taille du crochet */
+    color:  #d44687; /* Couleur du crochet */
+    z-index: 1; /* Met le crochet au-dessus de la couleur de fond */
+}
+
+.brun { background-color: rgb(56, 31, 1); }
+.rouge { background-color: red; }
+.rose { background-color: pink; }
+.mauve { background-color: purple; }
+.bleu { background-color: blue; }
+.vert { background-color: green; }
+.jaune { background-color: yellow; }
+.orange { background-color: orange; }
+.noir { background-color: black; color: white; }
+.gris { background-color: gray; }
+.blanc { background-color: white; }
+.multicolore { background-image: url('img/multi2.jpg'); } 
+
+/*//////////////////////////////////////////////////////////*/
+/* pour page catalogue*/
+/*//////////////////////////////////////////////////////////*/
+
+.grid-container {
+    margin: 10px auto; 
+    padding: 10px;
+    max-width: 1600px; 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 20px; 
+    justify-items:center;
+}
+.grid-item {
+    position: relative; 
+}
+
+.imageCatalogue{
+    border: 1px solid black;
+    width: 100%; 
+    height: auto; 
+    border-radius: 15px; 
+    margin: 0;
+    position:relative;
+}
+
+.grid-item:hover .info-container{
+    display:block;
+}
+
+.imageCatalogue:hover{
+    opacity: 0.5;
+}
+
+
+.plusB {
+    position: absolute; 
+    width: 50px; 
+    height: auto; 
+    cursor: pointer; 
+    top: 140px; 
+    left: 50px; 
+}
+
+.plusR {
+    position: absolute; 
+    width: 50px; 
+    height: auto; 
+    cursor: pointer; 
+    top: 140px; 
+    left: 50px; 
+}
+
+
+.coeurB {
+    position: absolute; 
+    width: 50px; 
+    height: auto; 
+    cursor: pointer; 
+    top: 140px; 
+    right: 25px; 
+}
+.coeurR {
+    position: absolute; 
+    width: 50px; 
+    height: auto; 
+    cursor: pointer; 
+    top: 140px; 
+    right: 25px; 
+}
+
+.info-container {
+    background-color: #f0b8c8;
+    color: black;
+    border: 1px solid black;
+    border-radius: 15px;
+    display: none; /* Cacher par défaut */
+    position: absolute; /* Positionner par rapport au conteneur */
+    top: 40%;
+    left: 45%;
+    transform: translate(-40%, -45%);
+    padding: 20px;
+    text-align: center;
+    cursor: pointer; 
+}
+.container-ajoutFavori{   
+    position: relative;
+    background-color: #f0b8c8;
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    margin-top: -50px;
+}
+
+/*//////////////////////////////////////////////////////////*/
+ /*pour la page de confirmation*/
+/*//////////////////////////////////////////////////////////*/
+
+ .container-confirmation {
+    background-color: lightgrey;
+    margin: 20px auto; 
+    padding: 20px;
+    border-radius: 20px;
+    max-width: 400px; 
+    display: grid;
+    justify-items: center;
+}
+
+/*//////////////////////////////////////////////////////////*/
 /* container image page detailsCostume*/
+/*//////////////////////////////////////////////////////////*/
+
 .image-container {
     position: relative; 
 }
 
-.image-options {
+ .image-options {
     display: flex; 
     justify-content: space-between;
     position: absolute; 
@@ -592,13 +483,7 @@ h3{
     right: 0; 
     bottom: 58%; 
     padding: 0 25px; 
-}
-
-.image-options img {
-    width: 45px; 
-    height: auto; 
-    cursor: pointer; 
-}
+} 
 
 .imgCostume{
     border: 1px solid black;
@@ -607,13 +492,45 @@ h3{
     border-radius: 15px; 
 }
 
+#preferenceCostume{
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.grid-container-detail{
+    background-color:#ccc;
+    border-radius: 20px;
+    margin: 2% auto;
+    padding: 5%;
+    max-width: 1200px; 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8%;  
+    box-sizing: border-box;
+}
+
+.grid-item-detail {
+    flex: 1 1 calc(50% - 20px); /* Prend 50% de l'espace avec un espacement */
+    box-sizing: border-box; /* Inclure le rembourrage et la bordure dans les dimensions */
+}
+
+.couleur-container{
+    width: 100%;
+    text-align: center;
+}
+
+ 
+
+/*//////////////////////////////////////////////////////////*/
+/*Pour le formulaire du filtre*/
+/*//////////////////////////////////////////////////////////*/
+
 #filtreMot {
     background-color: #f0b8c8;
     border: 1px solid #d44687;
     height: 32px;
 }
-
-
 
 .input-with-placeholder {
     position: relative; /* Positionner relativement pour le positionnement absolu des éléments enfants */
@@ -636,9 +553,17 @@ h3{
     pointer-events: none; /* L'image ne doit pas interférer avec les clics */
 }
 
-/* Pour les petits écrans */
-@media (max-width: 1300px) {
 
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/* Instructions de mise en page pour les différentes grandeurs d'écrans */
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+/*//////////////////////////////////////////////////////////*/
+/* Pour les écrans largeur max:1300px*/
+/*//////////////////////////////////////////////////////////*/
+
+@media (max-width: 1300px) {
+    /*position image de la loupe dans le filtre par mot*/
     .placeholder-image {
         position: absolute;
         left: 5px; /* Positionnement à gauche */
@@ -650,14 +575,25 @@ h3{
     }
 }   
 
-/* Pour les petits écrans */
+/*//////////////////////////////////////////////////////////*/
+/* Pour les écrans largeur max: 900px */
+/*//////////////////////////////////////////////////////////*/
+
 @media (max-width: 900px) {
+    #barreNavig .navbar-nav {
+        flex-direction: column; /* Alignement vertical pour les petits écrans */
+        align-items: center; /* Alignez les éléments au centre */
+    }
+    .nav-item {
+        margin: 10px 0; /* Espacement vertical entre les éléments du menu */
+    }
     table ::placeholder{
         opacity: 100%;
     }
     .input-with-placeholder input {
         font-size:smaller;
     }
+    /*position image de la loupe dans le filtre par mot*/
     .placeholder-image {
         position: absolute;
         left: 5px; /* Positionnement à gauche */
@@ -668,3 +604,111 @@ h3{
         pointer-events: none; /* L'image ne doit pas interférer avec les clics */
     }
 }
+
+/*//////////////////////////////////////////////////////////*/
+/* Pour les écrans largeur max: 600px */
+/*//////////////////////////////////////////////////////////*/
+
+@media (max-width: 600px) {
+     .grid-container-detail {
+        flex-direction: column; /* Empiler les éléments pour les petits écrans */
+    } 
+    
+    .grid-item-detail {
+        flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
+        text-align:center; /* Centrage du contenu textuel */
+    }
+    
+    .color-checkbox {
+        width: 10%; /* Ajuster la largeur pour 3 colonnes */
+        margin: 5px; /* Marge entre les cases */
+    }
+
+    .color-label {
+        width: 10%;
+        height: 10%; /*Pour donner une hauteur uniforme */
+        display:inline-block;  /*Permettre la disposition horizontal */
+    } 
+
+    .flex-container {
+        flex-direction:column; /* Empiler les éléments verticalement */
+        align-items: center; /* Centrer les éléments */
+    }
+  
+    .flex-item {
+        flex:1 1 100%; /* Chaque item prend 100% de la largeur */
+      
+    }
+
+    table {
+        display:flexbox; /* Affichage en bloc sur les écrans mobiles */
+        overflow-x: auto; /* Ajouter un défilement horizontal si nécessaire */
+        -webkit-overflow-scrolling:touch; /* Défilement fluide sur les appareils tactiles */
+    }
+
+    table th {
+        display: none; /* Masquer l'en-tête du tableau */
+    }
+
+    /* Utiliser des divs pour chaque ligne sur les petits écrans */
+    tr {
+        display:flex; /* Utilisation de flexbox */
+        flex-direction:column; /* Chaque ligne s'affiche comme un colonne */  
+        margin-bottom: 0; 
+    }
+    
+    td {
+        display: block; /* Chaque cellule prendra toute la largeur */
+        text-align: left; /* Alignement à gauche pour les cellules */
+        border: none; /* Supprimer les bordures des cellules */
+    }
+
+    td::before {
+        content: attr(data-label); /* Affiche l'étiquette pour chaque cellule */
+        font-weight: bold; /* Mettre en valeur l'étiquette */
+        display: inline-block; /* L'afficher comme un bloc en ligne */
+        padding: 10px;
+    }
+
+    
+.radio-group {
+    display:flow-root;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.radio-group input {
+    margin-left: 10px;  
+}
+
+.radio-group b {
+    margin-left: 10px;
+}
+  
+} 
+
+/*//////////////////////////////////////////////////////////*/
+/* Pour les écrans largeur max: 480px */
+/*//////////////////////////////////////////////////////////*/
+
+@media (max-width: 480px) {
+      /* Instructions pour petits écrans */
+    .nav-item {
+        margin: 0 5px; 
+        flex-basis: 100%;
+    }
+    .imageEntete{
+        height: auto;
+    }
+    h3{
+        text-align: center;
+        flex-wrap: wrap;
+    }
+    .grid-container {
+        grid-template-columns: 1fr; 
+        padding-left: 10px; 
+        padding-right: 10px; 
+    }
+}
+ 

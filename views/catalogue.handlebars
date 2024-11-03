@@ -5,76 +5,128 @@
  <form action="/choixProf" method="post" id="preferenceCostume">
  <div class="grid-container">
     {{#each groupeCostume}}
-        <div class="grid-item">
+        <div class="grid-item" data-costume-id="{{this.costume_id}}">
             <ul>
                 <a href="/detailsCostume/{{this.costume_id}}">
-                    <img src="/static/img/{{this.image}}"  alt="{{this.titre}}" class="imageCatalogue">
-                </a>
-                <img src="/static/img/plusBlanc.png" alt="plus" id="plusB"> 
-                <img src="/static/img/plusRose.png" alt="plus" id="plusR" hidden >
-                <img src="/static/img/coeurBlanc.png" alt="coeur" id="coeurB">  
-                <img src="/static/img/coeurRose.png" alt="coeur" id="coeurR" hidden>
-                <div class="info-container">
+                    <div class="image-container">
+                        <img src="/static/img/{{this.image}}"  alt="{{this.titre}}" class="imageCatalogue">
+                    </div>
+                 </a>
+                    <div class="image-options">
+                        <img src="/static/img/plusBlanc.png" alt="plus" class="plusB">
+                        <img src="/static/img/plusRose.png" alt="plus" class="plusR" hidden >
+                        <img src="/static/img/coeurBlanc.png" alt="coeur" class="coeurB"> 
+                        <img src="/static/img/coeurRose.png" alt="coeur" class="coeurR" hidden> 
+                    </div>
+
+                    <div class="info-container">
                         <h4>{{this.titre}}</h4>
-                        Quantité : {{this.quantite_totale}}<br>
-                        Localisation : {{#if this.localisation}}{{this.localisation}}{{else}}N/A{{/if}}
-                </div>
-                <div class="container-ajoutFavori" hidden>
-                    <label for="groupes">Choisir le groupe à mettre pour le favori</label>
-                        <select name="groupes" class="select-group">
-                            <option value="">Sélectionner</option>
-                            {{#each groupe}}
-                                <option value="{{groupe.nom}}"</option>
-                            {{/each}}
-                        </select>
-                </div>
-                {{!-- <a href="/detailsCostume/{{this.id}}">Détails</a></li> --}}
+                            Quantité : {{this.quantite_totale}}<br>
+                            Localisation : {{#if this.localisation}}{{this.localisation}}{{else}}N/A{{/if}}
+                    </div>
+                    <div class="container-ajoutFavori" hidden>
+                        <label for="groupes">Choisir le groupe à mettre pour le favori</label>
+                            <select name="groupes" class="select-group">
+                                <option value="">Sélectionner</option>
+                                {{#each groupe}}
+                                    <option value="{{groupe.nom}}"></option>
+                                {{/each}}
+                            </select>
+                    </div>
             </ul>
         </div>
     {{/each}}
 </div>
 </form>
+
+
  <script>
-
+    const user_id = {{{userId}}};
     document.querySelectorAll('.grid-item').forEach(item => {
-    item.addEventListener('mouseenter', () => {
-        item.querySelector('.info-container').style.display = 'block';
-    });
+    
+        const costume_id = item.getAttribute('data-costume-id');
+        
+        item.addEventListener('mouseenter', () => {
+            item.querySelector('.info-container').style.display = 'block';
+        });
+        item.addEventListener('mouseleave', () => {
+            item.querySelector('.info-container').style.display = 'none';
+        });
 
-    item.addEventListener('mouseleave', () => {
-        item.querySelector('.info-container').style.display = 'none';
-    });
+        const plusBlanc = item.querySelector('.plusB');
+        const plusRose = item.querySelector('.plusR');
+        const ajoutFavori = item.querySelector(".container-ajoutFavori");
+        
+        plusBlanc.addEventListener('click', () => {
+            plusBlanc.hidden = true;
+            plusRose.hidden = false; 
+            ajoutFavori.hidden = false;   
+        });
 
-    const plusBlanc = item.querySelector('#plusB');
-    const plusRose = item.querySelector('#plusR');
-    const ajoutFavori = item.querySelector(".container-ajoutFavori");
+        plusRose.addEventListener('click', () => {
+            plusRose.hidden = true;
+            plusBlanc.hidden = false;  
+            ajoutFavori.hidden = true;    
+        });
 
-    plusBlanc.addEventListener('click', () => {
-        plusBlanc.hidden = true;  // Cacher le plus blanc
-        plusRose.hidden = false;   // Afficher le plus rose
-        ajoutFavori.hidden = false; //Afficher le choix de groupe
-        //ajouter l'ajout aux favoris de l'utilisateur
-    });
-    plusRose.addEventListener('click', () => {
-        plusRose.hidden = true;  // Cacher le plus rose
-        plusBlanc.hidden = false;   // Afficher le plus blanc
-        ajoutFavori.hidden = true; //Cacher le choix de groupe
-        //enlever des favoris de l'utilisateur
-    });
+        const coeurBlanc = item.querySelector('.coeurB');
+        const coeurRose = item.querySelector('.coeurR');
 
-    const coeurBlanc = item.querySelector('#coeurB');
-    const coeurRose = item.querySelector('#coeurR');
+         // Vérifiez si le costume est aimé
+       /* if (likedCostumeIds.includes(parseInt(costume_id))) {
+            coeurBlanc.hidden = true;  
+            coeurRose.hidden = false;   
+        } else {
+            coeurBlanc.hidden = false;  
+            coeurRose.hidden = true;     
+        }*/
 
-    coeurBlanc.addEventListener('click', () => {
-        coeurBlanc.hidden = true;  // Cacher le coeur blanc
-        coeurRose.hidden = false;   // Afficher le coeur rose
-        //ajouter l'ajout aux J'aime de l'utilisateur
+        coeurBlanc.addEventListener('click', () => {
+            coeurBlanc.hidden = true;
+            coeurRose.hidden = false;    
+
+            //Envoyer une requête AJAX pour ajouter le like
+           
+
+            fetch('/ajouterLike', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ user_id, costume_id }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                likedCostumeIds.push(costume_id);
+            })
+            .catch((error) => {
+                console.error('Erreur:', error);
+            });
+        });
+        coeurRose.addEventListener('click', () => {
+            coeurRose.hidden = true;
+            coeurBlanc.hidden = false;     
+       
+        // envoyer une requête ajax pour enlever le like
+
+            
+            fetch('/enleverLike', {
+                method: 'post',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body: JSON.stringify({ user_id, costume_id }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                likedCostumeIds = likedCostumeIds.filter(id => id !== costume_id);
+            })
+            .catch((error) => {
+                console.error('erreur:', error);
+            });
+        });
     });
-    coeurRose.addEventListener('click', () => {
-        coeurRose.hidden = true;  // Cacher le coeur rose
-        coeurBlanc.hidden = false;   // Afficher le coeur blanc
-        //enlever des J'aime de l'utilisateur
-    });
-});
 
  </script>

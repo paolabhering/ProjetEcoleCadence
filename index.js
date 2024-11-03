@@ -19,6 +19,9 @@ const helpers = {
     },
     eq: function(a, b) {
         return a === b;
+    },
+    not: function(value) {
+        return !value;
     }
 };
 
@@ -41,6 +44,8 @@ app.use(session({
         maxAge: 1800000 
     }
 }));
+
+app.use(express.json());
 
 // pour lier les routers
 const routerAjoutCostume = require("./routerAjoutCostume");
