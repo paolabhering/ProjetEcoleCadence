@@ -11,24 +11,7 @@
 
 <div class="grid-container-detail">
     <div class="image-container">
-      <img src="../static/img/{{costume.image}}" style="width:400px; height:400px" class="imgCostume"><br>
-
-      <div class="image-options">
-        <img src="/static/img/plusBlanc.png" alt="plus" class="plusB"> 
-        <img src="/static/img/plusRose.png" alt="plus" class="plusR" hidden >
-        <img src="/static/img/coeurBlanc.png" alt="coeur" class="coeurB">  
-        <img src="/static/img/coeurRose.png" alt="coeur" class="coeurR" hidden>
-      </div>    
-
-      <div class="container-ajoutFavori" hidden>
-        <label for="groupes">Choisir le groupe à mettre pour le favori</label>
-          <select name="groupes" class="select-group">
-            <option value="">Sélectionner</option>
-              {{#each groupe}}
-                <option value="{{groupe.nom}}"></option>
-              {{/each}}
-          </select>
-      </div>
+      <img src="../static/img/{{costume.image}}" style="width:400px; height:400px" class="imgCostume"><br> 
     </div>
 
   <div class="grid-item-detail">
@@ -116,4 +99,3 @@
     <button type="button" class="btn btn_roseFonce" onclick=rediriger({{costume.costume_id}})>MODIFIER</button>
   </div>
 </div>
-

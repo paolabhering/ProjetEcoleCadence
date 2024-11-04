@@ -52,8 +52,21 @@ router.get("/filtre", function (req,res) {
     
     try {
         const { rows } = await db.execute(query, params);
+        const { user } = req.session;
+        let likedCostumeIds = [];
+
+        if (user) {
+            const userId = user.user_id;
+            const { rows: likes } = await db.execute(`
+                SELECT costume_id
+                FROM likes
+                WHERE user_id = :user_id`, { user_id: userId});
+            likedCostumeIds = likes.map(like => like.costume_id);
+        }
         res.render("catalogue", { 
             groupeCostume: rows,
+            likedCostumeIds,
+            userId: user ? user.user_id : null,
             filters: {
                 category,
                 quantityMin,
