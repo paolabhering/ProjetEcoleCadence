@@ -5,6 +5,28 @@ const db = require("./db");
 //pour importer la liste des costumes du fichier costume
 const { groupeCostume } = require('./costume');
 
+router.get("/groupes", async function(req, res) {
+  const { user } = req.session;
+  const userId = user ? user.user_id : null;
+  
+  if (!userId) {
+      return res.status(403).json({ message: "Utilisateur non connecté." });
+  }
+
+  try {
+      const { rows: groupes } = await db.execute(`
+          SELECT  nom, groupe_id
+          FROM groupes
+          WHERE user_id = :user_id`, { user_id: userId });
+
+      res.json(groupes);
+      console.log("Groupes utilisateur:", groupes);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Erreur lors de la récupération des groupes." });
+  }
+});
+
 router.get("/catalogue", async function(req,res) {
   try{ 
     const { user } = req.session;
@@ -17,6 +39,17 @@ router.get("/catalogue", async function(req,res) {
         LEFT JOIN grandeurs g ON c.costume_id = g.costume_id
         GROUP BY c.costume_id`)
 
+        let groupesUser = [];
+        // Si l'utilisateur est connecté, récupérez ses groupes
+        if(userId) {
+          const { rows: groupes } = await db.execute(`
+            SELECT nom
+            FROM groupes
+            WHERE user_id = :user_id`, { user_id: userId });
+          groupesUser = groupes.map(groupe => groupe.nom);
+        }
+        console.log("Nom des groupes:", groupesUser);
+
         let likedCostumeIds = [];
         // Si l'utilisateur est connecté, récupérez ses likes
         if(userId) {
@@ -27,7 +60,8 @@ router.get("/catalogue", async function(req,res) {
         likedCostumeIds = likes.map(like => like.costume_id);
     }
     console.log("Liked Costume IDs:", likedCostumeIds);
-      res.render("catalogue", {groupeCostume: rows, likedCostumeIds, userId});
+    console.log("Nom des groupes:", groupesUser);
+      res.render("catalogue", {groupeCostume: rows, likedCostumeIds, groupesUser, userId});
   } catch (error) {
       console.error(error);
       res.status(500).send("Erreur interne du serveur");
@@ -113,6 +147,26 @@ router.post("/enleverLike", async function(req, res) {
     console.error(error);
     res.status(500).json({ message: "Erreur lors du retrait du like" });
   }
+});
+
+// Ajouter un favori
+router.post("/ajouterFavori", async function(req, res) {
+    console.log(req.body);
+    try {
+        const { costume_id, group_id } = req.body;
+        if (!costume_id || !group_id) {
+            console.error("Costume ID ou Group ID est manquant");
+            return;
+        }
+        await db.execute(`
+            INSERT INTO favorites (costume_id, group_id) 
+            VALUES (:costume_id, :group_id)`, { costume_id, group_id });
+
+        res.status(200).json({ message: "Favori ajouté avec succès" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur lors de l'ajout du favori" });
+    }
 });
 
 module.exports = router;

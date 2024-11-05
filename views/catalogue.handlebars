@@ -2,11 +2,33 @@
 
 {{> header}} 
 
+{{#if filters}}
+    <div class="container-confirmation" id="filtersApplied">
+        <h3>Filtre(s) appliqué(s) :</h3>
+        <ul>
+            {{#if filters.category}}
+                <li><b>Catégorie : </b>{{filters.category}}</li>
+            {{/if}}
+            {{#if filters.quantityMin}}
+                <li><b>Quantité minimum : </b>{{filters.quantityMin}}</li>
+            {{/if}}
+            {{#if filters.age_group}}
+                <li><b>Catégorie d'âge : </b>{{filters.age_group}}</li>
+            {{/if}}
+            {{#if filters.filtreMot}}
+                <li><b>Mot-clé : </b>{{filters.filtreMot}}</li>
+            {{/if}}
+            {{#if filters.color}}
+                <li><b>Couleur(s) : </b>{{filters.color}}</li>
+            {{/if}}
+        </ul>
+    </div>
+{{/if}}
+
  <form action="/choixProf" method="post" id="preferenceCostume">
  <div class="grid-container">
     {{#each groupeCostume}}
         <div class="grid-item" data-costume-id="{{this.costume_id}}">
-            <ul>
                 <a href="/detailsCostume/{{this.costume_id}}">
                     <div class="image-container">
                         <img src="/static/img/{{this.image}}"  alt="{{this.titre}}" class="imageCatalogue">
@@ -25,15 +47,14 @@
                             Localisation : {{#if this.localisation}}{{this.localisation}}{{else}}N/A{{/if}}
                     </div>
                     <div class="container-ajoutFavori" hidden>
-                        <label for="groupes">Choisir le groupe à mettre pour le favori</label>
+                        <label for="groupes">Groupe pour le favori</label>
                             <select name="groupes" class="select-group">
                                 <option value="">Sélectionner</option>
-                                {{#each groupe}}
-                                    <option value="{{groupe.nom}}"></option>
-                                {{/each}}
+                                    {{#each groupes}}
+                                        <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
                             </select>
                     </div>
-            </ul>
         </div>
     {{/each}}
 </div>
@@ -43,6 +64,29 @@
  <script>
     const user_id = {{{userId}}};
     const likedCostumeIds = {{{json likedCostumeIds}}};
+    const groupes = {{{json groupesUser}}};
+
+                 
+     //Envoyer une requête AJAX pour ajouter les groupes au favori
+
+    fetch('/groupes')
+        .then(response => response.json())
+        .then(groupes => {
+            console.log('Données des groupes récupérées:', groupes);
+            // Mettre à jour le select avec les groupes récupérés
+            const selectGroupes = document.querySelectorAll('.select-group');
+            selectGroupes.forEach(select => {
+                groupes.forEach(groupe => {
+                const option = document.createElement('option');
+                    option.value = groupe.groupe_id;
+                    option.textContent = groupe.nom;
+                    select.appendChild(option);
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Erreur lors de la récupération des groupes:', error);
+        });
 
     document.querySelectorAll('.grid-item').forEach(item => {
     
@@ -60,9 +104,10 @@
         const ajoutFavori = item.querySelector(".container-ajoutFavori");
         
         plusBlanc.addEventListener('click', () => {
+            console.log('Plus blanc cliqué'); 
             plusBlanc.hidden = true;
             plusRose.hidden = false; 
-            ajoutFavori.hidden = false;   
+            ajoutFavori.hidden = false;  
         });
 
         plusRose.addEventListener('click', () => {
@@ -101,12 +146,12 @@
             .then(data => {
                 console.log(data.message);
                 likedCostumeIds.push(costume_id);
-                console.log("bob");
             })
             .catch((error) => {
                 console.error('Erreur:', error);
             });
         });
+        
         coeurRose.addEventListener('click', () => {
             coeurRose.hidden = true;
             coeurBlanc.hidden = false;     
@@ -131,6 +176,27 @@
                 console.error('erreur:', error);
             });
         });
-    });
 
+    const selectGroupe = item.querySelector('.select-group');
+    selectGroupe.addEventListener('change',(event) => {
+        const selectedGroupe = event.target.value;
+         console.log(`Groupe sélectionné pour le costume ID ${costume_id}: ${selectedGroupe}`);
+
+        fetch('/ajouterFavori', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ user_id, costume_id, group_id: selectedGroupe }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+            })
+            .catch((error) => {
+                console.error('Erreur:', error);
+            });
+    })
+    });
+    
  </script>

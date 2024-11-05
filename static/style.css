@@ -362,7 +362,7 @@ td:nth-child(1){
 /*//////////////////////////////////////////////////////////*/
 
 .grid-container {
-    margin: 10px auto; 
+    margin: 10px; 
     padding: 10px;
     max-width: 1600px; 
     display: grid;
@@ -397,8 +397,8 @@ td:nth-child(1){
     width: 50px; 
     height: auto; 
     cursor: pointer; 
-    top: 140px; 
-    left: 50px; 
+    top: 130px; 
+    left: 25px; 
 }
 
 .plusR {
@@ -406,8 +406,8 @@ td:nth-child(1){
     width: 50px; 
     height: auto; 
     cursor: pointer; 
-    top: 140px; 
-    left: 50px; 
+    top: 130px; 
+    left: 25px; 
 }
 
 
@@ -416,7 +416,7 @@ td:nth-child(1){
     width: 50px; 
     height: auto; 
     cursor: pointer; 
-    top: 140px; 
+    top: 130px; 
     right: 25px; 
 }
 .coeurR {
@@ -424,7 +424,7 @@ td:nth-child(1){
     width: 50px; 
     height: auto; 
     cursor: pointer; 
-    top: 140px; 
+    top: 130px; 
     right: 25px; 
 }
 

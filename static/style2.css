@@ -770,3 +770,14 @@ router.post("/enleverLike", async function(req, res) {
           WHERE user_id = :user_id`, { user_id: userId });
         likedCostumeIds = likes.map(like => like.costume_id);
     }*/
+
+    
+form {
+    background-color: lightgrey;
+    margin-top: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 2%;
+    text-align: center;
+    border-radius: 20px;
+}
