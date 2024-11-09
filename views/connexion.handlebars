@@ -1,99 +1,133 @@
-<div class="entete"> 
-        <img src="../../static/img/imageEnteteLogo.png" alt="Logo" class="imageEntete">  
-        <img src="../../static/img/logoNoir.png" alt="Logo" class="logoNoir" width="190" height="140" hidden>
- </div>  
 
- 
-    <nav class="navbar navbar-expand-sm" id="barreNavig">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <button type="button" class="btn btn-rose" data-en="Administrator Menu" data-fr="Menu administrateur" id="btn-admin" href="/admin"><b>Menu Administrateur</b></button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" class="btn btn-rose" data-en="My account" data-fr="Mon compte" href="/"><b>Mon compte</b></button>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <button type="button" class="btn btn-rose nav-link dropdown-toggle active" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <b>Costumes</b></button>
-                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-					            <li><a class="dropdown-item" data-en="All" data-fr="Tous" href="/catalogue"><b>Tous</b></a></li>
-					            <li><a class="dropdown-item" data-en="Filter" data-fr="Filtre" href="/filtre"><b>Filtre</b></a></li>
-                            </ul>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" class="btn btn-dark nav-link" data-en="Logout" data-fr="Déconnexion" onclick="window.location.href='/logout'">Déconnexion</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<div>
+{{> headerConnexion}}
+</div>
 
+<h2><bold>COSTUMIER/COSTUME INVENTORY</bold></h2>
 
-
-<div style="text-align: center; margin-top: 20px;">
+  <div style="text-align: center; margin-top: 20px;">
     <button id="btnEnglish" class="lang-button">English</button>
     <button id="btnFrench" class="lang-button">Français</button>
 </div>
 
+<div class="form-container">
+    
+    <form action="/login" method="POST" class="connexion-form">
 
+        <div class="form-group">
+            <h3 id="userLabel" data-en="USER NAME" data-fr="NOM D'UTILISATEUR">NOM D'UTILISATEUR</h3>
+            
+        </div>
+        <div class="form-group">
 
+            <input type="text" id="username" name="username" placeholder="Entrez votre nom d'utilisateur" data-en="Enter your username" data-fr="Entrez votre nom d'utilisateur" required>
+        </div>
+        <div class="form-group">
+            <h3 id="mdp" data-en="PASSWORD" data-fr="MOT DE PASSE">MOT DE PASSE</h3>
+            
+        </div>
+        <div class="form-group">
 
-<form action="/add-user" method="POST" class="connexion-form">
-    <h2 data-en="User Addition Form" data-fr="Formulaire d'ajout d'utilisateur">Formulaire d'ajout d'utilisateur</h2>
-    <div class="flex-container">
-        <div class="flex-item">
-            <label for="username"><b data-en="Name:" data-fr="Nom :">Nom :</b></label>
-            <input type="text" id="username" name="username" placeholder="Entrez le nom d'utilisateur" data-en="Enter the username" data-fr="Entrez le nom d'utilisateur" required>
+            <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" data-en="Enter your password" data-fr="Entrez votre mot de passe" required>
         </div>
-        <div class="flex-item">
-            <label for="email"><b data-en="Email:" data-fr="Email :">Email :</b></label>
-            <input type="email" id="email" name="email" placeholder="Entrez votre email" data-en="Enter your email" data-fr="Entrez votre email" required>
-        </div>
-        <div class="flex-item colonneCache"></div>
-        <div class="flex-item">
-            <label for="password"><b data-en="Password:" data-fr="Mot de passe :">Mot de passe :</b></label>
-            <input type="password" id="password" name="password" placeholder="Entrez le mot de passe" data-en="Enter the password" data-fr="Entrez le mot de passe" required>
-        </div>
-        <div class="flex-item full-width">
-            <label for="groups"><b data-en="Group(s):" data-fr="Groupe(s) :">Groupe(s) :</b></label>
-            <div class="group-inputs">
-                <input type="text" id="groupName" name="groupName" placeholder="Entrez le nom du groupe" data-en="Enter the group name" data-fr="Entrez le nom du groupe" required>
-                <div id="groupFieldsContainer"></div>
-                <div class="button-container">
-                    <button type="button" class="add-group" onclick="addGroupField()" data-en="Add Group" data-fr="Ajouter un groupe">+</button>
-                </div>
-            </div>
-        </div>
-        <div class="flex-item full-width">
-            <label for="role"><b data-en="Role:" data-fr="Rôle :">Rôle :</b></label>
-            <div class="radio-group">
-                <input type="radio" id="admin" name="role" value="administrateur" required><b data-en="Administrator" data-fr="Administrateur">Administrateur</b>
-                <input type="radio" id="professeur" name="role" value="professeur" required><b data-en="Professor" data-fr="Professeur">Professeur</b>
-            </div>
-        </div>
-        <div class="flex-item full-width">
-            <label for="language"><b data-en="Language:" data-fr="Langue :">Langue :</b></label>
-            <div class="radio-group">
-                <input type="radio" id="french" name="language" value="fr" required><b data-en="French" data-fr="Français">Français</b>
-                <input type="radio" id="english" name="language" value="en" required><b data-en="English" data-fr="Anglais">Anglais</b>
-            </div>
-        </div>
-        <div class="flex-item full-width">
-            <button type="submit" class="btn btn_roseFonce" id="boutonCompte" data-en="Save" data-fr="Enregistrer">Enregistrer</button>
-        </div>
-    </div>
-</form>
+        <button type="submit" class="btn btn-rose" data-en="ENTER" data-fr="ENTRER">ENTRER</button>
+    </form>
+</div>
 
+<style>
 
+    h2 {
+        text-align: center;
+  
+    }
+    #userLabel {
+        text-align: center;
+        padding-left: 20%;
+        color: #d44687;
+    }
+
+    #mdp {
+         text-align: center;
+        padding-left: 30%;
+        color: #d44687;
+    }
+
+    #usernameLabel {
+        margin-left: 35%;
+    }
+    .form-container {
+        background-color: lightgrey;
+        margin: 20px auto;
+        padding: 30px; /* Vous pouvez ajuster cette valeur */
+        width: 40%; /* Ajustez la largeur selon vos besoins */
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .form-group label {
+        flex: 0 0 150px; /* Largeur du label */
+        text-align: left; /* Alignement à gauche */
+        margin-right: 10px;
+    }
+
+    .radio-group {
+        display: flex;
+        gap: 15px; /* Espacement entre les boutons radio */
+        align-items: center;
+        margin-left: 10px; /* Alignement avec le champ précédent */
+    }
+
+    label {
+        text-align: center;
+    }
+
+    .connexion-form input[type="text"],
+    .connexion-form input[type="email"],
+    .connexion-form input[type="password"] {
+        flex: 1;
+        padding: 10px; /* Ajoutez du padding pour le champ de texte */
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+
+    .btn {
+        display: block;
+        margin: 0 auto; /* Centrer le bouton */
+        border-radius: 20px;
+        padding: 10px 20px;
+        background-color: #d44687;
+        cursor: pointer;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    .btn:hover {
+        background-color: #7a7a7a;
+        color: white;
+    }
+
+    .btn-rose {
+    background-color: #d44687; 
+}
+
+.btn-rose:hover {
+    background-color: #7a7a7a; 
+}
+.btn-rose:active {
+    background-color: #ffffff;
+}
+</style>
 
 <script>
 
-    window.onload = () => {
+     window.onload = () => {
 
         document.getElementById("btnEnglish").addEventListener("click", () => switchLanguage("en"));
         document.getElementById("btnFrench").addEventListener("click", () => switchLanguage("fr"));
@@ -103,18 +137,14 @@
         document.querySelectorAll("[data-en]").forEach(element => {
             element.textContent = element.getAttribute(`data-${lang}`);
         });
+        document.querySelectorAll("[data-en][placeholder]").forEach(element => {
+        element.setAttribute("placeholder", element.getAttribute(`data-${lang}`));
+    });
     }
 
-    function addGroupField() {
-        const groupInputsContainer = document.querySelector('.group-inputs');
-        const newGroupInput = document.createElement('input');
-        newGroupInput.type = 'text';
-        newGroupInput.placeholder = 'Entrez le nom du groupe';
-        newGroupInput.name = 'groups';
-        newGroupInput.required = true;
-
-        
-    // Ajouter le nouvel input en premier dans le conteneur
-    groupFieldsContainer.insertBefore(newGroupInput, groupFieldsContainer.firstChild); // Ajoute en haut du conteneur
+    // Check if the URL contains the query parameter `userCreated=true`
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('userCreated') === 'true') {
+        alert("Utilisateur créé avec succès!");
     }
 </script>
