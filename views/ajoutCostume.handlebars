@@ -37,35 +37,92 @@
     }
     // Appeler la fonction pour ajouter les écouteurs d'événements après le chargement de la page
     window.onload = addEventListeners;
+
+    window.onload = () => {
+        addEventListeners();
+        document.getElementById("btnEnglish").addEventListener("click", () => switchLanguage("en"));
+        document.getElementById("btnFrench").addEventListener("click", () => switchLanguage("fr"));
+    };
+
+    function switchLanguage(lang) {
+        document.querySelectorAll("[data-en]").forEach(element => {
+            element.textContent = element.getAttribute(`data-${lang}`);
+        });
+    }
+
+
+
 </script> 
 
-{{> headerAd}}
+
+ 
+ <div class="entete"> 
+        <img src="../../static/img/imageEnteteLogo.png" alt="Logo" class="imageEntete">  
+        <img src="../../static/img/logoNoir.png" alt="Logo" class="logoNoir" width="190" height="140" hidden>
+ </div>  
+
+ 
+    <nav class="navbar navbar-expand-sm" id="barreNavig">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-rose" data-en="Administrator Menu" data-fr="Menu administrateur" id="btn-admin" href="/admin"><b>Menu Administrateur</b></button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-rose" data-en="My account" data-fr="Mon compte" href="/"><b>Mon compte</b></button>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button type="button" class="btn btn-rose nav-link dropdown-toggle active" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <b>Costumes</b></button>
+                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+					            <li><a class="dropdown-item" data-en="All" data-fr="Tous" href="/catalogue"><b>Tous</b></a></li>
+					            <li><a class="dropdown-item" data-en="Filter" data-fr="Filtre" href="/filtre"><b>Filtre</b></a></li>
+                            </ul>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-dark nav-link" data-en="Logout" data-fr="Déconnexion" onclick="window.location.href='/logout'">Déconnexion</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+  <div style="text-align: center; margin-top: 20px;">
+    <button id="btnEnglish" class="lang-button">English</button>
+    <button id="btnFrench" class="lang-button">Français</button>
+</div>
+
 
 <form action="/ajout" enctype="multipart/form-data" method="POST" id="ajoutCostume">
-    <h3>Formulaire d'ajout de costume</h3>
+    <h3 data-en="Add costume form" data-fr="Formulaire d'ajout de costume" >Formulaire d'ajout de costume</h3>
         <div class="flex-container">
                 <div class="flex-item">
-                    <b><label for="titre">Titre:</label></b><br>
+                    <b><label for="titre" data-en="Title" data-fr="Titre">Titre:</label></b><br>
                     <input type="text" id="titre" name="titre"required><br><br>
+                    </div>
+                    <div class="flex-item">
+                    <b><label for="category" data-en="Category:" data-fr="Catégorie:">Catégorie:</label></b><br>
+                    <select name="category" id="category" required>
+                        <option value="" data-en="Choose category" data-fr="Choisir la catégorie">Choisir la catégorie</option>
+                        <option value="Accessoires" data-en="Accessories" data-fr="Accessoires">Accessoires</option>
+                        <option value="Bas du corps" data-en="Lower body" data-fr="Bas du corps">Bas du corps</option>
+                        <option value="Casse-noisette" data-en="Nutcracker" data-fr="Casse-noisette">Casse-noisette</option>
+                        <option value="Haut de corps" data-en="Upper body" data-fr="Haut de corps">Haut de corps</option>
+                        <option value="Jupe" data-en="Skirt" data-fr="Jupe">Jupe</option>
+                        <option value="Maillot" data-en="Swimsuit" data-fr="Maillot">Maillot</option>
+                        <option value="Pieds" data-en="Feet" data-fr="Pieds">Pieds</option>
+                        <option value="Robe" data-en="Dress" data-fr="Robe">Robe</option>
+                        <option value="Tête" data-en="Head" data-fr="Tête">Tête</option>
+                        <option value="Autre" data-en="Other" data-fr="Autre">Autre</option>
+                    </select><br>
                 </div>
                 <div class="flex-item">
-                    <b><label for="category">Catégorie:</label></b><br>
-                        <select name="category" id="category" required>
-                            <option value="">Choisir la catégorie</option>
-                            <option value="Accessoires">Accessoires</option>
-                            <option value="Bas du corps">Bas du corps</option>
-                            <option value="Casse-noisette">Casse-noisette</option>
-                            <option value="Haut de corps">Haut de corps</option>
-                            <option value="Jupe">Jupe</option>
-                            <option value="Maillot">Maillot</option>
-                            <option value="Pieds">Pieds</option>
-                            <option value="Robe">Robe</option>
-                            <option value="Tête">Tête</option>
-                            <option value="Autre">Autre</option>
-                        </select><br>
-                </div>
-                <div class="flex-item">
-                    <b>Couleur(s):</b><br>
+                    <b data-en="Color(s):" data-fr="Couleur(s):">Couleur(s):</b><br>
                         <input type="checkbox" name="brun" id="brun" class="color-checkbox">
                             <label for="brun" class="color-label brun"></label>
                         <input type="checkbox" name="rouge" id="rouge" class="color-checkbox">
@@ -91,78 +148,113 @@
                         <input type="checkbox" name="multicolore" id="multicolore" class="color-checkbox">
                             <label for="multicolore" class="color-label multicolore"></label><br>
                 </div>
-                <div class="flex-item">
-                    <b><label for="age_group">Catégorie d'âge:</label></b><br>
+                    <div class="flex-item">
+                        <b><label for="age_group" data-en="Age group:" data-fr="Catégorie d'âge:">Catégorie d'âge:</label></b><br>
                         <select name="age_group" id="age_group" required>
-                            <option value="">Choisir la catégorie</option>
-                            <option value="enfant">Enfant</option>
-                            <option value="ado">Adolescent</option>
-                            <option value="adulte">Adulte</option>
-                            <option value="N/A">N/A</option>
+                            <option value="" data-en="Choose category" data-fr="Choisir la catégorie">Choisir la catégorie</option>
+                            <option value="enfant" data-en="Child" data-fr="Enfant">Enfant</option>
+                            <option value="ado" data-en="Teen" data-fr="Adolescent">Adolescent</option>
+                            <option value="adulte" data-en="Adult" data-fr="Adulte">Adulte</option>
+                            <option value="N/A" data-en="N/A" data-fr="N/A">N/A</option>
                         </select><br>
-                </div>
-                <div class="flex-item bte_tableau">
-                    <b>Grandeur(s):</b><br>
-                        <table border="1">
-                            <tr>
-                                <th>grandeur</th>
-                                <th>enfant</th>
-                                <th>adulte</th>
-                                <th>N/A</th>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> XX-petit</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="XXpetit_enfant" name="XXpetit_enfant" placeholder="XXp-enfant"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="XXpetit_adulte" name="XXpetit_adulte" placeholder="XXp-adulte"></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> X-petit</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="Xpetit_enfant" name="Xpetit_enfant" placeholder="Xp-enfant"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="Xpetit_adulte" name="Xpetit_adulte" placeholder="Xp-adulte"></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> petit</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="petit_enfant" name="petit_enfant" placeholder="p-enfant"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="petit_adulte" name="petit_adulte" placeholder="p-adulte"></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> moyen</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="moyen_enfant" name="moyen_enfant" placeholder="m-enfant"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="moyen_adulte" name="moyen_adulte" placeholder="m-adulte"></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> grand</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="grand_enfant" name="grand_enfant" placeholder="g-enfant"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="grand_adulte" name="grand_adulte" placeholder="g-adulte"></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> X-grand</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="Xgrand_enfant" name="Xgrand_enfant" placeholder="Xg-enfant"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="Xgrand_adulte" name="Xgrand_adulte" placeholder="Xg-adulte"></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> XX-grand</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="XXgrand_enfant" name="XXgrand_enfant" placeholder="XXg-enfant"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="XXgrand_adulte" name="XXgrand_adulte" placeholder="XXg-adulte"></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> sans grandeur</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="sansGrandeur_enfant" name="sansGrandeur_enfant" placeholder="sansGrandeur-enfant"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="sansGrandeur_adulte" name="sansGrandeur_adulte" placeholder="sansGrandeur-adulte"></td>
-                                <td data-label="N/A"><input type="number" class="bte_tableau" id="sansGrandeur" name="sansGrandeur" placeholder="sans Grandeur"></td>
-                            </tr>
-                        </table>
-                </div>
+                    </div>
+                    <div class="flex-item bte_tableau">
+        <b data-en="Size(s):" data-fr="Grandeur(s):">Grandeur(s):</b><br>
+        <table border="1">
+            <tr>
+                <th data-en="Size" data-fr="Grandeur">grandeur</th>
+                <th data-en="Child" data-fr="enfant">enfant</th>
+                <th data-en="Adult" data-fr="adulte">adulte</th>
+                <th data-en="N/A" data-fr="N/A">N/A</th>
+            </tr>
+            <tr>
+                <td data-label="Grandeur" data-en="XX-Small" data-fr="XX-petit">XX-petit</td>
+                <td data-label="Child" data-en="Child XX-Small" data-fr="XXp-enfant">
+                    <input type="number" class="bte_tableau" id="XXpetit_enfant" name="XXpetit_enfant" placeholder="XXp-enfant">
+                </td>
+                <td data-label="Adult" data-en="Adult XX-Small" data-fr="XXp-adulte">
+                    <input type="number" class="bte_tableau" id="XXpetit_adulte" name="XXpetit_adulte" placeholder="XXp-adulte">
+                </td>
+            </tr>
+            <tr>
+                <td data-label="Grandeur" data-en="X-Small" data-fr="X-petit">X-petit</td>
+                <td data-label="Child" data-en="Child X-Small" data-fr="Xp-enfant">
+                    <input type="number" class="bte_tableau" id="Xpetit_enfant" name="Xpetit_enfant" placeholder="Xp-enfant">
+                </td>
+                <td data-label="Adult" data-en="Adult X-Small" data-fr="Xp-adulte">
+                    <input type="number" class="bte_tableau" id="Xpetit_adulte" name="Xpetit_adulte" placeholder="Xp-adulte">
+                </td>
+            </tr>
+            <tr>
+                <td data-label="Grandeur" data-en="Small" data-fr="petit">petit</td>
+                <td data-label="Child" data-en="Child Small" data-fr="p-enfant">
+                    <input type="number" class="bte_tableau" id="petit_enfant" name="petit_enfant" placeholder="p-enfant">
+                </td>
+                <td data-label="Adult" data-en="Adult Small" data-fr="p-adulte">
+                    <input type="number" class="bte_tableau" id="petit_adulte" name="petit_adulte" placeholder="p-adulte">
+                </td>
+            </tr>
+            <tr>
+                <td data-label="Grandeur" data-en="Medium" data-fr="moyen">moyen</td>
+                <td data-label="Child" data-en="Child Medium" data-fr="m-enfant">
+                    <input type="number" class="bte_tableau" id="moyen_enfant" name="moyen_enfant" placeholder="m-enfant">
+                </td>
+                <td data-label="Adult" data-en="Adult Medium" data-fr="m-adulte">
+                    <input type="number" class="bte_tableau" id="moyen_adulte" name="moyen_adulte" placeholder="m-adulte">
+                </td>
+            </tr>
+            <tr>
+                <td data-label="Grandeur" data-en="Large" data-fr="grand">grand</td>
+                <td data-label="Child" data-en="Child Large" data-fr="g-enfant">
+                    <input type="number" class="bte_tableau" id="grand_enfant" name="grand_enfant" placeholder="g-enfant">
+                </td>
+                <td data-label="Adult" data-en="Adult Large" data-fr="g-adulte">
+                    <input type="number" class="bte_tableau" id="grand_adulte" name="grand_adulte" placeholder="g-adulte">
+                </td>
+            </tr>
+            <tr>
+                <td data-label="Grandeur" data-en="X-Large" data-fr="X-grand">X-grand</td>
+                <td data-label="Child" data-en="Child X-Large" data-fr="Xg-enfant">
+                    <input type="number" class="bte_tableau" id="Xgrand_enfant" name="Xgrand_enfant" placeholder="Xg-enfant">
+                </td>
+                <td data-label="Adult" data-en="Adult X-Large" data-fr="Xg-adulte">
+                    <input type="number" class="bte_tableau" id="Xgrand_adulte" name="Xgrand_adulte" placeholder="Xg-adulte">
+                </td>
+            </tr>
+            <tr>
+                <td data-label="Grandeur" data-en="XX-Large" data-fr="XX-grand">XX-grand</td>
+                <td data-label="Child" data-en="Child XX-Large" data-fr="XXg-enfant">
+                    <input type="number" class="bte_tableau" id="XXgrand_enfant" name="XXgrand_enfant" placeholder="XXg-enfant">
+                </td>
+                <td data-label="Adult" data-en="Adult XX-Large" data-fr="XXg-adulte">
+                    <input type="number" class="bte_tableau" id="XXgrand_adulte" name="XXgrand_adulte" placeholder="XXg-adulte">
+                </td>
+            </tr>
+            <tr>
+                <td data-label="Grandeur" data-en="No Size" data-fr="sans grandeur">sans grandeur</td>
+                <td data-label="Child" data-en="No Size (Child)" data-fr="sansGrandeur-enfant">
+                    <input type="number" class="bte_tableau" id="sansGrandeur_enfant" name="sansGrandeur_enfant" placeholder="sansGrandeur-enfant">
+                </td>
+                <td data-label="Adult" data-en="No Size (Adult)" data-fr="sansGrandeur-adulte">
+                    <input type="number" class="bte_tableau" id="sansGrandeur_adulte" name="sansGrandeur_adulte" placeholder="sansGrandeur-adulte">
+                </td>
+                <td data-label="N/A" data-en="No Size (N/A)" data-fr="sans Grandeur">
+                    <input type="number" class="bte_tableau" id="sansGrandeur" name="sansGrandeur" placeholder="sans Grandeur">
+                </td>
+            </tr>
+        </table>
+    </div>
+
                 <div class="flex-item">
-                    <b><label for="quantity">Quantité totale:</label></b><br>
+                    <b><label for="quantity" data-en="Total quantity:" data-fr="Quantité totale:">Quantité totale:</label></b><br>
                         <b><input type="text" id="quantity" name="quantity" readonly>{{grandTotal}}</b>
                 </div>
                 <div class="flex-item">
-                    <b><label for="localisation">Localisation:</label></b><br>
+                    <b><label for="localisation" data-en="Location:" data-fr="Localisation:">Localisation:</label></b><br>
                         <input type="text" id="localisation" name="localisation"><br><br>
                 </div>
                 <div class="flex-item">
-                    <b><label for="boite">Boîte:</label></b><br>
+                    <b><label for="boite" data-en="Box:" data-fr="Boîte:">Boîte:</label></b><br>
                         <input type="text" id="boite" name="boite"><br><br>
                 </div>
                 <div class="flex-item">
@@ -174,7 +266,7 @@
                         <input type="file" id="upload_photo"  name="upload_photo" class="form-control"><br><br>
                 </div>
             </div>
-               <button type="submit" class="btn btn_roseFonce" id="button">ENREGISTRER</button>
+               <button type="submit" class="btn btn_roseFonce" data-en="SAVE" data-fr="ENREGISTRER" id="button">ENREGISTRER</button>
 </form>
 
 

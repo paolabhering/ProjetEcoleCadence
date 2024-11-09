@@ -1,34 +1,68 @@
+<script>
+
+     window.onload = () => {
+
+        document.getElementById("btnEnglish").addEventListener("click", () => switchLanguage("en"));
+        document.getElementById("btnFrench").addEventListener("click", () => switchLanguage("fr"));
+    };
+
+    function switchLanguage(lang) {
+        document.querySelectorAll("[data-en]").forEach(element => {
+            element.textContent = element.getAttribute(`data-${lang}`);
+        });
+    }
+</script>
 
 
-{{> header}} 
+<div class="entete"> 
+        <img src="../../static/img/imageEnteteLogo.png" alt="Logo" class="imageEntete">  
+        <img src="../../static/img/logoNoir.png" alt="Logo" class="logoNoir" width="190" height="140" hidden>
+ </div>  
 
-{{#if filters}}
-    <div class="container-confirmation" id="filtersApplied">
-        <h3>Filtre(s) appliqué(s) :</h3>
-        <ul>
-            {{#if filters.category}}
-                <li><b>Catégorie : </b>{{filters.category}}</li>
-            {{/if}}
-            {{#if filters.quantityMin}}
-                <li><b>Quantité minimum : </b>{{filters.quantityMin}}</li>
-            {{/if}}
-            {{#if filters.age_group}}
-                <li><b>Catégorie d'âge : </b>{{filters.age_group}}</li>
-            {{/if}}
-            {{#if filters.filtreMot}}
-                <li><b>Mot-clé : </b>{{filters.filtreMot}}</li>
-            {{/if}}
-            {{#if filters.color}}
-                <li><b>Couleur(s) : </b>{{filters.color}}</li>
-            {{/if}}
-        </ul>
-    </div>
-{{/if}}
+ 
+    <nav class="navbar navbar-expand-sm" id="barreNavig">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-rose" id="btn-admin" href="#" hidden></button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-rose" data-en="My account" data-fr="Mon compte" href="/"><b>Mon compte</b></button>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button type="button" class="btn btn-rose nav-link dropdown-toggle active" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <b>Costumes</b></button>
+                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+					            <li><a class="dropdown-item" data-en="All" data-fr="Tous" href="/catalogue"><b>Tous</b></a></li>
+					            <li><a class="dropdown-item" data-en="Filter" data-fr="Filtre" href="/filtre"><b>Filtre</b></a></li>
+                            </ul>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-dark nav-link" data-en="Logout" data-fr="Déconnexion" onclick="window.location.href='/logout'">Déconnexion</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+  <div style="text-align: center; margin-top: 20px;">
+    <button id="btnEnglish" class="lang-button">English</button>
+    <button id="btnFrench" class="lang-button">Français</button>
+</div>
+
+
+
 
  <form action="/choixProf" method="post" id="preferenceCostume">
  <div class="grid-container">
     {{#each groupeCostume}}
         <div class="grid-item" data-costume-id="{{this.costume_id}}">
+            <ul>
                 <a href="/detailsCostume/{{this.costume_id}}">
                     <div class="image-container">
                         <img src="/static/img/{{this.image}}"  alt="{{this.titre}}" class="imageCatalogue">
@@ -43,18 +77,19 @@
 
                     <div class="info-container">
                         <h4>{{this.titre}}</h4>
-                            Quantité : {{this.quantite_totale}}<br>
-                            Localisation : {{#if this.localisation}}{{this.localisation}}{{else}}N/A{{/if}}
+                            <span data-en="Quantity :" data-fr="Quantité :">Quantité : {{this.quantite_totale}}</span><br>
+                            <span data-en="Location :" data-fr="Localisation :">Localisation : {{#if this.localisation}}{{this.localisation}}{{else}}N/A{{/if}}</span>
                     </div>
                     <div class="container-ajoutFavori" hidden>
-                        <label for="groupes">Costume favori pour le groupe:</label>
+                        <label for="groupes" data-en="Choose the group to set for the favorite" data-fr="Choisir le groupe à mettre pour le favori" >Choisir le groupe à mettre pour le favori</label>
                             <select name="groupes" class="select-group">
-                                <option value="">Sélectionner</option>
-                                    {{#each groupes}}
-                                        <option value="{{this}}">{{this}}</option>
-                                    {{/each}}
+                                <option value="" data-en="Select" data-fr="Sélectionner">Sélectionner</option>
+                                {{#each groupe}}
+                                    <option value="{{groupe.nom}}"></option>
+                                {{/each}}
                             </select>
                     </div>
+            </ul>
         </div>
     {{/each}}
 </div>
@@ -64,29 +99,8 @@
  <script>
     const user_id = {{{userId}}};
     const likedCostumeIds = {{{json likedCostumeIds}}};
-    const groupes = {{{json groupesUser}}};
 
-                 
-     //Envoyer une requête AJAX pour ajouter les groupes au favori
-
-    fetch('/groupes')
-        .then(response => response.json())
-        .then(groupes => {
-            console.log('Données des groupes récupérées:', groupes);
-            // Mettre à jour le select avec les groupes récupérés
-            const selectGroupes = document.querySelectorAll('.select-group');
-            selectGroupes.forEach(select => {
-                groupes.forEach(groupe => {
-                const option = document.createElement('option');
-                    option.value = groupe.groupe_id;
-                    option.textContent = groupe.nom;
-                    select.appendChild(option);
-                });
-            });
-        })
-        .catch(error => {
-            console.error('Erreur lors de la récupération des groupes:', error);
-        });
+   
 
     document.querySelectorAll('.grid-item').forEach(item => {
     
@@ -104,10 +118,9 @@
         const ajoutFavori = item.querySelector(".container-ajoutFavori");
         
         plusBlanc.addEventListener('click', () => {
-            console.log('Plus blanc cliqué'); 
             plusBlanc.hidden = true;
             plusRose.hidden = false; 
-            ajoutFavori.hidden = false;  
+            ajoutFavori.hidden = false;   
         });
 
         plusRose.addEventListener('click', () => {
@@ -146,12 +159,12 @@
             .then(data => {
                 console.log(data.message);
                 likedCostumeIds.push(costume_id);
+                console.log("bob");
             })
             .catch((error) => {
                 console.error('Erreur:', error);
             });
         });
-        
         coeurRose.addEventListener('click', () => {
             coeurRose.hidden = true;
             coeurBlanc.hidden = false;     
@@ -176,27 +189,6 @@
                 console.error('erreur:', error);
             });
         });
-
-    const selectGroupe = item.querySelector('.select-group');
-    selectGroupe.addEventListener('change',(event) => {
-        const selectedGroupe = event.target.value;
-         console.log(`Groupe sélectionné pour le costume ID ${costume_id}: ${selectedGroupe}`);
-
-        fetch('/ajouterFavori', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ user_id, costume_id, group_id: selectedGroupe }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.message);
-            })
-            .catch((error) => {
-                console.error('Erreur:', error);
-            });
-    })
     });
-    
+
  </script>
