@@ -60,6 +60,7 @@ const routerAdmin = require("./routerAdmin");
 const routerModifCostume = require("./routerModifCostume");
 //const routerModif2Costume = require("./routermodif2Costume"); en standby
 const routerFiltreCatalogue = require("./routerFiltreCatalogue");
+const routerModifierCompte = require("./routerModifierCompte");
 
 app.use("/", routerAdmin);
 app.use("/", routerConnexion);
@@ -67,6 +68,7 @@ app.use("/", routerCreerCompte);
 app.use("/", routerAjoutCostume);
 app.use("/", routerCostume);
 app.use("/", routerModifCostume);
+app.use("/", routerModifierCompte);
 //app.use("/", routerModif2Costume); en standby
 app.use("/", routerFiltreCatalogue);
 
