@@ -44,8 +44,6 @@ router.get("/filtre", function (req,res) {
         
         query += ` AND (${colorConditions})`;
         params.push(...color.map(c => `%${c}%`));
-        console.log(colorConditions);
-        console.log(query);
     }
     
     query += " GROUP BY c.costume_id";
@@ -76,7 +74,6 @@ router.get("/filtre", function (req,res) {
             },
             hasFilters: rows.length > 0
          });
-         console.log("SQL Params:", params);
     } catch (error) {
         console.error(error);
         res.status(500).send("Erreur interne du serveur");

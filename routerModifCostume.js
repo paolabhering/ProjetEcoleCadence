@@ -9,7 +9,7 @@ const router = express.Router();
 
 const storage =  multer.diskStorage({   
     destination : (req, file, cb) => {
-        cb(null, './static/img/')           //télcharge le fichier en l'envoyant dans la destination (fichier) précisée
+        cb(null, './static/img/')           //télécharge le fichier en l'envoyant dans la destination (fichier) précisée
     },
     filename : (req, file, cb) => {
         cb(null, file.originalname);        //fonction callback qui le fichier avec le nom du fichier
@@ -69,10 +69,6 @@ router.get("/confirmation", function (req,res) {
 
 router.post("/modif/:costume_id", upload.single('upload_photo'), async function(req,res) {
     try {
-         // Affichez le contenu de req.body et req.file pour le débogage
-         console.log(req.body);
-         console.log(req.file);
-
         const { costume_id } = req.params;
         let couleurs = [];
         if (req.body.brun) couleurs.push("brun");
@@ -174,19 +170,19 @@ router.post("/delete/:costume_id", async function(req, res) {
     try {
         const { costume_id } = req.params;
 
-        // Supprimez le costume de la base de données
+        // Supprimer le costume de la base de données
         await db.execute({
             sql: "DELETE FROM costumes WHERE costume_id = :costume_id",
             args: { costume_id: costume_id },
         });
-
-        // Supprimez également les grandeurs associées
+        console.log(costume_id)
+        // Supprimer les grandeurs associées
         await db.execute({
             sql: "DELETE FROM grandeurs WHERE costume_id = :costume_id",
             args: { costume_id: costume_id },
         });
 
-        // Redirigez vers une page de confirmation ou d'accueil
+        // Rediriger vers une page de confirmation
         res.redirect("/confirmation");
     } catch (error) {
         console.error("Erreur lors de la suppression:", error);
