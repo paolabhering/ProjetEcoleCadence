@@ -1,165 +1,221 @@
-{{> headerAd}}
+<div class="entete"> 
+        <img src="../../static/img/imageEnteteLogo.png" alt="Logo" class="imageEntete">  
+        <img src="../../static/img/logoNoir.png" alt="Logo" class="logoNoir" width="190" height="140" hidden>
+ </div>  
+
+ 
+    <nav class="navbar navbar-expand-sm" id="barreNavig">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-rose" data-en="Administrator Menu" data-fr="Menu administrateur" id="btn-admin" href="/admin"><b>Menu Administrateur</b></button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-rose" data-en="My account" data-fr="Mon compte" href="/"><b>Mon compte</b></button>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button type="button" class="btn btn-rose nav-link dropdown-toggle active" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <b>Costumes</b></button>
+                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+					            <li><a class="dropdown-item" data-en="All" data-fr="Tous" href="/catalogue"><b>Tous</b></a></li>
+					            <li><a class="dropdown-item" data-en="Filter" data-fr="Filtre" href="/filtre"><b>Filtre</b></a></li>
+                            </ul>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-dark nav-link" data-en="Logout" data-fr="Déconnexion" onclick="window.location.href='/logout'">Déconnexion</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+  <div style="text-align: center; margin-top: 20px;">
+    <button id="btnEnglish" class="lang-button">English</button>
+    <button id="btnFrench" class="lang-button">Français</button>
+</div>
+
 
 <form action="/modif/{{costume.costume_id}}" enctype="multipart/form-data" method="POST" id="modifCostume">
-    <h3>Formulaire de modification ou suppression de costume</h3>
+    <h3 data-en="Costume modification or deletion form" data-fr="Formulaire de modification ou suppression de costume">Formulaire de modification ou suppression de costume</h3>
         <div class="flex-container">
                 <div class="flex-item">
-                    <b><label for="titre">Titre:</label></b><br>
+                    <b><label for="titre" data-en="Title" data-fr="Titre">Titre:</label></b><br>
                     <input type="text" id="titre" name="titre" value="{{costume.titre}}" requires><br><br>
                 </div>
                 <div class="flex-item">
-                    <b><label for="category">Catégorie:</label></b><br>
-                        <select name="category" id="category" required>
-                            <option value="">Choisir la catégorie</option>
-                            <option value="">Choisir la catégorie</option>
-                            <option value="Accessoires" {{#if (eq costume.category "Accessoires")}}selected{{/if}}>Accessoires</option>
-                            <option value="Bas du corps" {{#if (eq costume.category "Bas du corps")}}selected{{/if}}>Bas du corps</option>
-                            <option value="Casse-noisette" {{#if (eq costume.category "Casse-noisette")}}selected{{/if}}>Casse-noisette</option>
-                            <option value="Haut de corps" {{#if (eq costume.category "Haut de corps")}}selected{{/if}}>Haut de corps</option>
-                            <option value="Jupe" {{#if (eq costume.category "Jupe")}}selected{{/if}}>Jupe</option>
-                            <option value="Maillot" {{#if (eq costume.category "Maillot")}}selected{{/if}}>Maillot</option>
-                            <option value="Pieds" {{#if (eq costume.category "Pieds")}}selected{{/if}}>Pieds</option>
-                            <option value="Robe" {{#if (eq costume.category "Robe")}}selected{{/if}}>Robe</option>
-                            <option value="Tête" {{#if (eq costume.category "Tête")}}selected{{/if}}>Tête</option>
-                            <option value="Autre" {{#if (eq costume.category "Autre")}}selected{{/if}}>Autre</option>
-                        </select><br>
+                <b><label for="category" data-en="Category:" data-fr="Catégorie:">Catégorie:</label></b><br>
+                <select name="category" id="category" required>
+                    <option value="" data-en="Choose category" data-fr="Choisir la catégorie">Choisir la catégorie</option>
+                    <option value="Accessoires" {{#if (eq costume.category "Accessoires")}}selected{{/if}} data-en="Accessories" data-fr="Accessoires">Accessoires</option>
+                    <option value="Bas du corps" {{#if (eq costume.category "Bas du corps")}}selected{{/if}} data-en="Lower body" data-fr="Bas du corps">Bas du corps</option>
+                    <option value="Casse-noisette" {{#if (eq costume.category "Casse-noisette")}}selected{{/if}} data-en="Nutcracker" data-fr="Casse-noisette">Casse-noisette</option>
+                    <option value="Haut de corps" {{#if (eq costume.category "Haut de corps")}}selected{{/if}} data-en="Upper body" data-fr="Haut de corps">Haut de corps</option>
+                    <option value="Jupe" {{#if (eq costume.category "Jupe")}}selected{{/if}} data-en="Skirt" data-fr="Jupe">Jupe</option>
+                    <option value="Maillot" {{#if (eq costume.category "Maillot")}}selected{{/if}} data-en="Swimwear" data-fr="Maillot">Maillot</option>
+                    <option value="Pieds" {{#if (eq costume.category "Pieds")}}selected{{/if}} data-en="Feet" data-fr="Pieds">Pieds</option>
+                    <option value="Robe" {{#if (eq costume.category "Robe")}}selected{{/if}} data-en="Dress" data-fr="Robe">Robe</option>
+                    <option value="Tête" {{#if (eq costume.category "Tête")}}selected{{/if}} data-en="Head" data-fr="Tête">Tête</option>
+                    <option value="Autre" {{#if (eq costume.category "Autre")}}selected{{/if}} data-en="Other" data-fr="Autre">Autre</option>
+                </select><br>
                 </div>
                 <div class="flex-item">
-                    <b>Couleur(s):</b><br>
-                        <input type="checkbox" name="brun" id="brun" class="color-checkbox" {{#if (includes couleurs "brun")}}checked{{/if}}>
-                            <label for="brun" class="color-label brun"></label>
-                        <input type="checkbox" name="rouge" id="rouge" class="color-checkbox" {{#if (includes couleurs "rouge")}}checked{{/if}}>
-                            <label for="rouge" class="color-label rouge"></label>
-                        <input type="checkbox" name="rose" id="rose" class="color-checkbox" {{#if (includes couleurs "rose")}}checked{{/if}}>
-                            <label for="rose" class="color-label rose"></label>
-                        <input type="checkbox" name="mauve" id="mauve" class="color-checkbox" {{#if (includes couleurs "mauve")}}checked{{/if}}>
-                            <label for="mauve" class="color-label mauve"></label>
-                        <input type="checkbox" name="bleu" id="bleu" class="color-checkbox" {{#if (includes couleurs "bleu")}}checked{{/if}}>
-                            <label for="bleu" class="color-label bleu"></label>
-                        <input type="checkbox" name="vert" id="vert" class="color-checkbox" {{#if (includes couleurs "vert")}}checked{{/if}}>
-                            <label for="vert" class="color-label vert"></label><br>
-                        <input type="checkbox" name="jaune" id="jaune" class="color-checkbox" {{#if (includes couleurs "jaune")}}checked{{/if}}>
-                            <label for="jaune" class="color-label jaune"></label>
-                        <input type="checkbox" name="orange" id="orange" class="color-checkbox" {{#if (includes couleurs "orange")}}checked{{/if}}>
-                            <label for="orange" class="color-label orange"></label>
-                        <input type="checkbox" name="noir" id="noir" class="color-checkbox" {{#if (includes couleurs "noir")}}checked{{/if}}>
-                            <label for="noir" class="color-label noir"></label>
-                        <input type="checkbox" name="gris" id="gris" class="color-checkbox" {{#if (includes couleurs "gris")}}checked{{/if}}>
-                            <label for="gris" class="color-label gris"></label>
-                        <input type="checkbox" name="blanc" id="blanc" class="color-checkbox" {{#if (includes couleurs "blanc")}}checked{{/if}}>
-                            <label for="blanc" class="color-label blanc"></label>
-                        <input type="checkbox" name="multicolore" id="multicolore" class="color-checkbox" {{#if (includes couleurs "multicolore")}}checked{{/if}}>
-                            <label for="multi" class="color-label multicolore"></label><br>
+                <b data-en="Color(s):" data-fr="Couleur(s):">Couleur(s):</b><br>
+                <input type="checkbox" name="brun" id="brun" class="color-checkbox" {{#if (includes couleurs "brun")}}checked{{/if}} data-en="Brown" data-fr="Brun">
+                <label for="brun" class="color-label brun"></label>
+                <input type="checkbox" name="rouge" id="rouge" class="color-checkbox" {{#if (includes couleurs "rouge")}}checked{{/if}} data-en="Red" data-fr="Rouge">
+                <label for="rouge" class="color-label rouge"></label>
+                <input type="checkbox" name="rose" id="rose" class="color-checkbox" {{#if (includes couleurs "rose")}}checked{{/if}} data-en="Pink" data-fr="Rose">
+                <label for="rose" class="color-label rose"></label>
+                <input type="checkbox" name="mauve" id="mauve" class="color-checkbox" {{#if (includes couleurs "mauve")}}checked{{/if}} data-en="Purple" data-fr="Mauve">
+                <label for="mauve" class="color-label mauve"></label>
+                <input type="checkbox" name="bleu" id="bleu" class="color-checkbox" {{#if (includes couleurs "bleu")}}checked{{/if}} data-en="Blue" data-fr="Bleu">
+                <label for="bleu" class="color-label bleu"></label>
+                <input type="checkbox" name="vert" id="vert" class="color-checkbox" {{#if (includes couleurs "vert")}}checked{{/if}} data-en="Green" data-fr="Vert">
+                <label for="vert" class="color-label vert"></label><br>
+                <input type="checkbox" name="jaune" id="jaune" class="color-checkbox" {{#if (includes couleurs "jaune")}}checked{{/if}} data-en="Yellow" data-fr="Jaune">
+                <label for="jaune" class="color-label jaune"></label>
+                <input type="checkbox" name="orange" id="orange" class="color-checkbox" {{#if (includes couleurs "orange")}}checked{{/if}} data-en="Orange" data-fr="Orange">
+                <label for="orange" class="color-label orange"></label>
+                <input type="checkbox" name="noir" id="noir" class="color-checkbox" {{#if (includes couleurs "noir")}}checked{{/if}} data-en="Black" data-fr="Noir">
+                <label for="noir" class="color-label noir"></label>
+                <input type="checkbox" name="gris" id="gris" class="color-checkbox" {{#if (includes couleurs "gris")}}checked{{/if}} data-en="Gray" data-fr="Gris">
+                <label for="gris" class="color-label gris"></label>
+                <input type="checkbox" name="blanc" id="blanc" class="color-checkbox" {{#if (includes couleurs "blanc")}}checked{{/if}} data-en="White" data-fr="Blanc">
+                <label for="blanc" class="color-label blanc"></label>
+                <input type="checkbox" name="multicolore" id="multicolore" class="color-checkbox" {{#if (includes couleurs "multicolore")}}checked{{/if}} data-en="Multicolor" data-fr="Multicolore">
+                <label for="multi" class="color-label multicolore"></label><br>
                 </div>
                 <div class="flex-item">
-                    <b><label for="age_group">Catégorie d'âge:</label></b><br>
-                        <select name="age_group" id="age_group" required>
-                            <option value="">Choisir la catégorie</option>
-                            <option value="enfant" {{#if (eq costume.age_group "enfant")}}selected{{/if}}>Enfant</option>
-                            <option value="ado" {{#if (eq costume.age_group "ado")}}selected{{/if}}>Adolescent</option>
-                            <option value="adulte" {{#if (eq costume.age_group "adulte")}}selected{{/if}}>Adulte</option>
-                            <option value="N/A" {{#if (eq costume.age_group "N/A")}}selected{{/if}}>N/A</option>
-                        </select><br>
-                </div>
+                <b><label for="age_group" data-en="Age Group:" data-fr="Catégorie d'âge:">Catégorie d'âge:</label></b><br>
+                <select name="age_group" id="age_group" required>
+                    <option value="" data-en="Choose category" data-fr="Choisir la catégorie">Choisir la catégorie</option>
+                    <option value="enfant" {{#if (eq costume.age_group "enfant")}}selected{{/if}} data-en="Child" data-fr="Enfant">Enfant</option>
+                    <option value="ado" {{#if (eq costume.age_group "ado")}}selected{{/if}} data-en="Teen" data-fr="Adolescent">Adolescent</option>
+                    <option value="adulte" {{#if (eq costume.age_group "adulte")}}selected{{/if}} data-en="Adult" data-fr="Adulte">Adulte</option>
+                    <option value="N/A" {{#if (eq costume.age_group "N/A")}}selected{{/if}} data-en="N/A" data-fr="N/A">N/A</option>
+                </select><br>
+               </div>
                 <div class="flex-item">
-                    <b>Grandeur(s):</b><br>
-                        <table border="1">
-                            <tr>
-                                <th>grandeur</th>
-                                <th>enfant</th>
-                                <th>adulte</th>
-                                <th>N/A</th>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> XX-petit</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="XXpetit_enfant" name="XXpetit_enfant" value="{{quantites.XXpetit_enfant}}"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="XXpetit_adulte" name="XXpetit_adulte" value="{{quantites.XXpetit_adulte}}"></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> X-petit</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="Xpetit_enfant" name="Xpetit_enfant" value="{{quantites.Xpetit_enfant}}"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="Xpetit_adulte" name="Xpetit_adulte" value="{{quantites.Xpetit_adulte}}"></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> petit</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="petit_enfant" name="petit_enfant" value="{{quantites.petit_enfant}}"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="petit_adulte" name="petit_adulte" value="{{quantites.petit_adulte}}"></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> moyen</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="moyen_enfant" name="moyen_enfant" value="{{quantites.moyen_enfant}}"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="moyen_adulte" name="moyen_adulte" value="{{quantites.moyen_adulte}}"></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> grand</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="grand_enfant" name="grand_enfant" value="{{quantites.grand_enfant}}"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="grand_adulte" name="grand_adulte" value="{{quantites.grand_adulte}}"></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> X-grand</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="Xgrand_enfant" name="Xgrand_enfant" value="{{quantites.Xgrand_enfant}}"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="Xgrand_adulte" name="Xgrand_adulte" value="{{quantites.Xgrand_adulte}}"></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> XX-grand</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="XXgrand_enfant" name="XXgrand_enfant" value="{{quantites.XXgrand_enfant}}"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="XXgrand_adulte" name="XXgrand_adulte" value="{{quantites.XXgrand_adulte}}"></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Grandeur"> sans grandeur</td>
-                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="sansGrandeur_enfant" name="sansGrandeur_enfant" value="{{quantites.sansGrandeur_enfant}}"></td>
-                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="sansGrandeur_adulte" name="sansGrandeur_adulte" value="{{quantites.sansGrandeur_adulte}}"></td>
-                                <td data-label="N/A"><input type="number" class="bte_tableau" id="sansGrandeur" name="sansGrandeur" value="{{quantites.sansGrandeur}}"></td>
-                            </tr>
-                        </table>
-                </div>
+                <b data-en="Size(s):" data-fr="Grandeur(s):">Grandeur(s):</b><br>
+                <table border="1">
+                    <tr>
+                        <th data-en="Size" data-fr="Grandeur">Grandeur</th>
+                        <th data-en="Child" data-fr="Enfant">Enfant</th>
+                        <th data-en="Adult" data-fr="Adulte">Adulte</th>
+                        <th data-en="N/A" data-fr="N/A">N/A</th>
+                    </tr>
+                    <tr>
+                        <td data-label="Size" data-en="XX-Small" data-fr="XX-petit">XX-petit</td>
+                        <td data-label="Child" data-en="Child" data-fr="Enfant"><input type="number" class="bte_tableau" id="XXpetit_enfant" name="XXpetit_enfant" value="{{quantites.XXpetit_enfant}}"></td>
+                        <td data-label="Adult" data-en="Adult" data-fr="Adulte"><input type="number" class="bte_tableau" id="XXpetit_adulte" name="XXpetit_adulte" value="{{quantites.XXpetit_adulte}}"></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Size" data-en="X-Small" data-fr="X-petit">X-petit</td>
+                        <td data-label="Child" data-en="Child" data-fr="Enfant"><input type="number" class="bte_tableau" id="Xpetit_enfant" name="Xpetit_enfant" value="{{quantites.Xpetit_enfant}}"></td>
+                        <td data-label="Adult" data-en="Adult" data-fr="Adulte"><input type="number" class="bte_tableau" id="Xpetit_adulte" name="Xpetit_adulte" value="{{quantites.Xpetit_adulte}}"></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Size" data-en="Small" data-fr="petit">petit</td>
+                        <td data-label="Child" data-en="Child" data-fr="Enfant"><input type="number" class="bte_tableau" id="petit_enfant" name="petit_enfant" value="{{quantites.petit_enfant}}"></td>
+                        <td data-label="Adult" data-en="Adult" data-fr="Adulte"><input type="number" class="bte_tableau" id="petit_adulte" name="petit_adulte" value="{{quantites.petit_adulte}}"></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Size" data-en="Medium" data-fr="moyen">moyen</td>
+                        <td data-label="Child" data-en="Child" data-fr="Enfant"><input type="number" class="bte_tableau" id="moyen_enfant" name="moyen_enfant" value="{{quantites.moyen_enfant}}"></td>
+                        <td data-label="Adult" data-en="Adult" data-fr="Adulte"><input type="number" class="bte_tableau" id="moyen_adulte" name="moyen_adulte" value="{{quantites.moyen_adulte}}"></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Size" data-en="Large" data-fr="grand">grand</td>
+                        <td data-label="Child" data-en="Child" data-fr="Enfant"><input type="number" class="bte_tableau" id="grand_enfant" name="grand_enfant" value="{{quantites.grand_enfant}}"></td>
+                        <td data-label="Adult" data-en="Adult" data-fr="Adulte"><input type="number" class="bte_tableau" id="grand_adulte" name="grand_adulte" value="{{quantites.grand_adulte}}"></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Size" data-en="X-Large" data-fr="X-grand">X-grand</td>
+                        <td data-label="Child" data-en="Child" data-fr="Enfant"><input type="number" class="bte_tableau" id="Xgrand_enfant" name="Xgrand_enfant" value="{{quantites.Xgrand_enfant}}"></td>
+                        <td data-label="Adult" data-en="Adult" data-fr="Adulte"><input type="number" class="bte_tableau" id="Xgrand_adulte" name="Xgrand_adulte" value="{{quantites.Xgrand_adulte}}"></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Size" data-en="XX-Large" data-fr="XX-grand">XX-grand</td>
+                        <td data-label="Child" data-en="Child" data-fr="Enfant"><input type="number" class="bte_tableau" id="XXgrand_enfant" name="XXgrand_enfant" value="{{quantites.XXgrand_enfant}}"></td>
+                        <td data-label="Adult" data-en="Adult" data-fr="Adulte"><input type="number" class="bte_tableau" id="XXgrand_adulte" name="XXgrand_adulte" value="{{quantites.XXgrand_adulte}}"></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Size" data-en="No size" data-fr="sans grandeur">sans grandeur</td>
+                        <td data-label="Child" data-en="Child" data-fr="Enfant"><input type="number" class="bte_tableau" id="sansGrandeur_enfant" name="sansGrandeur_enfant" value="{{quantites.sansGrandeur_enfant}}"></td>
+                        <td data-label="Adult" data-en="Adult" data-fr="Adulte"><input type="number" class="bte_tableau" id="sansGrandeur_adulte" name="sansGrandeur_adulte" value="{{quantites.sansGrandeur_adulte}}"></td>
+                        <td data-label="N/A" data-en="N/A" data-fr="N/A"><input type="number" class="bte_tableau" id="sansGrandeur" name="sansGrandeur" value="{{quantites.sansGrandeur}}"></td>
+                    </tr>
+                </table>
+            </div>
+
                 <div class="flex-item">
-                    <b><label for="quantity">Quantité totale:</label></b><br>
-                        <b><input type="text" id="quantity" name="quantity" readonly></b><br><br>
-                </div>
-                <div class="flex-item">
-                    <b><label for="localisation">Localisation:</label></b><br>
-                        <input type="text" id="localisation" name="localisation" value="{{#if costume.localisation}}{{costume.localisation}}{{else}}N/A{{/if}}"><br><br>
-                </div>
-                <div class="flex-item">
-                    <b><label for="boite">Boîte:</label></b><br>
-                        <input type="text" id="boite" name="boite" value="{{#if costume.boite}}{{costume.boite}}{{else}}N/A{{/if}}"><br><br>
-                </div>
-                <div class="flex-item">
-                    <b><label for="notes">Notes:</label></b><br>
-                        <textarea id="notes" name="notes" rows="2" cols="40">{{#if costume.notes}}{{costume.notes}}{{else}}N/A{{/if}}</textarea><br><br>
-                </div>
-                <div class="flex-item">
-                    <b>Image actuelle:</b>
-                    <img src="{{costume.imagePath}}" alt="Image de {{costume.titre}}" style="max-width: 200px; max-height: 200px;"><br><br>
-                </div>
-                <div class="flex-item colonneCache">
-                    <input type="hidden" name="costume_id" value="{{costume.costume_id}}">
-                </div>
-                <div class="flex-item">
-                    <b><label for="upload_photo">Téléverser une nouvelle photo:</label></b>
-                    <input type="file" id="upload_photo" name="upload_photo" class="form-control"><br><br>
-                </div>
-            <div class="flex-item">
-                <button type="button" class="btn btn_grisFonce" id="buttonSupprimer" onclick="confirmSuppression()">SUPPRIMER LE COSTUME</button>
+                <b><label for="quantity" data-en="Total Quantity:" data-fr="Quantité totale:">Quantité totale:</label></b><br>
+                <b><input type="text" id="quantity" name="quantity" readonly></b><br><br>
             </div>
             <div class="flex-item">
-               <button type="submit" class="btn btn_roseFonce" id="buttonEngModif" value="save">ENREGISTRER MODIFICATIONS</button>
+                <b><label for="localisation" data-en="Location:" data-fr="Localisation:">Localisation:</label></b><br>
+                <input type="text" id="localisation" name="localisation" value="{{#if costume.localisation}}{{costume.localisation}}{{else}}N/A{{/if}}"><br><br>
             </div>
+            <div class="flex-item">
+                <b><label for="boite" data-en="Box:" data-fr="Boîte:">Boîte:</label></b><br>
+                <input type="text" id="boite" name="boite" value="{{#if costume.boite}}{{costume.boite}}{{else}}N/A{{/if}}"><br><br>
+            </div>
+            <div class="flex-item">
+                <b><label for="notes" data-en="Notes:" data-fr="Notes:">Notes:</label></b><br>
+                <textarea id="notes" name="notes" rows="2" cols="40">{{#if costume.notes}}{{costume.notes}}{{else}}N/A{{/if}}</textarea><br><br>
+            </div>
+            <div class="flex-item">
+                <b data-en="Current Image:" data-fr="Image actuelle:">Image actuelle:</b>
+                <img src="{{costume.imagePath}}" alt="Image de {{costume.titre}}" style="max-width: 200px; max-height: 200px;"><br><br>
+            </div>
+            <div class="flex-item colonneCache">
+                <input type="hidden" name="costume_id" value="{{costume.costume_id}}">
+            </div>
+            <div class="flex-item">
+                <b><label for="upload_photo" data-en="Upload a new photo:" data-fr="Téléverser une nouvelle photo:">Téléverser une nouvelle photo:</label></b>
+                <input type="file" id="upload_photo" name="upload_photo" class="form-control"><br><br>
+            </div>
+            <div class="flex-item">
+                <button type="button" class="btn btn_grisFonce" id="buttonSupprimer" onclick="confirmSuppression()" data-en="DELETE COSTUME" data-fr="SUPPRIMER LE COSTUME">SUPPRIMER LE COSTUME</button>
+            </div>
+            <div class="flex-item">
+                <button type="submit" class="btn btn_roseFonce" id="buttonEngModif" value="save" data-en="SAVE CHANGES" data-fr="ENREGISTRER MODIFICATIONS">ENREGISTRER MODIFICATIONS</button>
+            </div>
+
             <!-- Modal -->
             <div id="deleteModal" class="modal">
-                <div class="modal-content">
-                    <span class="close" id="modalClose">&times;</span>
-                    <h2>Confirmation de Suppression</h2>
-                    <p>Êtes-vous certain de vouloir supprimer ce costume définitivement?</p>
-                    <button id="confirmDelete" class="btn btn_roseFonce">Oui, supprimer</button><br>
-                    <button type="button" id="cancelDelete" class="btn btn_grisFonce">Non, annuler</button>
-                </div>
+            <div class="modal-content">
+                <span class="close" id="modalClose" data-en="Close" data-fr="Fermer">&times;</span>
+                <h2 data-en="Delete Confirmation" data-fr="Confirmation de Suppression">Confirmation de Suppression</h2>
+                <p data-en="Are you sure you want to delete this costume permanently?" data-fr="Êtes-vous certain de vouloir supprimer ce costume définitivement?">
+                    Êtes-vous certain de vouloir supprimer ce costume définitivement?
+                </p>
+                <button id="confirmDelete" class="btn btn_roseFonce" data-en="Yes, delete" data-fr="Oui, supprimer">Oui, supprimer</button><br>
+                <button id="cancelDelete" class="btn btn_grisFonce" data-en="No, cancel" data-fr="Non, annuler">Non, annuler</button>
             </div>
+            </div>
+
         </div>
 </form>
 
 <script>
+    window.onload = () => {
+
+        document.getElementById("btnEnglish").addEventListener("click", () => switchLanguage("en"));
+        document.getElementById("btnFrench").addEventListener("click", () => switchLanguage("fr"));
+    };
+
+    function switchLanguage(lang) {
+        document.querySelectorAll("[data-en]").forEach(element => {
+            element.textContent = element.getAttribute(`data-${lang}`);
+        });
+    }
+
     
     function calculerQuantiteTotale() {
         let total = 0;
