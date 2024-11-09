@@ -14,7 +14,7 @@
 3. **Installer les dépendances**
    - Une fois le projet cloné, accédez au dossier du projet dans le terminal et installez les dépendances requises:
      ```
-     npm install @libsql/client express express-handlebars bcrypt express-session
+     npm install @libsql/client express express-handlebars bcrypt express-session dotenv multer
      ```
 
 ## Lancer l'application localement
