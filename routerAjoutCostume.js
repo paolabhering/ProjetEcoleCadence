@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require('multer'); // pour télécharger des fichiers
 const db = require("./db");
+const { ensureAuthenticated, restrictToRole } = require("./session");
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ const router = express.Router();
 
 const storage =  multer.diskStorage({   
     destination : (req, file, cb) => {
-        cb(null, './static/img/')           //télécharge le fichier en l'envoyant dans la destination (fichier) précisée
+        cb(null, './static/img/')           //télcharge le fichier en l'envoyant dans la destination (fichier) précisée
     },
     filename : (req, file, cb) => {
         cb(null, file.originalname);        //fonction callback qui le fichier avec le nom du fichier
@@ -18,13 +19,50 @@ const storage =  multer.diskStorage({
 
 const upload = multer({storage : storage});
 
-router.get("/ajout", function (req, res) {   
-    res.render("ajoutCostume");
+router.get("/ajout", ensureAuthenticated, restrictToRole("administrateur"), async (req, res) => {   
+    try {
+        const userId = req.session.user.user_id;
+        console.log("User id is", userId); 
+        const query = await db.execute(
+            `SELECT langue FROM users WHERE user_id = ?`,
+            [userId] 
+        );
+
+        const result = query.rows[0];
+        const userLangue = result.langue;
+        console.log("User's chosen language is:", userLangue);
+
+        if (userLangue === 'fr') {
+            
+            res.render("ajoutCostume", { userLangue });
+        } else {
+            res.render("ajoutCostumeEN", { userLangue });
+        }
+    } catch (error) {
+        console.error("Error fetching language preference:", error);
+        res.status(500).send("Internal Server Error");
+    }
 });
 
 
-router.get("/confirmation", function (req,res) {
-    res.render("confirmation")
+router.get("/confirmation", async (req,res) => {
+    const userIdSession = req.session.user.user_id;
+    console.log("User id is", userIdSession); 
+        const query = await db.execute(
+            `SELECT langue FROM users WHERE user_id = ?`,
+            [userIdSession] 
+        );
+
+        const result = query.rows[0];
+        const userLangue = result.langue;
+        console.log("User's chosen language is:", userLangue);
+        if (userLangue === 'fr') {
+          res.render("confirmation", {userLangue});  
+          
+      } else {
+        res.render("confirmationEN", {userLangue});
+      }
+
  })
 
 router.post("/ajout", upload.single('upload_photo'), async function(req,res) {
@@ -43,7 +81,18 @@ router.post("/ajout", upload.single('upload_photo'), async function(req,res) {
         if (req.body.multicolore) couleurs.push("multicolore");
 
     let colorString = couleurs.length > 0 ? couleurs.join(", "): null;
+    console.log("Couleurs sélectionnées:", colorString);
     
+    console.log({
+        titre: req.body.titre, 
+        category: req.body.category,
+        age_group: req.body.age_group,
+        couleurs: colorString,
+        notes: req.body.notes,
+        localisation: req.body.localisation,
+        boite: req.body.boite,
+        image: req.file.filename,
+    })
     const result = await db.execute({
         sql: "INSERT INTO costumes(titre, category, age_group, color, notes, localisation, boite, image) VALUES(:titre, :category, :age_group, :color, :notes, :localisation, :boite,:image)",
         args:{
@@ -83,6 +132,12 @@ router.post("/ajout", upload.single('upload_photo'), async function(req,res) {
         for (const taille of grandeurs) {
            
             if (parseInt(taille.quantite) > 0) { 
+
+                console.log({
+                    costume_id: Number(costumeId), 
+                    grandeur: taille.taille,
+                    quantity: taille.quantite,
+                })
     
                 try{
                     await db.execute({
