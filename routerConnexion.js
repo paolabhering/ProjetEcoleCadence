@@ -32,14 +32,21 @@ router.post("/login", async (req, res) => {
             return res.status(400).send("Nom d'utilisateur ou mot de passe incorrect");
         }
 
-        // Save the user role in the session
-        req.session.user = { user_id: user.user_id, role: user.role }; //J'ai ajouté id:user.user_id ici pour pouvoir le récupérer
+    
+
+              // Save user details in the session
+              req.session.user = {
+                user_id: user.user_id,   // User ID from the database
+                username: user.username, // Optionally store username for convenience
+                role: user.role,         // User's role (admin, professor, etc.)
+                langue: user.langue      // User's language preference
+            };
         
         // Redirect based on user role
         if (user.role === "administrateur") {
             res.redirect("/admin");
         } else if (user.role === "professeur") {
-            res.redirect("/professeur");
+            res.redirect("/catalogue");
         } else {
             res.status(400).send("Role non reconnu");
         }
