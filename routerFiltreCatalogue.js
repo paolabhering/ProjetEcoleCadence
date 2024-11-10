@@ -1,10 +1,26 @@
 const express = require("express");
 const router = express.Router();
 const db = require("./db");
+const { ensureAuthenticated, restrictToRole } = require("./session");
 
-router.get("/filtre", function (req,res) {
+router.get("/filtre", ensureAuthenticated, async (req,res) => {
+    const userIdSession = req.session.user.user_id;
+        console.log("User id is", userIdSession); 
+        const query = await db.execute(
+            `SELECT langue FROM users WHERE user_id = ?`,
+            [userIdSession] 
+        );
+
+        const result = query.rows[0];
+        const userLangue = result.langue;
+        console.log("User's chosen language is:", userLangue);
+        if (userLangue === 'fr') {
+            res.render("filtreCatalogue", {userLangue});  
+          
+      } else {
+        res.render("filtreCatalogueEN", {userLangue});
+      }
     
-    res.render("filtreCatalogue");
  });
 
  router.post("/filtre", async function(req, res) {
@@ -44,6 +60,8 @@ router.get("/filtre", function (req,res) {
         
         query += ` AND (${colorConditions})`;
         params.push(...color.map(c => `%${c}%`));
+        console.log(colorConditions);
+        console.log(query);
     }
     
     query += " GROUP BY c.costume_id";
@@ -74,6 +92,7 @@ router.get("/filtre", function (req,res) {
             },
             hasFilters: rows.length > 0
          });
+         console.log("SQL Params:", params);
     } catch (error) {
         console.error(error);
         res.status(500).send("Erreur interne du serveur");
