@@ -1,0 +1,101 @@
+
+<script>
+
+  function rediriger(costume_id) {
+    window.location.href = `/modif/${costume_id}`;
+  }
+  
+</script>
+
+{{> headerAdEN}} 
+
+<div class="grid-container-detail">
+    <div class="image-container">
+      <img src="../static/img/{{costume.image}}" style="width:400px; height:400px" class="imgCostume"><br> 
+    </div>
+
+  <div class="grid-item-detail">
+    <h3>{{costume.titre}}</h3><br>
+    <b>Category:  </b>{{costume.category}}<br><br>
+    <b>Colors: </b><br>
+      <div class="couleur-container">
+        {{#each (split costume.color ", ")}}
+          {{#if (eq this "brun")}}<div class="color-label brun"></div>{{/if}}
+          {{#if (eq this "rouge")}}<div class="color-label rouge"></div>{{/if}}
+          {{#if (eq this "rose")}}<div class="color-label rose"></div>{{/if}}
+          {{#if (eq this "mauve")}}<div class="color-label mauve"></div>{{/if}}
+          {{#if (eq this "bleu")}}<div class="color-label bleu"></div>{{/if}}
+          {{#if (eq this "vert")}}<div class="color-label vert"></div>{{/if}}
+          {{#if (eq this "jaune")}}<div class="color-label jaune"></div>{{/if}}
+          {{#if (eq this "orange")}}<div class="color-label orange"></div>{{/if}}
+          {{#if (eq this "noir")}}<div class="color-label noir"></div>{{/if}}
+          {{#if (eq this "gris")}}<div class="color-label gris"></div>{{/if}}
+          {{#if (eq this "blanc")}}<div class="color-label blanc"></div>{{/if}}
+          {{#if (eq this "multicolore")}}<div class="color-label multicolore"></div>{{/if}}
+        {{/each}}
+      </div><br>
+    <b>Age group: </b>{{costume.age_group}}<br><br>
+    <b>Quantity by size:</b><br>
+        <table id="tableDetail">
+            <tr>
+                <th></th>
+                <th>Child</th>
+                <th>Adult</th>
+                <th>N/A</th>
+            </tr>
+            <tr>
+                <td data-label="Grandeur">XX-small</td>
+                <td data-label="Enfant">{{quantites.XXpetit_enfant}}</td>
+                <td data-label="Adulte">{{quantites.XXpetit_adulte}}</td>
+                <td data-label="N/A"></td>
+            </tr>
+            <tr>
+                <td data-label="Grandeur">X-small</td>
+                <td data-label="Enfant">{{quantites.Xpetit_enfant}}</td>
+                <td data-label="Adulte">{{quantites.Xpetit_adulte}}</td>
+                <td data-label="N/A"></td>
+            </tr>
+            <tr>
+                <td data-label="Grandeur">Small</td>
+                <td data-label="Enfant">{{quantites.petit_enfant}}</td>
+                <td data-label="Adulte">{{quantites.petit_adulte}}</td>
+                <td data-label="N/A"></td>
+            </tr>
+            <tr>
+                <td data-label="Grandeur">Medium</td>
+                <td data-label="Enfant">{{quantites.moyen_enfant}}</td>
+                <td data-label="Adulte">{{quantites.moyen_adulte}}</td>
+                <td data-label="N/A"></td>
+            </tr>
+            <tr>
+                <td data-label="Grandeur">Large</td>
+                <td data-label="Enfant">{{quantites.grand_enfant}}</td>
+                <td data-label="Adulte">{{quantites.grand_adulte}}</td>
+                <td data-label="N/A"></td>
+            </tr>
+            <tr>
+                <td data-label="Grandeur">X-large</td>
+                <td data-label="Enfant">{{quantites.Xgrand_enfant}}</td>
+                <td data-label="Adulte">{{quantites.Xgrand_adulte}}</td>
+                <td data-label="N/A"></td>
+            </tr>
+            <tr>
+                <td data-label="Grandeur">XX-large</td>
+                <td data-label="Enfant">{{quantites.XXgrand_enfant}}</td>
+                <td data-label="Adulte">{{quantites.XXgrand_adulte}}</td>
+                <td data-label="N/A"></td>
+            </tr>
+            <tr>
+                <td data-label="Grandeur">No size</td>
+                <td data-label="Enfant">{{quantites.sansGrandeur_enfant}}</td>
+                <td data-label="Adulte">{{quantites.sansGrandeur_adulte}}</td>
+                <td data-label="N/A">{{quantites.sansGrandeur}}</td>
+            </tr>
+        </table><br>
+    <b>Total quantity:  </b>{{quantiteTotale}}<br><br>
+    <b>Location: </b>{{#if costume.localisation}}{{costume.localisation}}{{else}}N/A{{/if}}<br>
+    <b>Box: </b>{{#if costume.boite}}{{costume.boite}}{{else}}N/A{{/if}} <br><br>
+    <b>Notes: </b>{{#if costume.notes}}{{costume.notes}}{{else}}N/A{{/if}}  <br><br>
+    <button type="button" class="btn btn_roseFonce" onclick=rediriger({{costume.costume_id}})>MODIFY</button>
+  </div>
+</div>
