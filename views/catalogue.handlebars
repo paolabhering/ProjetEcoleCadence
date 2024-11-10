@@ -55,6 +55,10 @@
                                     {{/each}}
                             </select>
                     </div>
+                    {{!-- J'aimerais afficher le nom du groupe favori pour ce costume ici --}}
+                    <div class="groupe-info" hidden>
+                        <label for="favoriteCostumeGroup">{{{groupe.nom}}}</label>
+                    </div>
         </div>
     {{/each}}
 </div>
@@ -65,8 +69,9 @@
     const user_id = {{{userId}}};
     const likedCostumeIds = {{{json likedCostumeIds}}};
     const groupes = {{{json groupesUser}}};
+    const favoriteCostumeIds = {{{json favoriteCostumeIds}}};
 
-                 
+     console.log("costumes favoris: ",favoriteCostumeIds);            
      //Envoyer une requête AJAX pour ajouter les groupes au favori
 
     fetch('/groupes')
@@ -102,18 +107,32 @@
         const plusBlanc = item.querySelector('.plusB');
         const plusRose = item.querySelector('.plusR');
         const ajoutFavori = item.querySelector(".container-ajoutFavori");
+        const favoriteCostumeGroupe = item.querySelector(".groupe-info");
         
+
+         // Vérifiez si le costume est favori
+        if (favoriteCostumeIds.includes(parseInt(costume_id))) {
+            plusBlanc.hidden = true;  
+            plusRose.hidden = false; 
+
+        } else {
+            plusBlanc.hidden = false;  
+            plusRose.hidden = true;     
+        }
+
         plusBlanc.addEventListener('click', () => {
             console.log('Plus blanc cliqué'); 
             plusBlanc.hidden = true;
             plusRose.hidden = false; 
-            ajoutFavori.hidden = false;  
+            ajoutFavori.hidden = false; 
+            favoriteCostumeIds.push(costume_id); 
         });
 
         plusRose.addEventListener('click', () => {
             plusRose.hidden = true;
             plusBlanc.hidden = false;  
-            ajoutFavori.hidden = true;    
+            ajoutFavori.hidden = true; 
+            favoriteCostumeIds = favoriteCostumeIds.filter(id => id !== costume_id);   
         });
 
         const coeurBlanc = item.querySelector('.coeurB');
