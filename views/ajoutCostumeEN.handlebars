@@ -1,0 +1,181 @@
+<script>
+    function additionner(){
+        let XXpetit_enfant = parseInt(document.getElementById("XXpetit_enfant").value) || 0;
+        let Xpetit_enfant = parseInt(document.getElementById("Xpetit_enfant").value) || 0;
+        let petit_enfant = parseInt(document.getElementById("petit_enfant").value) || 0;
+        let moyen_enfant = parseInt(document.getElementById("moyen_enfant").value) || 0;
+        let grand_enfant = parseInt(document.getElementById("grand_enfant").value) || 0;
+        let Xgrand_enfant = parseInt(document.getElementById("Xgrand_enfant").value) || 0;
+        let XXgrand_enfant = parseInt(document.getElementById("XXgrand_enfant").value) || 0;
+
+        let XXpetit_adulte = parseInt(document.getElementById("XXpetit_adulte").value) || 0;
+        let Xpetit_adulte = parseInt(document.getElementById("Xpetit_adulte").value) || 0;
+        let petit_adulte = parseInt(document.getElementById("petit_adulte").value) || 0;
+        let moyen_adulte = parseInt(document.getElementById("moyen_adulte").value) || 0;
+        let grand_adulte = parseInt(document.getElementById("grand_adulte").value) || 0;
+        let Xgrand_adulte = parseInt(document.getElementById("Xgrand_adulte").value) || 0;
+        let XXgrand_adulte = parseInt(document.getElementById("XXgrand_adulte").value) || 0;
+
+        let sansGrandeur_enfant = parseInt(document.getElementById("sansGrandeur_enfant").value) || 0;
+        let sansGrandeur_adulte = parseInt(document.getElementById("sansGrandeur_adulte").value) || 0;
+        let sansGrandeur = parseInt(document.getElementById("sansGrandeur").value) || 0;
+
+        let totalEnfant = XXpetit_enfant + Xpetit_enfant + petit_enfant + moyen_enfant + grand_enfant + Xgrand_enfant + XXgrand_enfant;
+        let totalAdulte = XXpetit_adulte + Xpetit_adulte + petit_adulte + moyen_adulte + grand_adulte + Xgrand_adulte + XXgrand_adulte;
+        let totalSans =  sansGrandeur_enfant + sansGrandeur_adulte + sansGrandeur;
+
+        let grandTotal = totalEnfant + totalAdulte + totalSans;
+
+        document.getElementById("quantity").value = grandTotal;
+    }
+     // Fonction pour ajouter des écouteurs d'événements à chaque champ de saisie
+    function addEventListeners() {
+        const inputs = document.querySelectorAll('.bte_tableau');
+        inputs.forEach(input => {
+            input.addEventListener('input', additionner); // Écouteur d'événement sur chaque champ d'entrée
+        });
+    }
+    // Appeler la fonction pour ajouter les écouteurs d'événements après le chargement de la page
+    window.onload = addEventListeners;
+</script> 
+
+{{> headerAdEN}}
+
+<form action="/ajout" enctype="multipart/form-data" method="POST" id="ajoutCostume">
+    <h3>Add costume form</h3>
+        <div class="flex-container">
+                <div class="flex-item">
+                    <b><label for="titre">Title:</label></b><br>
+                    <input type="text" id="titre" name="titre"required><br><br>
+                </div>
+                <div class="flex-item">
+                    <b><label for="category">Category:</label></b><br>
+                        <select name="category" id="category" required>
+                            <option value="">Choose category</option>
+                            <option value="Accessories">Accessories</option>
+                            <option value="Lower Body">Lower Body</option>
+                            <option value="Nutcracker">Nutcracker</option>
+                            <option value="Upper Body">Upper Body</option>
+                            <option value="Skirt">Skirt</option>
+                            <option value="Swimsuit">Swimsuit</option>
+                            <option value="Feet">Feet</option>
+                            <option value="Dress">Dress</option>
+                            <option value="Head">Head</option>
+                            <option value="Other">Other</option>
+                        </select><br>
+                </div>
+                <div class="flex-item">
+                    <b>Color(s):</b><br>
+                        <input type="checkbox" name="brun" id="brun" class="color-checkbox">
+                            <label for="brun" class="color-label brun"></label>
+                        <input type="checkbox" name="rouge" id="rouge" class="color-checkbox">
+                            <label for="rouge" class="color-label rouge"></label>
+                        <input type="checkbox" name="rose" id="rose" class="color-checkbox">
+                            <label for="rose" class="color-label rose"></label>
+                        <input type="checkbox" name="mauve" id="mauve" class="color-checkbox">
+                            <label for="mauve" class="color-label mauve"></label>
+                        <input type="checkbox" name="bleu" id="bleu" class="color-checkbox">
+                            <label for="bleu" class="color-label bleu"></label>
+                        <input type="checkbox" name="vert" id="vert" class="color-checkbox">
+                            <label for="vert" class="color-label vert"></label><br>
+                        <input type="checkbox" name="jaune" id="jaune" class="color-checkbox">
+                            <label for="jaune" class="color-label jaune"></label>
+                        <input type="checkbox" name="orange" id="orange" class="color-checkbox">
+                            <label for="orange" class="color-label orange"></label>
+                        <input type="checkbox" name="noir" id="noir" class="color-checkbox">
+                            <label for="noir" class="color-label noir"></label>
+                        <input type="checkbox" name="gris" id="gris" class="color-checkbox">
+                            <label for="gris" class="color-label gris"></label>
+                        <input type="checkbox" name="blanc" id="blanc" class="color-checkbox">
+                            <label for="blanc" class="color-label blanc"></label>
+                        <input type="checkbox" name="multicolore" id="multicolore" class="color-checkbox">
+                            <label for="multicolore" class="color-label multicolore"></label><br>
+                </div>
+                <div class="flex-item">
+                    <b><label for="age_group">Age Category:</label></b><br>
+                        <select name="age_group" id="age_group" required>
+                            <option value="">Choose category</option>
+                            <option value="child">Child</option>
+                            <option value="teen">Teenager</option>
+                            <option value="adult">Adult</option>
+                            <option value="N/A">N/A</option>
+                        </select><br>
+                </div>
+                <div class="flex-item bte_tableau">
+                    <b>Size(s):</b><br>
+                        <table border="1">
+                            <tr>
+                                <th>size</th>
+                                <th>child</th>
+                                <th>adult</th>
+                                <th>N/A</th>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> XX-small</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="XXpetit_enfant" name="XXpetit_enfant" placeholder="XXp-enfant"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="XXpetit_adulte" name="XXpetit_adulte" placeholder="XXp-adulte"></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> X-small</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="Xpetit_enfant" name="Xpetit_enfant" placeholder="Xp-enfant"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="Xpetit_adulte" name="Xpetit_adulte" placeholder="Xp-adulte"></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> small</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="petit_enfant" name="petit_enfant" placeholder="p-enfant"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="petit_adulte" name="petit_adulte" placeholder="p-adulte"></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> medium</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="moyen_enfant" name="moyen_enfant" placeholder="m-enfant"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="moyen_adulte" name="moyen_adulte" placeholder="m-adulte"></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> large</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="grand_enfant" name="grand_enfant" placeholder="g-enfant"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="grand_adulte" name="grand_adulte" placeholder="g-adulte"></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> X-large</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="Xgrand_enfant" name="Xgrand_enfant" placeholder="Xg-enfant"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="Xgrand_adulte" name="Xgrand_adulte" placeholder="Xg-adulte"></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> XX-large</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="XXgrand_enfant" name="XXgrand_enfant" placeholder="XXg-enfant"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="XXgrand_adulte" name="XXgrand_adulte" placeholder="XXg-adulte"></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> no size</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="sansGrandeur_enfant" name="sansGrandeur_enfant" placeholder="sansGrandeur-enfant"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="sansGrandeur_adulte" name="sansGrandeur_adulte" placeholder="sansGrandeur-adulte"></td>
+                                <td data-label="N/A"><input type="number" class="bte_tableau" id="sansGrandeur" name="sansGrandeur" placeholder="sans Grandeur"></td>
+                            </tr>
+                        </table>
+                </div>
+                <div class="flex-item">
+                    <b><label for="quantity">Total quantity:</label></b><br>
+                        <b><input type="text" id="quantity" name="quantity" readonly>{{grandTotal}}</b>
+                </div>
+                <div class="flex-item">
+                    <b><label for="localisation">Location:</label></b><br>
+                        <input type="text" id="localisation" name="localisation"><br><br>
+                </div>
+                <div class="flex-item">
+                    <b><label for="boite">Box:</label></b><br>
+                        <input type="text" id="boite" name="boite"><br><br>
+                </div>
+                <div class="flex-item">
+                    <b><label for="notes">Notes:</label></b><br>
+                        <textarea id="notes" name="notes" rows="2" cols="40"></textarea><br><br>
+                </div>
+                <div class="flex-item">
+                    <b><label for="upload_photo">Photo:</label></b>
+                        <input type="file" id="upload_photo"  name="upload_photo" class="form-control"><br><br>
+                </div>
+            </div>
+               <button type="submit" class="btn btn_roseFonce" id="button">SAVE</button>
+</form>
+
+
+
