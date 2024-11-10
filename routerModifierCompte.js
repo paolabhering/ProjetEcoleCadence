@@ -7,36 +7,30 @@ const db = require("./db"); // Import the db client from db.js
 router.use(express.urlencoded({ extended: true }));
 
 // Route to render the account modification form
-router.get("/modifierCompte/:id", async (req, res) => {
+router.get("/modifierCompte", async (req, res) => {
+    const userIdSession = req.session.user.user_id;
+    console.log("User id stored in session is", userIdSession); 
     const userId = req.params.id;
     console.log("User ID:", userId); // Vérification de l'ID
 
     try {
         // Obtenir les informations de l'utilisateur et du groupe directement
-        //const userResult = await db.execute("SELECT * FROM users WHERE user_id = ?", [userId]);
-        //const groupResult = await db.execute("SELECT * FROM groupes WHERE user_id = ?", [userId]);
-        const userResult = await db.execute({
-            sql: `SELECT * FROM users WHERE user_id = :userId`,
-            args: {
-                userId: userId,
-            },
-        });
+        const user = await db.execute("SELECT * FROM users WHERE user_id = ?", [userIdSession]);
+        const group = await db.execute("SELECT * FROM groupes WHERE user_id = ?", [userIdSession]);
         
-        console.log("user result is " + userResult[0]);
-        // Vérifiez si des utilisateurs ont été trouvés
-        if (!userResult || userResult.length === 0 || !userResult[0].length) {
-            console.error("Utilisateur non trouvé pour ID :", userId);
-            return res.status(404).send("Utilisateur non trouvé");
-        }
+        const userResult = user.rows[0];
+        const groupResult = group.rows[0];
+        
+        console.log("user result is ", userResult);
+        console.log("user result is ", groupResult);
+        
 
-        // Récupération des données utilisateur et groupe
-        const user = userResult[0][0]; // Premier utilisateur trouvé
-        const group = groupResult[0].length ? groupResult[0][0].nom : "";
+       
 
         // Rendu de la page avec les données récupérées
         res.render("modifierCompte", {
-            user,
-            group
+            userResult,
+            groupResult
         });
     } catch (error) {
         console.error("Erreur pendant l'opération DB :", error);
