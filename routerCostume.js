@@ -22,15 +22,40 @@ router.get("/catalogue", ensureAuthenticated, async function(req,res) {
         LEFT JOIN grandeurs g ON c.costume_id = g.costume_id
         GROUP BY c.costume_id`)
 
+        let groupesUser = [];
+        // Si l'utilisateur est connecté, récupérez ses groupes
+        if(userId) {
+          const { rows: groupes } = await db.execute(`
+            SELECT nom
+            FROM groupes
+            WHERE user_id = :user_id`, { user_id: userId });
+          groupesUser = groupes.map(groupe => groupe.nom);
+        }
+        console.log("Nom des groupes:", groupesUser);
+
         let likedCostumeIds = [];
-        // Si l'utilisateur est connecté, récupérez ses likes
+        // Si l'utilisateur est connecté, récupérer ses likes
         if(userId) {
         const { rows: likes } = await db.execute(`
           SELECT costume_id 
           FROM likes
           WHERE user_id = :user_id`, { user_id: userId });
         likedCostumeIds = likes.map(like => like.costume_id);
-    }
+        }
+
+        let favoriteCostumeIds = [];
+        // si l'utilsateur est connecté, récupérer ses favoris
+        if(userId) {
+          const { rows: favorites } = await db.execute(`
+            SELECT f.costume_id
+            FROM favorites f
+            JOIN costumes c ON f.costume_id = c.costume_id
+            JOIN groupes g ON f.group_id = g.groupe_id
+            WHERE g.user_id = :user_id`, {user_id: userId});
+          
+          favoriteCostumeIds = favorites.map(favorite => favorite.costume_id);
+        }
+    console.log("Costumes favoris:", favoriteCostumeIds);
     console.log("Liked Costume IDs:", likedCostumeIds);
 
 
@@ -48,7 +73,7 @@ router.get("/catalogue", ensureAuthenticated, async function(req,res) {
           res.render("catalogue", {groupeCostume: rows, likedCostumeIds, userId, userLangue});  
           
       } else {
-        res.render("catalogueEN", {groupeCostume: rows, likedCostumeIds, userId, userLangue});
+        res.render("catalogueEN", {groupeCostume: rows, likedCostumeIds, userId, userLangue, favoriteCostumeIds});
       }
 
 

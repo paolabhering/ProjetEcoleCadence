@@ -16,7 +16,7 @@
                         <img src="/static/img/plusBlanc.png" alt="plus" class="plusB">
                         <img src="/static/img/plusRose.png" alt="plus" class="plusR" hidden >
                         <img src="/static/img/coeurBlanc.png" alt="coeur" class="coeurB"> 
-                        <img src="/static/img/coeurRose.png" alt="coeur" class="coeurR" hidden> 
+                        <img src="/static/img/coeurRosePlein.png" alt="coeur" class="coeurR" hidden> 
                     </div>
 
                     <div class="info-container">
@@ -25,7 +25,7 @@
                             Localisation : {{#if this.localisation}}{{this.localisation}}{{else}}N/A{{/if}}
                     </div>
                     <div class="container-ajoutFavori" hidden>
-                        <label for="groupes">Choisir le groupe à mettre pour le favori</label>
+                        <label for="groupes">Costume favori pour le groupe:</label>
                             <select name="groupes" class="select-group">
                                 <option value="">Sélectionner</option>
                                 {{#each groupe}}
@@ -33,7 +33,10 @@
                                 {{/each}}
                             </select>
                     </div>
-            </ul>
+                    {{!-- J'aimerais afficher le nom du groupe favori pour ce costume ici --}}
+                    <div class="groupe-info" hidden>
+                        <label for="favoriteCostumeGroup">{{{groupe.nom}}}</label>
+                    </div>
         </div>
     {{/each}}
 </div>
@@ -43,6 +46,30 @@
  <script>
     const user_id = {{{userId}}};
     const likedCostumeIds = {{{json likedCostumeIds}}};
+    const groupes = {{{json groupesUser}}};
+    const favoriteCostumeIds = {{{json favoriteCostumeIds}}};
+
+     console.log("costumes favoris: ",favoriteCostumeIds);            
+     //Envoyer une requête AJAX pour ajouter les groupes au favori
+
+    fetch('/groupes')
+        .then(response => response.json())
+        .then(groupes => {
+            console.log('Données des groupes récupérées:', groupes);
+            // Mettre à jour le select avec les groupes récupérés
+            const selectGroupes = document.querySelectorAll('.select-group');
+            selectGroupes.forEach(select => {
+                groupes.forEach(groupe => {
+                const option = document.createElement('option');
+                    option.value = groupe.groupe_id;
+                    option.textContent = groupe.nom;
+                    select.appendChild(option);
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Erreur lors de la récupération des groupes:', error);
+        });
 
     document.querySelectorAll('.grid-item').forEach(item => {
     
@@ -58,17 +85,31 @@
         const plusBlanc = item.querySelector('.plusB');
         const plusRose = item.querySelector('.plusR');
         const ajoutFavori = item.querySelector(".container-ajoutFavori");
+        const favoriteCostumeGroupe = item.querySelector(".groupe-info");
         
+
+         // Vérifiez si le costume est favori
+        if (favoriteCostumeIds.includes(parseInt(costume_id))) {
+            plusBlanc.hidden = true;  
+            plusRose.hidden = false; 
+
+        } else {
+            plusBlanc.hidden = false;  
+            plusRose.hidden = true;     
+        }
+
         plusBlanc.addEventListener('click', () => {
             plusBlanc.hidden = true;
             plusRose.hidden = false; 
-            ajoutFavori.hidden = false;   
+            ajoutFavori.hidden = false; 
+            favoriteCostumeIds.push(costume_id); 
         });
 
         plusRose.addEventListener('click', () => {
             plusRose.hidden = true;
             plusBlanc.hidden = false;  
-            ajoutFavori.hidden = true;    
+            ajoutFavori.hidden = true; 
+            favoriteCostumeIds = favoriteCostumeIds.filter(id => id !== costume_id);   
         });
 
         const coeurBlanc = item.querySelector('.coeurB');
