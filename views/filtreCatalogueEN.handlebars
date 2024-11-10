@@ -1,0 +1,170 @@
+{{> headerAdEN}}
+
+<form action="/filtre" method="POST" id="filtreCatalogue">
+    <h3>Add filters</h3>
+        <div class="flex-container">
+                <div class="flex-item">
+                    <b><label for="category">Category:</label></b><br>
+                        <select name="category" id="category">
+                            <option value="">Choose a category</option>
+                            <option value="Accessoires">Accessories</option>
+                            <option value="Bas du corps">Lower Body</option>
+                            <option value="Casse-noisette">Nutcracker</option>
+                            <option value="Haut de corps">Upper Body</option>
+                            <option value="Jupe">Skirt</option>
+                            <option value="Maillot">Leotard</option>
+                            <option value="Pieds">Feet</option>
+                            <option value="Robe">Dress</option>
+                            <option value="Tête">Head</option>
+                            <option value="Autre">Other</option>
+                        </select>
+                </div>
+                <div class="flex-item">
+                    <b><label for="quantity">Minimal quantity:</label></b><br>
+                        <b><input type="number" id="quantityMin" name="quantityMin" min="0"></b>
+                </div>
+                <div class="flex-item">
+                    <b><label for="age_group">Age group:</label></b><br>
+                        <select name="age_group" id="age_group">
+                            <option value="">Chose the category</option>
+                            <option value="enfant">Child</option>
+                            <option value="ado">Teen</option>
+                            <option value="adulte">Adult</option>
+                            <option value="N/A">N/A</option>
+                        </select>
+                </div>
+                <div class="flex-item">
+                    <label for="filtreMot" hidden></label><br>
+                        <div class="input-with-placeholder">
+                            <input type="text" id="filtreMot" name="filtreMot" class="input-with-placeholder" placeholder="Filtre par mot clé">
+                            <img class="placeholder-image" src="../static/img/loupeRose.png" alt="Loupe">
+                        </div>
+                </div>
+                <div class="flex-item">
+                    <b>Couleur(s):</b><br><br>
+                        <input type="checkbox" name="color[]" value="brun" id="brun" class="color-checkbox">
+                            <label for="brun" class="color-label brun"></label>
+                        <input type="checkbox" name="color[]" value="rouge" id="rouge" class="color-checkbox">
+                            <label for="rouge" class="color-label rouge"></label>
+                        <input type="checkbox" name="color[]" value="rose" id="rose" class="color-checkbox">
+                            <label for="rose" class="color-label rose"></label>
+                        <input type="checkbox" name="color[]" value="mauve" id="mauve" class="color-checkbox">
+                            <label for="mauve" class="color-label mauve"></label>
+                        <input type="checkbox" name="color[]" value="bleu" id="bleu" class="color-checkbox">
+                            <label for="bleu" class="color-label bleu"></label>
+                        <input type="checkbox" name="color[]" value="vert" id="vert" class="color-checkbox">
+                            <label for="vert" class="color-label vert"></label><br>
+                        <input type="checkbox" name="color[]" value="jaune" id="jaune" class="color-checkbox">
+                            <label for="jaune" class="color-label jaune"></label>
+                        <input type="checkbox" name="color[]" value="orange" id="orange" class="color-checkbox">
+                            <label for="orange" class="color-label orange"></label>
+                        <input type="checkbox" name="color[]" value="noir" id="noir" class="color-checkbox">
+                            <label for="noir" class="color-label noir"></label>
+                        <input type="checkbox" name="color[]" value="gris" id="gris" class="color-checkbox">
+                            <label for="gris" class="color-label gris"></label>
+                        <input type="checkbox" name="color[]" value="blanc" id="blanc" class="color-checkbox">
+                            <label for="blanc" class="color-label blanc"></label>
+                        <input type="checkbox" name="color[]" value="multicolore" id="multicolore" class="color-checkbox">
+                            <label for="multicolore" class="color-label multicolore"></label><br>
+                </div>
+            <div class="flex-item btn">
+               <button type="submit" class="btn" id="buttonFiltre" value="recherche">FILTER</button>
+            </div>
+</form>
+
+
+<script>
+    const user_id = {{{userId}}};
+    const likedCostumeIds = {{{json likedCostumeIds}}};
+
+    document.querySelectorAll('.grid-item').forEach(item => {
+    
+        const costume_id = Number(item.getAttribute('data-costume-id'));
+        
+        item.addEventListener('mouseenter', () => {
+            item.querySelector('.info-container').style.display = 'block';
+        });
+        item.addEventListener('mouseleave', () => {
+            item.querySelector('.info-container').style.display = 'none';
+        });
+
+        const plusBlanc = item.querySelector('.plusB');
+        const plusRose = item.querySelector('.plusR');
+        const ajoutFavori = item.querySelector(".container-ajoutFavori");
+        
+        plusBlanc.addEventListener('click', () => {
+            plusBlanc.hidden = true;
+            plusRose.hidden = false; 
+            ajoutFavori.hidden = false;   
+        });
+
+        plusRose.addEventListener('click', () => {
+            plusRose.hidden = true;
+            plusBlanc.hidden = false;  
+            ajoutFavori.hidden = true;    
+        });
+
+        const coeurBlanc = item.querySelector('.coeurB');
+        const coeurRose = item.querySelector('.coeurR');
+        
+         // Vérifiez si le costume est aimé
+        if (likedCostumeIds.includes(parseInt(costume_id))) {
+            coeurBlanc.hidden = true;  
+            coeurRose.hidden = false;   
+        } else {
+            coeurBlanc.hidden = false;  
+            coeurRose.hidden = true;     
+        }
+
+        coeurBlanc.addEventListener('click', () => {
+            coeurBlanc.hidden = true;
+            coeurRose.hidden = false;    
+
+            //Envoyer une requête AJAX pour ajouter le like
+           
+
+            fetch('/ajouterLike', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ user_id, costume_id }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                likedCostumeIds.push(costume_id);
+                console.log("bob");
+            })
+            .catch((error) => {
+                console.error('Erreur:', error);
+            });
+        });
+        coeurRose.addEventListener('click', () => {
+            coeurRose.hidden = true;
+            coeurBlanc.hidden = false;     
+       
+        // envoyer une requête ajax pour enlever le like
+
+            
+            fetch('/enleverLike', {
+                method: 'post',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body: JSON.stringify({ user_id, costume_id }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                likedCostumeIds = likedCostumeIds.filter(id => id !== costume_id);
+                console.log("bob2");
+            })
+            .catch((error) => {
+                console.error('erreur:', error);
+            });
+        });
+    });
+
+ </script>
+
