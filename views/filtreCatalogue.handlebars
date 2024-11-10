@@ -1,141 +1,79 @@
-<script>
-    window.onload = () => {
-
-        document.getElementById("btnEnglish").addEventListener("click", () => switchLanguage("en"));
-        document.getElementById("btnFrench").addEventListener("click", () => switchLanguage("fr"));
-    };
-
-    function switchLanguage(lang) {
-        document.querySelectorAll("[data-en]").forEach(element => {
-            element.textContent = element.getAttribute(`data-${lang}`);
-        });
-    }
-</script>
-
-
-<div class="entete"> 
-        <img src="../../static/img/imageEnteteLogo.png" alt="Logo" class="imageEntete">  
-        <img src="../../static/img/logoNoir.png" alt="Logo" class="logoNoir" width="190" height="140" hidden>
- </div>  
-
- 
-    <nav class="navbar navbar-expand-sm" id="barreNavig">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <button type="button" class="btn btn-rose" data-en="Administrator Menu" data-fr="Menu administrateur" id="btn-admin" href="/admin"><b>Menu Administrateur</b></button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" class="btn btn-rose" data-en="My account" data-fr="Mon compte" href="/"><b>Mon compte</b></button>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <button type="button" class="btn btn-rose nav-link dropdown-toggle active" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <b>Costumes</b></button>
-                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-					            <li><a class="dropdown-item" data-en="All" data-fr="Tous" href="/catalogue"><b>Tous</b></a></li>
-					            <li><a class="dropdown-item" data-en="Filter" data-fr="Filtre" href="/filtre"><b>Filtre</b></a></li>
-                            </ul>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" class="btn btn-dark nav-link" data-en="Logout" data-fr="Déconnexion" onclick="window.location.href='/logout'">Déconnexion</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-
-<div style="text-align: center; margin-top: 20px;">
-    <button id="btnEnglish" class="lang-button">English</button>
-    <button id="btnFrench" class="lang-button">Français</button>
-</div>
-
-
+{{> headerAd}}
 
 <form action="/filtre" method="POST" id="filtreCatalogue">
-    <h3 data-en="Add Filters" data-fr="Ajouter des filtres">Ajouter des filtres</h3>
-    <div class="flex-container">
-        <div class="flex-item">
-            <b><label for="category" data-en="Category" data-fr="Catégorie:">Catégorie:</label></b><br>
-            <select name="category" id="category">
-                <option value="" data-en="Choose category" data-fr="Choisir la catégorie">Choisir la catégorie</option>
-                <option value="Accessoires" data-en="Accessories" data-fr="Accessoires">Accessoires</option>
-                <option value="Bas du corps" data-en="Lower body" data-fr="Bas du corps">Bas du corps</option>
-                <option value="Casse-noisette" data-en="Nutcracker" data-fr="Casse-noisette">Casse-noisette</option>
-                <option value="Haut de corps" data-en="Upper body" data-fr="Haut de corps">Haut de corps</option>
-                <option value="Jupe" data-en="Skirt" data-fr="Jupe">Jupe</option>
-                <option value="Maillot" data-en="Swimsuit" data-fr="Maillot">Maillot</option>
-                <option value="Pieds" data-en="Feet" data-fr="Pieds">Pieds</option>
-                <option value="Robe" data-en="Dress" data-fr="Robe">Robe</option>
-                <option value="Tête" data-en="Head" data-fr="Tête">Tête</option>
-                <option value="Autre" data-en="Other" data-fr="Autre">Autre</option>
-            </select>
-        </div>
-        <div class="flex-item">
-            <b><label for="quantity" data-en="Minimum quantity" data-fr="Quantité minimum:">Quantité minimum:</label></b><br>
-            <b><input type="number" id="quantityMin" name="quantityMin" min="0"></b>
-        </div>
-        <div class="flex-item">
-            <b><label for="age_group" data-en="Age category" data-fr="Catégorie d'âge:">Catégorie d'âge:</label></b><br>
-            <select name="age_group" id="age_group">
-                <option value="" data-en="Choose category" data-fr="Choisir la catégorie">Choisir la catégorie</option>
-                <option value="enfant" data-en="Child" data-fr="Enfant">Enfant</option>
-                <option value="ado" data-en="Teenager" data-fr="Adolescent">Adolescent</option>
-                <option value="adulte" data-en="Adult" data-fr="Adulte">Adulte</option>
-                <option value="N/A" data-en="N/A" data-fr="N/A">N/A</option>
-            </select>
-        </div>
-        <div class="flex-item">
-            <label for="filtreMot" hidden></label><br>
-            <div class="input-with-placeholder">
-                <input type="text" id="filtreMot" name="filtreMot" class="input-with-placeholder" placeholder="Filtre par mot clé" data-en="Filter by keyword" data-fr="Filtre par mot clé">
-                <img class="placeholder-image" src="../static/img/loupeRose.png" alt="Loupe" data-en="Magnifying glass" data-fr="Loupe">
+    <h3>Ajouter des filtres</h3>
+        <div class="flex-container">
+                <div class="flex-item">
+                    <b><label for="category">Catégorie:</label></b><br>
+                        <select name="category" id="category">
+                            <option value="">Choisir la catégorie</option>
+                            <option value="Accessoires">Accessoires</option>
+                            <option value="Bas du corps">Bas du corps</option>
+                            <option value="Casse-noisette">Casse-noisette</option>
+                            <option value="Haut de corps">Haut de corps</option>
+                            <option value="Jupe">Jupe</option>
+                            <option value="Maillot">Maillot</option>
+                            <option value="Pieds">Pieds</option>
+                            <option value="Robe">Robe</option>
+                            <option value="Tête">Tête</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                </div>
+                <div class="flex-item">
+                    <b><label for="quantity">Quantité minimum:</label></b><br>
+                        <b><input type="number" id="quantityMin" name="quantityMin" min="0"></b>
+                </div>
+                <div class="flex-item">
+                    <b><label for="age_group">Catégorie d'âge:</label></b><br>
+                        <select name="age_group" id="age_group">
+                            <option value="">Choisir la catégorie</option>
+                            <option value="enfant">Enfant</option>
+                            <option value="ado">Adolescent</option>
+                            <option value="adulte">Adulte</option>
+                            <option value="N/A">N/A</option>
+                        </select>
+                </div>
+                <div class="flex-item">
+                    <label for="filtreMot" hidden></label><br>
+                        <div class="input-with-placeholder">
+                            <input type="text" id="filtreMot" name="filtreMot" class="input-with-placeholder" placeholder="Filtre par mot clé">
+                            <img class="placeholder-image" src="../static/img/loupeRose.png" alt="Loupe">
+                        </div>
+                </div>
+                <div class="flex-item">
+                    <b>Couleur(s):</b><br><br>
+                        <input type="checkbox" name="color[]" value="brun" id="brun" class="color-checkbox">
+                            <label for="brun" class="color-label brun"></label>
+                        <input type="checkbox" name="color[]" value="rouge" id="rouge" class="color-checkbox">
+                            <label for="rouge" class="color-label rouge"></label>
+                        <input type="checkbox" name="color[]" value="rose" id="rose" class="color-checkbox">
+                            <label for="rose" class="color-label rose"></label>
+                        <input type="checkbox" name="color[]" value="mauve" id="mauve" class="color-checkbox">
+                            <label for="mauve" class="color-label mauve"></label>
+                        <input type="checkbox" name="color[]" value="bleu" id="bleu" class="color-checkbox">
+                            <label for="bleu" class="color-label bleu"></label>
+                        <input type="checkbox" name="color[]" value="vert" id="vert" class="color-checkbox">
+                            <label for="vert" class="color-label vert"></label><br>
+                        <input type="checkbox" name="color[]" value="jaune" id="jaune" class="color-checkbox">
+                            <label for="jaune" class="color-label jaune"></label>
+                        <input type="checkbox" name="color[]" value="orange" id="orange" class="color-checkbox">
+                            <label for="orange" class="color-label orange"></label>
+                        <input type="checkbox" name="color[]" value="noir" id="noir" class="color-checkbox">
+                            <label for="noir" class="color-label noir"></label>
+                        <input type="checkbox" name="color[]" value="gris" id="gris" class="color-checkbox">
+                            <label for="gris" class="color-label gris"></label>
+                        <input type="checkbox" name="color[]" value="blanc" id="blanc" class="color-checkbox">
+                            <label for="blanc" class="color-label blanc"></label>
+                        <input type="checkbox" name="color[]" value="multicolore" id="multicolore" class="color-checkbox">
+                            <label for="multicolore" class="color-label multicolore"></label><br>
+                </div>
+            <div class="flex-item btn">
+               <button type="submit" class="btn" id="buttonFiltre" value="recherche">FILTRER</button>
             </div>
-        </div>
-        <div class="flex-item">
-            <b data-en="Color(s):" data-fr="Couleur(s):">Couleur(s):</b><br><br>
-            <input type="checkbox" name="color[]" value="brun" id="brun" class="color-checkbox">
-            <label for="brun" class="color-label brun"></label>
-            <input type="checkbox" name="color[]" value="rouge" id="rouge" class="color-checkbox">
-            <label for="rouge" class="color-label rouge"></label>
-            <input type="checkbox" name="color[]" value="rose" id="rose" class="color-checkbox">
-            <label for="rose" class="color-label rose"></label>
-            <input type="checkbox" name="color[]" value="mauve" id="mauve" class="color-checkbox">
-            <label for="mauve" class="color-label mauve"></label>
-            <input type="checkbox" name="color[]" value="bleu" id="bleu" class="color-checkbox">
-            <label for="bleu" class="color-label bleu"></label>
-            <input type="checkbox" name="color[]" value="vert" id="vert" class="color-checkbox">
-            <label for="vert" class="color-label vert"></label><br>
-            <input type="checkbox" name="color[]" value="jaune" id="jaune" class="color-checkbox">
-            <label for="jaune" class="color-label jaune"></label>
-            <input type="checkbox" name="color[]" value="orange" id="orange" class="color-checkbox">
-            <label for="orange" class="color-label orange"></label>
-            <input type="checkbox" name="color[]" value="noir" id="noir" class="color-checkbox">
-            <label for="noir" class="color-label noir"></label>
-            <input type="checkbox" name="color[]" value="gris" id="gris" class="color-checkbox">
-            <label for="gris" class="color-label gris"></label>
-            <input type="checkbox" name="color[]" value="blanc" id="blanc" class="color-checkbox">
-            <label for="blanc" class="color-label blanc"></label>
-            <input type="checkbox" name="color[]" value="multicolore" id="multicolore" class="color-checkbox">
-            <label for="multicolore" class="color-label multicolore"></label><br>
-        </div>
-        <div class="flex-item btn">
-            <button type="submit" class="btn" id="buttonFiltre" value="recherche" data-en="Filter" data-fr="FILTRER">FILTRER</button>
-        </div>
-    </div>
 </form>
 
 
-
-
 <script>
-
-    
-
     const user_id = {{{userId}}};
     const likedCostumeIds = {{{json likedCostumeIds}}};
 
