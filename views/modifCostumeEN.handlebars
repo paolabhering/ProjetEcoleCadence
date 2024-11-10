@@ -1,0 +1,212 @@
+{{> headerAdEN}}
+
+<form action="/modif/{{costume.costume_id}}" enctype="multipart/form-data" method="POST" id="modifCostume">
+    <h3>Costume modification or deletion form</h3>
+        <div class="flex-container">
+                <div class="flex-item">
+                    <b><label for="titre">Title:</label></b><br>
+                    <input type="text" id="titre" name="titre" value="{{costume.titre}}" requires><br><br>
+                </div>
+                <div class="flex-item">
+                    <b><label for="category">Category:</label></b><br>
+                        <select name="category" id="category" required>
+                            <option value="">Chose the category</option>
+                            <option value="">Chose the category</option>
+                            <option value="Accessoires" {{#if (eq costume.category "Accessoires")}}selected{{/if}}>Accessories</option>
+                            <option value="Bas du corps" {{#if (eq costume.category "Bas du corps")}}selected{{/if}}>Lower body</option>
+                            <option value="Casse-noisette" {{#if (eq costume.category "Casse-noisette")}}selected{{/if}}>Nutcracker</option>
+                            <option value="Haut de corps" {{#if (eq costume.category "Haut de corps")}}selected{{/if}}>Upper body</option>
+                            <option value="Jupe" {{#if (eq costume.category "Jupe")}}selected{{/if}}>Skirt</option>
+                            <option value="Maillot" {{#if (eq costume.category "Maillot")}}selected{{/if}}>Maillot</option>
+                            <option value="Pieds" {{#if (eq costume.category "Pieds")}}selected{{/if}}>Feet</option>
+                            <option value="Robe" {{#if (eq costume.category "Robe")}}selected{{/if}}>Dress</option>
+                            <option value="Tête" {{#if (eq costume.category "Tête")}}selected{{/if}}>Head</option>
+                            <option value="Autre" {{#if (eq costume.category "Autre")}}selected{{/if}}>Other</option>
+                        </select><br>
+                </div>
+                <div class="flex-item">
+                    <b>Color(s):</b><br>
+                        <input type="checkbox" name="brun" id="brun" class="color-checkbox" {{#if (includes couleurs "brun")}}checked{{/if}}>
+                            <label for="brun" class="color-label brun"></label>
+                        <input type="checkbox" name="rouge" id="rouge" class="color-checkbox" {{#if (includes couleurs "rouge")}}checked{{/if}}>
+                            <label for="rouge" class="color-label rouge"></label>
+                        <input type="checkbox" name="rose" id="rose" class="color-checkbox" {{#if (includes couleurs "rose")}}checked{{/if}}>
+                            <label for="rose" class="color-label rose"></label>
+                        <input type="checkbox" name="mauve" id="mauve" class="color-checkbox" {{#if (includes couleurs "mauve")}}checked{{/if}}>
+                            <label for="mauve" class="color-label mauve"></label>
+                        <input type="checkbox" name="bleu" id="bleu" class="color-checkbox" {{#if (includes couleurs "bleu")}}checked{{/if}}>
+                            <label for="bleu" class="color-label bleu"></label>
+                        <input type="checkbox" name="vert" id="vert" class="color-checkbox" {{#if (includes couleurs "vert")}}checked{{/if}}>
+                            <label for="vert" class="color-label vert"></label><br>
+                        <input type="checkbox" name="jaune" id="jaune" class="color-checkbox" {{#if (includes couleurs "jaune")}}checked{{/if}}>
+                            <label for="jaune" class="color-label jaune"></label>
+                        <input type="checkbox" name="orange" id="orange" class="color-checkbox" {{#if (includes couleurs "orange")}}checked{{/if}}>
+                            <label for="orange" class="color-label orange"></label>
+                        <input type="checkbox" name="noir" id="noir" class="color-checkbox" {{#if (includes couleurs "noir")}}checked{{/if}}>
+                            <label for="noir" class="color-label noir"></label>
+                        <input type="checkbox" name="gris" id="gris" class="color-checkbox" {{#if (includes couleurs "gris")}}checked{{/if}}>
+                            <label for="gris" class="color-label gris"></label>
+                        <input type="checkbox" name="blanc" id="blanc" class="color-checkbox" {{#if (includes couleurs "blanc")}}checked{{/if}}>
+                            <label for="blanc" class="color-label blanc"></label>
+                        <input type="checkbox" name="multicolore" id="multicolore" class="color-checkbox" {{#if (includes couleurs "multicolore")}}checked{{/if}}>
+                            <label for="multi" class="color-label multicolore"></label><br>
+                </div>
+                <div class="flex-item">
+                    <b><label for="age_group">Age group:</label></b><br>
+                        <select name="age_group" id="age_group" required>
+                            <option value="">Chose the category</option>
+                            <option value="enfant" {{#if (eq costume.age_group "enfant")}}selected{{/if}}>Child</option>
+                            <option value="ado" {{#if (eq costume.age_group "ado")}}selected{{/if}}>Teen</option>
+                            <option value="adulte" {{#if (eq costume.age_group "adulte")}}selected{{/if}}>Adult</option>
+                            <option value="N/A" {{#if (eq costume.age_group "N/A")}}selected{{/if}}>N/A</option>
+                        </select><br>
+                </div>
+                <div class="flex-item">
+                    <b>Size(s):</b><br>
+                        <table border="1">
+                            <tr>
+                                <th>size</th>
+                                <th>child</th>
+                                <th>adult</th>
+                                <th>N/A</th>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> XX-small</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="XXpetit_enfant" name="XXpetit_enfant" value="{{quantites.XXpetit_enfant}}"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="XXpetit_adulte" name="XXpetit_adulte" value="{{quantites.XXpetit_adulte}}"></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> X-small</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="Xpetit_enfant" name="Xpetit_enfant" value="{{quantites.Xpetit_enfant}}"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="Xpetit_adulte" name="Xpetit_adulte" value="{{quantites.Xpetit_adulte}}"></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> small</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="petit_enfant" name="petit_enfant" value="{{quantites.petit_enfant}}"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="petit_adulte" name="petit_adulte" value="{{quantites.petit_adulte}}"></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> medium</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="moyen_enfant" name="moyen_enfant" value="{{quantites.moyen_enfant}}"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="moyen_adulte" name="moyen_adulte" value="{{quantites.moyen_adulte}}"></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> large</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="grand_enfant" name="grand_enfant" value="{{quantites.grand_enfant}}"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="grand_adulte" name="grand_adulte" value="{{quantites.grand_adulte}}"></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> X-large</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="Xgrand_enfant" name="Xgrand_enfant" value="{{quantites.Xgrand_enfant}}"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="Xgrand_adulte" name="Xgrand_adulte" value="{{quantites.Xgrand_adulte}}"></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> XX-large</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="XXgrand_enfant" name="XXgrand_enfant" value="{{quantites.XXgrand_enfant}}"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="XXgrand_adulte" name="XXgrand_adulte" value="{{quantites.XXgrand_adulte}}"></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Grandeur"> no size</td>
+                                <td data-label="Enfant"><input type="number" class="bte_tableau" id="sansGrandeur_enfant" name="sansGrandeur_enfant" value="{{quantites.sansGrandeur_enfant}}"></td>
+                                <td data-label="Adulte"><input type="number" class="bte_tableau" id="sansGrandeur_adulte" name="sansGrandeur_adulte" value="{{quantites.sansGrandeur_adulte}}"></td>
+                                <td data-label="N/A"><input type="number" class="bte_tableau" id="sansGrandeur" name="sansGrandeur" value="{{quantites.sansGrandeur}}"></td>
+                            </tr>
+                        </table>
+                </div>
+                <div class="flex-item">
+                    <b><label for="quantity">Total quantity:</label></b><br>
+                        <b><input type="text" id="quantity" name="quantity" readonly></b><br><br>
+                </div>
+                <div class="flex-item">
+                    <b><label for="localisation">Location:</label></b><br>
+                        <input type="text" id="localisation" name="localisation" value="{{#if costume.localisation}}{{costume.localisation}}{{else}}N/A{{/if}}"><br><br>
+                </div>
+                <div class="flex-item">
+                    <b><label for="boite">Box:</label></b><br>
+                        <input type="text" id="boite" name="boite" value="{{#if costume.boite}}{{costume.boite}}{{else}}N/A{{/if}}"><br><br>
+                </div>
+                <div class="flex-item">
+                    <b><label for="notes">Notes:</label></b><br>
+                        <textarea id="notes" name="notes" rows="2" cols="40">{{#if costume.notes}}{{costume.notes}}{{else}}N/A{{/if}}</textarea><br><br>
+                </div>
+                <div class="flex-item">
+                    <b>Current image:</b>
+                    <img src="{{costume.imagePath}}" alt="Image de {{costume.titre}}" style="max-width: 200px; max-height: 200px;"><br><br>
+                </div>
+                <div class="flex-item colonneCache">
+                    <input type="hidden" name="costume_id" value="{{costume.costume_id}}">
+                </div>
+                <div class="flex-item">
+                    <b><label for="upload_photo">Upload a new photo:</label></b>
+                    <input type="file" id="upload_photo" name="upload_photo" class="form-control"><br><br>
+                </div>
+            <div class="flex-item">
+                <button type="button" class="btn btn_grisFonce" id="buttonSupprimer" onclick="confirmSuppression()">REMOVE THE COSTUME</button>
+            </div>
+            <div class="flex-item">
+               <button type="submit" class="btn btn_roseFonce" id="buttonEngModif" value="save">SAVE MODIFICATIONS</button>
+            </div>
+            <!-- Modal -->
+            <div id="deleteModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" id="modalClose">&times;</span>
+                    <h2>Removal Confirmation</h2>
+                    <p>Are you sure you want to permanently remove the costume?</p>
+                    <button id="confirmDelete" class="btn btn_roseFonce">Yes, remove</button><br>
+                    <button id="cancelDelete" class="btn btn_grisFonce">No, cancel</button>
+                </div>
+            </div>
+        </div>
+</form>
+
+<script>
+    
+    function calculerQuantiteTotale() {
+        let total = 0;
+        const inputs = document.querySelectorAll('.bte_tableau');
+        
+        inputs.forEach(input => {
+            total += parseInt(input.value) || 0; 
+        });
+        document.getElementById('quantity').value = total;
+    }
+    document.querySelectorAll('.bte_tableau').forEach(input => {
+        input.addEventListener('input', calculerQuantiteTotale);
+    });
+
+    calculerQuantiteTotale();
+
+
+    function confirmSuppression() {
+        const modal = document.getElementById("deleteModal");
+        modal.style.display = "block"; // Affiche le modal
+
+        const confirmButton = document.getElementById("confirmDelete");
+        const cancelButton = document.getElementById("cancelDelete");
+        const modalClose = document.getElementById("modalClose");
+
+        confirmButton.onclick = function() {
+            const costume_id = document.querySelector('input[name="costume_id"]').value;
+            document.getElementById('modifCostume').action = `/delete/${costume_id}`;
+            document.getElementById('modifCostume').submit();
+        }
+
+        cancelButton.onclick = function() {
+            modal.style.display = "none"; // Ferme le modal
+        }
+
+        modalClose.onclick = function() {
+            modal.style.display = "none"; // Ferme le modal si l'utilisateur clique sur la croix
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none"; // Ferme le modal si l'utilisateur clique à l'extérieur
+            }
+        }
+    }
+
+</script>
+
+
+
