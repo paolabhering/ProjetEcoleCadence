@@ -7,7 +7,12 @@
   
 </script>
 
-{{> headerAdEN}} 
+{{#if (eq userRole "administrateur")}}
+    {{> headerAdEN}}
+{{else if (eq userRole "professeur")}}
+    {{> headerEN}}
+{{/if}}
+
 
 <div class="grid-container-detail">
     <div class="image-container">
