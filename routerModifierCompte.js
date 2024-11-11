@@ -27,23 +27,26 @@ router.get("/modifierCompte", async (req, res) => {
         
 
         const query = await db.execute(
-            `SELECT langue FROM users WHERE user_id = ?`,
+            `SELECT langue,role FROM users WHERE user_id = ?`,
             [userIdSession] 
         );
 
         const result = query.rows[0];
         const userLangue = result.langue;
+        const userRole = result.role;
         console.log("User's chosen language is:", userLangue);
         if (userLangue === 'fr') {
             res.render("modifierCompte", {
                 userResult,
-                group: groupResult.nom
+                group: groupResult.nom,
+                userRole
             });
           
       } else {
         res.render("modifierCompteEN", {
             userResult,
-            group: groupResult.nom
+            group: groupResult.nom,
+            userRole
         });
       }
        
