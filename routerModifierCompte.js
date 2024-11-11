@@ -2,12 +2,13 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const db = require("./db"); // Import the db client from db.js
+const { ensureAuthenticated, restrictToRole } = require("./session");
 
 // Middleware to parse URL-encoded data
 router.use(express.urlencoded({ extended: true }));
 
 // Route to render the account modification form
-router.get("/modifierCompte", async (req, res) => {
+router.get("/modifierCompte", ensureAuthenticated,restrictToRole("administrateur"), async (req, res) => {
     const userIdSession = req.session.user.user_id;
     console.log("User id stored in session is", userIdSession); 
     const userId = req.params.id;
