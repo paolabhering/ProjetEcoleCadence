@@ -7,7 +7,6 @@ const router = express.Router();
 
  const exphbs = require("express-handlebars");
 
-
 const storage =  multer.diskStorage({   
     destination : (req, file, cb) => {
         cb(null, './static/img/')           //télcharge le fichier en l'envoyant dans la destination (fichier) précisée
@@ -75,9 +74,6 @@ router.get("/modif/:costume_id", ensureAuthenticated,restrictToRole("administrat
             quantites: quantitesParGrandeur, 
             quantiteTotale, userLangue});
       }
-
-
-        
 
     } catch (error) {
         console.error(error);
@@ -214,19 +210,19 @@ router.post("/delete/:costume_id", async function(req, res) {
     try {
         const { costume_id } = req.params;
 
-        // Supprimez le costume de la base de données
+        // Supprimer le costume de la base de données
         await db.execute({
             sql: "DELETE FROM costumes WHERE costume_id = :costume_id",
             args: { costume_id: costume_id },
         });
 
-        // Supprimez également les grandeurs associées
+        // Supprimer également les grandeurs associées
         await db.execute({
             sql: "DELETE FROM grandeurs WHERE costume_id = :costume_id",
             args: { costume_id: costume_id },
         });
 
-        // Redirigez vers une page de confirmation ou d'accueil
+        // Rediriger vers une page de confirmation ou d'accueil
         res.redirect("/confirmation");
     } catch (error) {
         console.error("Erreur lors de la suppression:", error);

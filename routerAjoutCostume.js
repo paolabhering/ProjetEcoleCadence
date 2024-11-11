@@ -10,7 +10,7 @@ const router = express.Router();
 
 const storage =  multer.diskStorage({   
     destination : (req, file, cb) => {
-        cb(null, './static/img/')           //télcharge le fichier en l'envoyant dans la destination (fichier) précisée
+        cb(null, './static/img/')           //télécharge le fichier en l'envoyant dans la destination (fichier) précisée
     },
     filename : (req, file, cb) => {
         cb(null, file.originalname);        //fonction callback qui le fichier avec le nom du fichier

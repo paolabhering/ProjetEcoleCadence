@@ -46,9 +46,6 @@ ul.navbar-nav {
     margin: 0 75px; /* Espacement horizontal entre les boutons */ 
     margin-top: -20px;  
 }
-/* .nav-item:first-child {
-    margin-right: auto;
-} */
 
 .btn {
     border-radius: 15px;
@@ -451,6 +448,21 @@ td:nth-child(1){
     padding: 10px;
     text-align: center;
     margin-top: -50px;
+}
+.groupe-info {
+    width: 80%;
+    height: auto;
+    border: 1px solid #d44687;
+    border-radius: 15px;
+    margin-left: 10%;
+    margin-right:auto;
+    background-color: #f0b8c8;
+    font-family: 'Verdana', 'Geneva', 'Tahoma', sans-serif;
+    font-size: large;
+    color:#d44687;
+    position:relative;
+    bottom: 15%;
+    text-align: center;
 }
 
 /*//////////////////////////////////////////////////////////*/

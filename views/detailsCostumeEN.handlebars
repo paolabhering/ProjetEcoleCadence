@@ -17,7 +17,7 @@
   <div class="grid-item-detail">
     <h3>{{costume.titre}}</h3><br>
     <b>Category:  </b>{{costume.category}}<br><br>
-    <b>Colors: </b><br>
+    <b>Color(s): </b><br>
       <div class="couleur-container">
         {{#each (split costume.color ", ")}}
           {{#if (eq this "brun")}}<div class="color-label brun"></div>{{/if}}

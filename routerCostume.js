@@ -6,15 +6,35 @@ const { ensureAuthenticated, restrictToRole } = require("./session");
 //pour importer la liste des costumes du fichier costume
 const { groupeCostume } = require('./costume');
 
+router.get("/groupes", async function(req, res) {
+   const { user } = req.session;
+   const userid = user ? user.user_id : null;
+  
+   if (!userid) {
+       return res.status(403).json({ message: "utilisateur non connecté." });
+   }
+
+   try {
+       const { rows: groupes } = await db.execute(`
+           select  nom, groupe_id
+           from groupes
+           where user_id = :user_id`, { user_id: userid });
+
+       res.json(groupes);
+       console.log("groupes utilisateur:", groupes);
+
+   } catch (error) {
+       console.error(error);
+          res.status(500).json({ message: "erreur lors de la récupération des groupes." });
+   }
+});
+
 router.get("/catalogue", ensureAuthenticated, async function(req,res) {
   try{ 
         
-
     const { user } = req.session;
     const userId = user ? user.user_id : null; 
     console.log(userId);
-
-    
 
     const {rows} = await db.execute (`
        SELECT c.*, SUM(g.quantity) AS quantite_totale 
@@ -23,15 +43,21 @@ router.get("/catalogue", ensureAuthenticated, async function(req,res) {
         GROUP BY c.costume_id`)
 
         let groupesUser = [];
-        // Si l'utilisateur est connecté, récupérez ses groupes
+        // Si l'utilisateur est connecté, récupérer ses groupes
         if(userId) {
           const { rows: groupes } = await db.execute(`
-            SELECT nom
+            SELECT nom, groupe_id
             FROM groupes
             WHERE user_id = :user_id`, { user_id: userId });
+
           groupesUser = groupes.map(groupe => groupe.nom);
+
+          console.log("Groupes noms:", groupesUser);
+          console.log("Groupes:", groupes);
+          // Récupérer uniquement les Ids de groupe
+          const IdsDeGroupes = groupes.map(groupe => groupe.groupe_id);
+          console.log("Groupes Ids:", IdsDeGroupes);
         }
-        console.log("Nom des groupes:", groupesUser);
 
         let likedCostumeIds = [];
         // Si l'utilisateur est connecté, récupérer ses likes
@@ -43,24 +69,30 @@ router.get("/catalogue", ensureAuthenticated, async function(req,res) {
         likedCostumeIds = likes.map(like => like.costume_id);
         }
 
-        let favoriteCostumeIds = [];
+        let favoriteCostumeGroups = [];
         // si l'utilsateur est connecté, récupérer ses favoris
         if(userId) {
           const { rows: favorites } = await db.execute(`
-            SELECT f.costume_id
+            SELECT f.costume_id, f.group_id, g.nom AS group_name
             FROM favorites f
             JOIN costumes c ON f.costume_id = c.costume_id
             JOIN groupes g ON f.group_id = g.groupe_id
             WHERE g.user_id = :user_id`, {user_id: userId});
           
-          favoriteCostumeIds = favorites.map(favorite => favorite.costume_id);
+          favoriteCostumeGroups = favorites.reduce((acc,favorite) => {
+            acc[favorite.costume_id] = {
+              group_id: favorite.group_id,
+              group_name: favorite.group_name
+            };
+            return acc;
+          }, {});
         }
-    console.log("Costumes favoris:", favoriteCostumeIds);
-    console.log("Liked Costume IDs:", likedCostumeIds);
 
+    console.log("Costumes favoris:", favoriteCostumeGroups);
+    console.log("Nom des groupes:", groupesUser);
 
       const userIdSession = req.session.user.user_id;
-      console.log("User id is", userIdSession);
+      
         const query = await db.execute(
             `SELECT langue FROM users WHERE user_id = ?`,
             [userIdSession] 
@@ -68,16 +100,14 @@ router.get("/catalogue", ensureAuthenticated, async function(req,res) {
 
         const result = query.rows[0];
         const userLangue = result.langue;
-        console.log("User's chosen language is:", userLangue);
+        
         if (userLangue === 'fr') {
-          res.render("catalogue", {groupeCostume: rows, likedCostumeIds, userId, userLangue});  
+          res.render("catalogue", {groupeCostume: rows, likedCostumeIds, userId, groupesUser, userLangue,  favoriteCostumeGroups});  
           
       } else {
-        res.render("catalogueEN", {groupeCostume: rows, likedCostumeIds, userId, userLangue, favoriteCostumeIds});
+        res.render("catalogueEN", {groupeCostume: rows, likedCostumeIds, userId, groupesUser, userLangue,  favoriteCostumeGroups});
       }
-
-
-      
+     
   } catch (error) {
       console.error(error);
       res.status(500).send("Erreur interne du serveur");
@@ -104,7 +134,7 @@ router.get("/detailsCostume/:costume_id", ensureAuthenticated, async function (r
       return;
     }
 
-    // Séparez les grandeurs et quantités pour le rendu
+    // Séparer les grandeurs et quantités pour le rendu
     const quantitesParGrandeur = {};
     let quantiteTotale = 0;
 
@@ -132,12 +162,6 @@ router.get("/detailsCostume/:costume_id", ensureAuthenticated, async function (r
         } else {
           res.render("detailsCostumeEN", { costume: costume[0], quantites: quantitesParGrandeur, quantiteTotale, userLangue });
         }
-
-
-    
-
-
-
 
   } catch (error) {
     console.error(error);
@@ -184,6 +208,54 @@ router.post("/enleverLike", async function(req, res) {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Erreur lors du retrait du like" });
+  }
+});
+
+// Ajouter un favori
+router.post("/ajouterFavori", async function(req, res) {
+  console.log(req.body);
+  
+  try {
+      const { costume_id, group_id } = req.body;
+      if (!costume_id || !group_id) {
+          console.error("Costume ID ou Group ID est manquant");
+          return;
+      }
+      await db.execute(`
+          INSERT INTO favorites (costume_id, group_id) 
+          VALUES (:costume_id, :group_id)`, { costume_id, group_id });
+
+      res.status(200).json({ message: "Favori ajouté avec succès" });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Erreur lors de l'ajout du favori" });
+  }
+});
+
+// Enlever un favori
+router.post("/enleverFavori", async function(req, res) {
+  console.log("Request Body:", req.body); 
+  console.log("allo");
+  console.log(req.body);
+  console.log("allo");
+  try {
+    const { group_id, costume_id } = req.body;
+
+    if (!group_id || !costume_id) {
+      console.error("Group ID ou Costume ID est manquant");
+      return res.status(400).json({ message: "Group ID ou Costume ID est manquant" });
+      return; 
+  }
+    await db.execute(`
+      DELETE FROM favorites 
+      WHERE group_id = :group_id AND costume_id = :costume_id`,
+       { group_id, costume_id });
+
+    res.status(200).json({ message: "Favori enlevé avec succès" });
+    console.log('favori supprimé', group_id, costume_id)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur lors du retrait du favori" });
   }
 });
 

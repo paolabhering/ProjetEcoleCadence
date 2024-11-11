@@ -2,11 +2,33 @@
 
 {{> header}} 
 
+{{#if filters}}
+    <div class="container-confirmation" id="filtersApplied">
+        <h3>Filtre(s) appliqué(s) :</h3>
+        <ul>
+            {{#if filters.category}}
+                <li><b>Catégorie : </b>{{filters.category}}</li>
+            {{/if}}
+            {{#if filters.quantityMin}}
+                <li><b>Quantité minimum : </b>{{filters.quantityMin}}</li>
+            {{/if}}
+            {{#if filters.age_group}}
+                <li><b>Catégorie d'âge : </b>{{filters.age_group}}</li>
+            {{/if}}
+            {{#if filters.filtreMot}}
+                <li><b>Mot-clé : </b>{{filters.filtreMot}}</li>
+            {{/if}}
+            {{#if filters.color}}
+                <li><b>Couleur(s) : </b>{{filters.color}}</li>
+            {{/if}}
+        </ul>
+    </div>
+{{/if}}
+
  <form action="/choixProf" method="post" id="preferenceCostume">
  <div class="grid-container">
     {{#each groupeCostume}}
         <div class="grid-item" data-costume-id="{{this.costume_id}}">
-            <ul>
                 <a href="/detailsCostume/{{this.costume_id}}">
                     <div class="image-container">
                         <img src="/static/img/{{this.image}}"  alt="{{this.titre}}" class="imageCatalogue">
@@ -29,13 +51,14 @@
                             <select name="groupes" class="select-group">
                                 <option value="">Sélectionner</option>
                                 {{#each groupe}}
-                                    <option value="{{groupe.nom}}"></option>
+                                    <option value="{{groupe.id}}">{{groupe.nom}}</option>
                                 {{/each}}
                             </select>
                     </div>
-                    {{!-- J'aimerais afficher le nom du groupe favori pour ce costume ici --}}
                     <div class="groupe-info" hidden>
-                        <label for="favoriteCostumeGroup">{{{groupe.nom}}}</label>
+                        {{#if favoriteCostumeGroups.[this.costume_id]}}
+                            Costume favori pour groupe : {{favoriteCostumeGroups.[this.costume_id].group_name}}
+                        {{/if}}
                     </div>
         </div>
     {{/each}}
@@ -45,11 +68,12 @@
 
  <script>
     const user_id = {{{userId}}};
-    const likedCostumeIds = {{{json likedCostumeIds}}};
-    const groupes = {{{json groupesUser}}};
-    const favoriteCostumeIds = {{{json favoriteCostumeIds}}};
+    let likedCostumeIds = {{{json likedCostumeIds}}};
+    let groupes = {{{json groupesUser}}};
+    let favoriteCostumeGroups = {{{json favoriteCostumeGroups}}};
 
-     console.log("costumes favoris: ",favoriteCostumeIds);            
+    console.log(typeof favoriteCostumeGroups, favoriteCostumeGroups);
+          
      //Envoyer une requête AJAX pour ajouter les groupes au favori
 
     fetch('/groupes')
@@ -85,37 +109,102 @@
         const plusBlanc = item.querySelector('.plusB');
         const plusRose = item.querySelector('.plusR');
         const ajoutFavori = item.querySelector(".container-ajoutFavori");
-        const favoriteCostumeGroupe = item.querySelector(".groupe-info");
+        const groupeInfo = item.querySelector(".groupe-info");
         
 
-         // Vérifiez si le costume est favori
-        if (favoriteCostumeIds.includes(parseInt(costume_id))) {
+         // Vérifier si le costume est favori
+        if (favoriteCostumeGroups[costume_id]) {
             plusBlanc.hidden = true;  
             plusRose.hidden = false; 
-
+            groupeInfo.textContent = ` Costume favori pour groupe: ${favoriteCostumeGroups[costume_id].group_name}`;
+            groupeInfo.hidden = false; // Assurez-vous que l'information est visible
         } else {
             plusBlanc.hidden = false;  
             plusRose.hidden = true;     
+            groupeInfo.hidden = true; // Cachez l'info si le costume n'est pas favori
         }
 
         plusBlanc.addEventListener('click', () => {
             plusBlanc.hidden = true;
             plusRose.hidden = false; 
             ajoutFavori.hidden = false; 
-            favoriteCostumeIds.push(costume_id); 
+
+            const selectGroupe = item.querySelector('.select-group');
+
+            selectGroupe.addEventListener('change',(event) => {
+                const selectedGroupeId = event.target.value;
+                const selectedOption = event.target.options[event.target.selectedIndex];
+                const selectedGroupeNom = selectedOption.text; // Récupère le nom du groupe à partir de l'option sélectionnée
+
+                console.log(`Groupe sélectionné pour le costume ID ${costume_id}: ${selectedGroupeId} (${selectedGroupeNom})`);
+                
+                fetch('/ajouterFavori', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ user_id, costume_id, group_id: selectedGroupeId, group_name: selectedGroupeNom }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message);
+                    ajoutFavori.hidden = true; 
+                    
+                    favoriteCostumeGroups[costume_id] = {
+                        group_id: selectedGroupeId,
+                        group_name: selectedGroupeNom
+                    };
+                    groupeInfo.textContent = `Costume favori pour groupe: ${selectedGroupeNom}`;
+                    groupeInfo.hidden = false; // Assurez-vous que l'information est visible
+                })
+                .catch((error) => {
+                    console.error('Erreur:', error);
+                });
+            });
         });
 
+       
         plusRose.addEventListener('click', () => {
             plusRose.hidden = true;
             plusBlanc.hidden = false;  
             ajoutFavori.hidden = true; 
-            favoriteCostumeIds = favoriteCostumeIds.filter(id => id !== costume_id);   
+            groupeInfo.hidden = true;
+
+            console.log("favoriteCostumeGroups avant delete: ", favoriteCostumeGroups);
+            const group_id = favoriteCostumeGroups[costume_id] ? favoriteCostumeGroups[costume_id].group_id : null;
+            console.log(costume_id, group_id)
+             // envoyer une requête ajax pour enlever le favori
+
+            fetch('/enleverFavori', {
+                method: 'post',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body: JSON.stringify({ costume_id, group_id }),
+            })
+            //console.log(costume_id, group_id);
+            //console.log("Réponse du serveur:", response);
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la suppression du favori'); // traiter les erreurs de réponse
+                }
+                return response.json(); 
+            }) 
+            .then(data => {
+                console.log(data.message);
+                delete favoriteCostumeGroups[costume_id];
+                console.log("Liste après delete: ", favoriteCostumeGroups);
+            })
+            .catch((error) => {
+                console.error('erreur:', error);
+                alert("Une erreur s'est produite lors de la suppression.");
+            });
         });
 
         const coeurBlanc = item.querySelector('.coeurB');
         const coeurRose = item.querySelector('.coeurR');
         
-         // Vérifiez si le costume est aimé
+         // Vérifier si le costume est aimé
         if (likedCostumeIds.includes(parseInt(costume_id))) {
             coeurBlanc.hidden = true;  
             coeurRose.hidden = false;   
@@ -142,12 +231,13 @@
             .then(data => {
                 console.log(data.message);
                 likedCostumeIds.push(costume_id);
-                console.log("bob");
             })
             .catch((error) => {
                 console.error('Erreur:', error);
             });
         });
+
+
         coeurRose.addEventListener('click', () => {
             coeurRose.hidden = true;
             coeurBlanc.hidden = false;     
@@ -166,12 +256,14 @@
             .then(data => {
                 console.log(data.message);
                 likedCostumeIds = likedCostumeIds.filter(id => id !== costume_id);
-                console.log("bob2");
             })
             .catch((error) => {
                 console.error('erreur:', error);
             });
         });
+
+
+    
     });
 
  </script>
