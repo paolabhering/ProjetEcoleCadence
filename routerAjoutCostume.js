@@ -24,19 +24,21 @@ router.get("/ajout", ensureAuthenticated, restrictToRole("administrateur"), asyn
         const userId = req.session.user.user_id;
         console.log("User id is", userId); 
         const query = await db.execute(
-            `SELECT langue FROM users WHERE user_id = ?`,
+            `SELECT langue,role FROM users WHERE user_id = ?`,
             [userId] 
         );
 
         const result = query.rows[0];
         const userLangue = result.langue;
+        const userRole = result.role;
         console.log("User's chosen language is:", userLangue);
+        console.log("User role is:", userRole);
 
         if (userLangue === 'fr') {
             
-            res.render("ajoutCostume", { userLangue });
+            res.render("ajoutCostume", { userLangue, userRole });
         } else {
-            res.render("ajoutCostumeEN", { userLangue });
+            res.render("ajoutCostumeEN", { userLangue, userRole });
         }
     } catch (error) {
         console.error("Error fetching language preference:", error);
@@ -49,18 +51,19 @@ router.get("/confirmation", async (req,res) => {
     const userIdSession = req.session.user.user_id;
     console.log("User id is", userIdSession); 
         const query = await db.execute(
-            `SELECT langue FROM users WHERE user_id = ?`,
+            `SELECT langue,role FROM users WHERE user_id = ?`,
             [userIdSession] 
         );
 
         const result = query.rows[0];
         const userLangue = result.langue;
+        const userRole = result.role;
         console.log("User's chosen language is:", userLangue);
         if (userLangue === 'fr') {
-          res.render("confirmation", {userLangue});  
+          res.render("confirmation", {userLangue, userRole});  
           
       } else {
-        res.render("confirmationEN", {userLangue});
+        res.render("confirmationEN", {userLangue,userRole});
       }
 
  })
