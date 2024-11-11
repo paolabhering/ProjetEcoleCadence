@@ -1,11 +1,11 @@
-{{> headerAd}}
+{{> headerAdEN}}
 
 <form action="/modifier-user/{{userResult.user_id}}" method="POST" class="connexion-form">
 
-    <h2>Modifier l'utilisateur</h2>
+    <h2>Modify user</h2>
     <div class="flex-container">
         <div class="flex-item">
-            <label for="username"><b>Nom :</b></label>
+            <label for="username"><b>Name :</b></label>
             <input type="text" id="username" name="username" value="{{userResult.username}}" required>
         </div>
         <div class="flex-item">
@@ -13,29 +13,29 @@
             <input type="email" id="email" name="email" value="{{userResult.email}}" required>
         </div>
         <div class="flex-item">
-            <label for="password"><b>Nouveau mot de passe :</b></label>
+            <label for="password"><b>New password :</b></label>
             <input type="password" id="password" name="password" placeholder="Laisser vide pour ne pas modifier">
         </div>
         <div class="flex-item full-width">
-            <label for="groups"><b>Groupe(s) :</b></label>
+            <label for="groups"><b>Group(s) :</b></label>
             <input type="text" id="groupName" name="groupName" value="{{group}}" required>
         </div>
         <div class="flex-item full-width">
-            <label for="role"><b>Rôle :</b></label>
+            <label for="role"><b>Role :</b></label>
             <div class="radio-group">
-                <input type="radio" id="admin" name="role" value="administrateur" {{#if (eq user.role "administrateur")}}checked{{/if}} required><b>Administrateur</b>
-                <input type="radio" id="professeur" name="role" value="professeur" {{#if (eq user.role "professeur")}}checked{{/if}} required><b>Professeur</b>
+                <input type="radio" id="admin" name="role" value="administrateur" {{#if (eq user.role "administrateur")}}checked{{/if}} required><b>Administrator</b>
+                <input type="radio" id="professeur" name="role" value="professeur" {{#if (eq user.role "professeur")}}checked{{/if}} required><b>Professor</b>
             </div>
         </div>
         <div class="flex-item full-width">
-            <label for="language"><b>Langue :</b></label>
+            <label for="language"><b>Language :</b></label>
             <div class="radio-group">
-                <input type="radio" id="french" name="language" value="fr" {{#if (eq user.langue "fr")}}checked{{/if}} required><b>Français</b>
-                <input type="radio" id="english" name="language" value="en" {{#if (eq user.langue "en")}}checked{{/if}} required><b>Anglais</b>
+                <input type="radio" id="french" name="language" value="fr" {{#if (eq user.langue "fr")}}checked{{/if}} required><b>French</b>
+                <input type="radio" id="english" name="language" value="en" {{#if (eq user.langue "en")}}checked{{/if}} required><b>English</b>
             </div>
         </div>
         <div class="flex-item full-width">
-            <button type="submit" class="btn btn_roseFonce" id="boutonCompte">Enregistrer les modifications</button>
+            <button type="submit" class="btn btn_roseFonce" id="boutonCompte">Save the modifications</button>
         </div>
     </div>
 </form>
