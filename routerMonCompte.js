@@ -8,7 +8,7 @@ const { ensureAuthenticated, restrictToRole } = require("./session");
 router.use(express.urlencoded({ extended: true }));
 
 // Route to render the account modification form
-router.get("/modifierCompte", ensureAuthenticated,restrictToRole("administrateur"), async (req, res) => {
+router.get("/monCompte", ensureAuthenticated,restrictToRole("administrateur"), async (req, res) => {
     const userIdSession = req.session.user.user_id;
     console.log("User id stored in session is", userIdSession); 
     const userId = req.params.id;
@@ -37,7 +37,7 @@ router.get("/modifierCompte", ensureAuthenticated,restrictToRole("administrateur
         const userRole = result.role;
         console.log("User's chosen language is:", userLangue);
         if (userLangue === 'fr') {
-            res.render("modifierCompte", {
+            res.render("monCompte", {
                 userResult,
                 group: groupResult.nom,
                 userRole
