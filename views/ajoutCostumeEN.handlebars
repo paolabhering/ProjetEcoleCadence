@@ -39,7 +39,11 @@
     window.onload = addEventListeners;
 </script> 
 
-{{> headerAdEN}}
+{{#if (eq userRole "administrateur")}}
+    {{> headerAdEN}}
+{{else if (eq userRole "professeur")}}
+    {{> headerEN}}
+{{/if}}
 
 <form action="/ajout" enctype="multipart/form-data" method="POST" id="ajoutCostume">
     <h3>Add costume form</h3>

@@ -1,6 +1,10 @@
 
 
-{{> header}} 
+{{#if (eq userRole "administrateur")}}
+    {{> headerAd}}
+{{else if (eq userRole "professeur")}}
+    {{> header}}
+{{/if}}
 
  <form action="/choixProf" method="post" id="preferenceCostume">
  <div class="grid-container">

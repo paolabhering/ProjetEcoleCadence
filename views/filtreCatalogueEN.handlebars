@@ -1,4 +1,8 @@
-{{> headerAdEN}}
+{{#if (eq userRole "administrateur")}}
+    {{> headerAdEN}}
+{{else if (eq userRole "professeur")}}
+    {{> headerEN}}
+{{/if}}
 
 <form action="/filtre" method="POST" id="filtreCatalogue">
     <h3>Add filters</h3>

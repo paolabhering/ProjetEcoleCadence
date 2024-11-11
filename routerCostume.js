@@ -62,18 +62,20 @@ router.get("/catalogue", ensureAuthenticated, async function(req,res) {
       const userIdSession = req.session.user.user_id;
       console.log("User id is", userIdSession);
         const query = await db.execute(
-            `SELECT langue FROM users WHERE user_id = ?`,
+            `SELECT langue,role FROM users WHERE user_id = ?`,
             [userIdSession] 
         );
 
         const result = query.rows[0];
         const userLangue = result.langue;
+        const userRole = result.role;
         console.log("User's chosen language is:", userLangue);
+        console.log("User role is:", userRole);
         if (userLangue === 'fr') {
-          res.render("catalogue", {groupeCostume: rows, likedCostumeIds, userId, userLangue});  
+          res.render("catalogue", {groupeCostume: rows, likedCostumeIds, userId, userLangue, userRole});  
           
       } else {
-        res.render("catalogueEN", {groupeCostume: rows, likedCostumeIds, userId, userLangue, favoriteCostumeIds});
+        res.render("catalogueEN", {groupeCostume: rows, likedCostumeIds, userId, userLangue, favoriteCostumeIds,userRole});
       }
 
 
@@ -118,19 +120,20 @@ router.get("/detailsCostume/:costume_id", ensureAuthenticated, async function (r
     const userId = req.session.user.user_id;
         console.log("User id is", userId); 
         const query = await db.execute(
-            `SELECT langue FROM users WHERE user_id = ?`,
+            `SELECT langue,role FROM users WHERE user_id = ?`,
             [userId] 
         );
 
         const result = query.rows[0];
         const userLangue = result.langue;
+        const userRole = result.role;
         console.log("User's chosen language is:", userLangue);
 
         if (userLangue === 'fr') {
-          res.render("detailsCostume", { costume: costume[0], quantites: quantitesParGrandeur, quantiteTotale, userLangue });
+          res.render("detailsCostume", { costume: costume[0], quantites: quantitesParGrandeur, quantiteTotale, userLangue,userRole });
 
         } else {
-          res.render("detailsCostumeEN", { costume: costume[0], quantites: quantitesParGrandeur, quantiteTotale, userLangue });
+          res.render("detailsCostumeEN", { costume: costume[0], quantites: quantitesParGrandeur, quantiteTotale, userLangue,userRole });
         }
 
 

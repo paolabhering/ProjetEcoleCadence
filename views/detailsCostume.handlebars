@@ -7,7 +7,12 @@
   
 </script>
 
-{{> headerAd}} 
+
+{{#if (eq userRole "administrateur")}}
+    {{> headerAd}}
+{{else if (eq userRole "professeur")}}
+    {{> header}}
+{{/if}}
 
 <div class="grid-container-detail">
     <div class="image-container">
@@ -96,7 +101,8 @@
     <b>Localisation: </b>{{#if costume.localisation}}{{costume.localisation}}{{else}}N/A{{/if}}<br>
     <b>Boîte: </b>{{#if costume.boite}}{{costume.boite}}{{else}}N/A{{/if}} <br><br>
     <b>Notes: </b>{{#if costume.notes}}{{costume.notes}}{{else}}N/A{{/if}}  <br><br>
+    {{#if (eq userRole "administrateur")}}
     <button type="button" class="btn btn_roseFonce" onclick=rediriger({{costume.costume_id}})>MODIFIER</button>
-    
+    {{/if}}
   </div>
 </div>

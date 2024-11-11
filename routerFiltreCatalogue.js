@@ -7,18 +7,19 @@ router.get("/filtre", ensureAuthenticated, async (req,res) => {
     const userIdSession = req.session.user.user_id;
         console.log("User id is", userIdSession); 
         const query = await db.execute(
-            `SELECT langue FROM users WHERE user_id = ?`,
+            `SELECT langue,role FROM users WHERE user_id = ?`,
             [userIdSession] 
         );
 
         const result = query.rows[0];
         const userLangue = result.langue;
+        const userRole = result.role;
         console.log("User's chosen language is:", userLangue);
         if (userLangue === 'fr') {
-            res.render("filtreCatalogue", {userLangue});  
+            res.render("filtreCatalogue", {userLangue,userRole});  
           
       } else {
-        res.render("filtreCatalogueEN", {userLangue});
+        res.render("filtreCatalogueEN", {userLangue,userRole});
       }
     
  });

@@ -1,4 +1,8 @@
-{{> headerAd}}
+{{#if (eq userRole "administrateur")}}
+    {{> headerAd}}
+{{else if (eq userRole "professeur")}}
+    {{> header}}
+{{/if}}
 
 <form action="/modifier-user/{{userResult.user_id}}" method="POST" class="connexion-form">
 
