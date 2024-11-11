@@ -5,7 +5,11 @@
     }
 </script>
 
-{{> headerAd}}
+{{#if (eq userRole "administrateur")}}
+    {{> headerAd}}
+{{else if (eq userRole "professeur")}}
+    {{> header}}
+{{/if}}
 
 <div class="container-confirmation">
     <b>Enregistrement effectué avec succès!</b><br>
