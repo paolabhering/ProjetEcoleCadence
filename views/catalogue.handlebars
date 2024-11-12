@@ -1,6 +1,10 @@
 
 
-{{> header}} 
+{{#if (eq userRole "administrateur")}}
+    {{> headerAd}}
+{{else if (eq userRole "professeur")}}
+    {{> header}}
+{{/if}}
 
 {{#if filters}}
     <div class="container-confirmation" id="filtersApplied">

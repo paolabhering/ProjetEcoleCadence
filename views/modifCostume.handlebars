@@ -1,4 +1,8 @@
-{{> headerAd}}
+{{#if (eq userRole "administrateur")}}
+    {{> headerAd}}
+{{else if (eq userRole "professeur")}}
+    {{> header}}
+{{/if}}
 
 <form action="/modif/{{costume.costume_id}}" enctype="multipart/form-data" method="POST" id="modifCostume">
     <h3>Formulaire de modification ou suppression de costume</h3>

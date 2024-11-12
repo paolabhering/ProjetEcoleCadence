@@ -53,26 +53,27 @@ router.get("/modif/:costume_id", ensureAuthenticated,restrictToRole("administrat
         const userIdSession = req.session.user.user_id;
         console.log("User id is", userIdSession); 
         const query = await db.execute(
-            `SELECT langue FROM users WHERE user_id = ?`,
+            `SELECT langue,role FROM users WHERE user_id = ?`,
             [userIdSession] 
         );
 
         const result = query.rows[0];
         const userLangue = result.langue;
+        const userRole = result.role;
         console.log("User's chosen language is:", userLangue);
         if (userLangue === 'fr') {
             res.render("modifCostume", { 
                 costume: costume[0],
                 couleurs: couleurArray, 
                 quantites: quantitesParGrandeur, 
-                quantiteTotale, userLangue});
+                quantiteTotale, userLangue,userRole});
           
       } else {
         res.render("modifCostumeEN", { 
             costume: costume[0],
             couleurs: couleurArray, 
             quantites: quantitesParGrandeur, 
-            quantiteTotale, userLangue});
+            quantiteTotale, userLangue,userRole});
       }
 
     } catch (error) {
@@ -86,18 +87,19 @@ router.get("/confirmation", async (req,res) => {
     const userIdSession = req.session.user.user_id;
         console.log("User id is", userIdSession); 
         const query = await db.execute(
-            `SELECT langue FROM users WHERE user_id = ?`,
+            `SELECT langue,role FROM users WHERE user_id = ?`,
             [userIdSession] 
         );
 
         const result = query.rows[0];
         const userLangue = result.langue;
+        const userRole = result.role;
         console.log("User's chosen language is:", userLangue);
         if (userLangue === 'fr') {
-          res.render("confirmation", {userLangue});  
+          res.render("confirmation", {userLangue,userRole});  
           
       } else {
-        res.render("confirmationEN", {userLangue});
+        res.render("confirmationEN", {userLangue,userRole});
       }
 
  })

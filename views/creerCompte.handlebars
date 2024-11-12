@@ -19,7 +19,7 @@
          <div class="flex-item full-width">
             <label for="groups"><b>Groupe(s) :</b></label>
             <div class="group-inputs">
-                <input type="text" id="groupName" name="groupName" placeholder="Entrez le nom du groupe" required>
+                <input type="text" id="groupName" name="groups[]" placeholder="Entrez le nom du groupe" required>
                 <div id="groupFieldsContainer"></div>
                 <div class="button-container">
                     <button type="button" class="add-group" onclick="addGroupField()">+</button>
@@ -50,15 +50,13 @@
 
 <script>
     function addGroupField() {
-        const groupInputsContainer = document.querySelector('.group-inputs');
-        const newGroupInput = document.createElement('input');
-        newGroupInput.type = 'text';
-        newGroupInput.placeholder = 'Entrez le nom du groupe';
-        newGroupInput.name = 'groups';
+        const groupFieldsContainer = document.getElementById("groupFieldsContainer");
+        const newGroupInput = document.createElement("input");
+        newGroupInput.type = "text";
+        newGroupInput.placeholder = "Entrez le nom du groupe";
+        newGroupInput.name = "groups[]";  // Updated to make it an array
         newGroupInput.required = true;
 
-        
-    // Ajouter le nouvel input en premier dans le conteneur
-    groupFieldsContainer.insertBefore(newGroupInput, groupFieldsContainer.firstChild); // Ajoute en haut du conteneur
+        groupFieldsContainer.appendChild(newGroupInput);
     }
 </script>
