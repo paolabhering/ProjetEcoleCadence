@@ -1,16 +1,16 @@
 {{#if (eq userRole "administrateur")}}
-    {{> headerAd}}
+    {{> headerAdEN}}
 {{else if (eq userRole "professeur")}}
-    {{> header}}
+    {{> headerEN}}
 {{/if}}
 
 <div class="container">
     <div class="account-section">
         <div class="account-info">
-            <h2>Mon compte</h2>
-            <p><b>Nom d'utilisateur:</b> {{user.username}}</p>
+            <h2>My account</h2>
+            <p><b>Username:</b> {{user.username}}</p>
             <p><b>Email:</b> {{user.email}}</p>
-            <p><b>Mes groupes:</b></p>
+            <p><b>My groupes:</b></p>
             <ul>
                 {{#each groups}}
                     <li>{{this}}</li>
@@ -18,20 +18,20 @@
             </ul>
         </div>
         <div class="password-form">
-            <h2>Modifier le mot de passe</h2>
+            <h2>Change password</h2>
             <form action="/modifier-mot-de-passe" method="POST">
-                <label for="currentPassword"><b>Mot de passe actuel:</b></label>
+                <label for="currentPassword"><b>Current password:</b></label>
                 <input type="password" id="currentPassword" name="currentPassword" required>
-                <label for="newPassword"><b>Nouveau mot de passe:</b></label>
+                <label for="newPassword"><b>New password:</b></label>
                 <input type="password" id="newPassword" name="newPassword" required>
-                <label for="confirmPassword"><b>Confirmer le nouveau mot de passe:</b></label>
+                <label for="confirmPassword"><b>Confirm the new password:</b></label>
                 <input type="password" id="confirmPassword" name="confirmPassword" required>
-                <button type="submit" class="btn btn_roseFonce">Modifier</button>
+                <button type="submit" class="btn btn_roseFonce">Modify</button>
             </form>
         </div>
     </div>
     <div class="favorites-section">
-        <h2>Mes favoris</h2>
+        <h2>My favorites</h2>
         <ul>
             {{#each favorites}}
                 <li>
@@ -43,7 +43,7 @@
         </ul>
     </div>
     <div class="likes-section">
-        <h2>Mes ❤️</h2>
+        <h2>My ❤️</h2>
         <ul>
             {{#each likes}}
                 <li>
@@ -54,7 +54,7 @@
         </ul>
     </div>
     <div class="my-suggestions-section">
-        <h2>Mes suggestions</h2>
+        <h2>My suggestions</h2>
         <ul>
             {{#each suggestions}}
                 <li>{{this.suggestion_text}}</li>
@@ -65,7 +65,7 @@
         <h2>Suggestions</h2>
         <form action="/envoyer-suggestion" method="POST">
             <textarea name="suggestion" rows="5" placeholder="Écrivez vos suggestions ici..." required></textarea>
-            <button type="submit" class="btn btn_roseFonce">Envoyer</button>
+            <button type="submit" class="btn btn_roseFonce">Send</button>
         </form>
     </div>
 </div>

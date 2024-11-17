@@ -10,6 +10,8 @@ router.use(express.urlencoded({ extended: true }));
 // Route to render the "Mon Compte" page
 router.get("/monCompte", ensureAuthenticated, async (req, res) => {
     const userId = req.session.user.user_id;
+    const userLangue = req.session.user.langue;
+    const userRole = req.session.user.role;
 
     try {
         const userQuery = await db.execute("SELECT * FROM users WHERE user_id = ?", [userId]);
@@ -36,14 +38,29 @@ router.get("/monCompte", ensureAuthenticated, async (req, res) => {
         const likes = likesQuery.rows;
         const suggestions = suggestionsQuery.rows;
 
-        res.render("monCompte", {
-            user,
-            groups,
-            favorites,
-            likes,
-            suggestions,
-            userRole: req.session.user.role
-        });
+        if (userLangue === 'fr') {
+            res.render("monCompte", {
+                user,
+                groups,
+                favorites,
+                likes,
+                suggestions,
+                userLangue,
+                userRole
+            });
+        } 
+        else {
+            res.render("monCompteEN", {
+                user,
+                groups,
+                favorites,
+                likes,
+                suggestions,
+                userLangue,
+                userRole
+            });
+        }
+        
     } catch (error) {
         console.error("Error fetching user data:", error);
         res.status(500).send("Error fetching user data");
