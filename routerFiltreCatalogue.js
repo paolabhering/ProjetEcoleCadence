@@ -15,13 +15,14 @@ async function getUserLanguage(userId) {
 router.get("/filtre", ensureAuthenticated, async (req, res) => {
     const { user } = req.session;
     const userId = user ? user.user_id : null; 
+    const userRole = req.session.user.role;
 
     const userLangue = await getUserLanguage(userId);
 
     if (userLangue === 'fr') {
-        res.render("filtreCatalogue", { userLangue });
+        res.render("filtreCatalogue", { userLangue, userRole });
     } else {
-        res.render("filtreCatalogueEN", { userLangue });
+        res.render("filtreCatalogueEN", { userLangue, userRole });
     }
 });
 
@@ -67,6 +68,7 @@ router.post("/filtre", ensureAuthenticated, async (req, res) => {
     try {
         const { rows } = await db.execute(costumeQuery, params); // Use the correct costumeQuery here
         const { user } = req.session;
+        const userRole = req.session.user.role;
         let likedCostumeIds = [];
 
         if (user) {
@@ -102,6 +104,8 @@ router.post("/filtre", ensureAuthenticated, async (req, res) => {
                 groupeCostume: rows,
                 likedCostumeIds,
                 favoriteCostumeGroups,
+                userRole,
+                userLangue,
                 userId: user ? user.user_id : null,
                 filters: { category, quantityMin, age_group, filtreMot, color: color.join(', ') },
                 hasFilters: rows.length > 0
@@ -111,6 +115,8 @@ router.post("/filtre", ensureAuthenticated, async (req, res) => {
                 groupeCostume: rows,
                 likedCostumeIds,
                 favoriteCostumeGroups,
+                userRole,
+                userLangue,
                 userId: user ? user.user_id : null,
                 filters: { category, quantityMin, age_group, filtreMot, color: color.join(', ') },
                 hasFilters: rows.length > 0
