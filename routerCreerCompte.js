@@ -13,7 +13,16 @@ router.get("/creerCompte", (req, res) => {
 
 // Route for creating a new user
 router.post("/add-user", async (req, res) => {
-    const { username, email, password, role, language, groupName } = req.body;
+    const { username, email, password, role, language } = req.body;
+    const groups = req.body.groups; // This will be an array
+
+    // Log the request body
+    console.log("Request Body:", req.body);
+
+    // Validate the request body
+    if (!username || !email || !password || !role || !language || !groups || groups.length === 0) {
+        return res.status(400).send("All fields are required");
+    }
 
     try {
         const saltRounds = 10;
@@ -26,9 +35,11 @@ router.post("/add-user", async (req, res) => {
         // Get the newly created user's ID
         const userId = result.lastInsertRowid;
 
-        // Insert the group into the "groupes" table
+        // Insert each group into the "groupes" table
         const groupSql = `INSERT INTO groupes (nom, user_id) VALUES (?, ?)`;
-        await db.execute(groupSql, [groupName, userId]);
+        for (const groupName of groups) {
+            await db.execute(groupSql, [groupName, userId]);
+        }
 
         res.status(201).redirect("/connexion?userCreated=true");
     } catch (error) {
@@ -36,6 +47,5 @@ router.post("/add-user", async (req, res) => {
         res.status(500).send("Error creating user and group");
     }
 });
-
 
 module.exports = router;

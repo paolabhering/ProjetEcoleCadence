@@ -2,114 +2,122 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const db = require("./db"); // Import the db client from db.js
-const { ensureAuthenticated, restrictToRole } = require("./session");
+const { ensureAuthenticated } = require("./session");
 
 // Middleware to parse URL-encoded data
 router.use(express.urlencoded({ extended: true }));
 
-// Route to render the account modification form
-router.get("/monCompte", ensureAuthenticated,restrictToRole("administrateur"), async (req, res) => {
-    const userIdSession = req.session.user.user_id;
-    console.log("User id stored in session is", userIdSession); 
-    const userId = req.params.id;
-    console.log("User ID:", userId); // Vérification de l'ID
+// Route to render the "Mon Compte" page
+router.get("/monCompte", ensureAuthenticated, async (req, res) => {
+    const userId = req.session.user.user_id;
 
     try {
-        // Obtenir les informations de l'utilisateur et du groupe directement
-        const user = await db.execute("SELECT * FROM users WHERE user_id = ?", [userIdSession]);
-        const group = await db.execute("SELECT * FROM groupes WHERE user_id = ?", [userIdSession]);
-        
-        const userResult = user.rows[0];
-        const groupResult = group.rows[0];
-        
-        console.log("user result is ", userResult);
-        console.log("user result is ", groupResult);
-        
-        
+        const userQuery = await db.execute("SELECT * FROM users WHERE user_id = ?", [userId]);
+        const groupsQuery = await db.execute("SELECT nom FROM groupes WHERE user_id = ?", [userId]);
+        const favoritesQuery = await db.execute(`
+            SELECT f.favorite_id, c.titre AS costume_name, g.nom AS group_name
+            FROM favorites f
+            JOIN costumes c ON f.costume_id = c.costume_id
+            JOIN groupes g ON f.group_id = g.groupe_id
+            WHERE g.user_id = ?`, [userId]);
+        const likesQuery = await db.execute(`
+            SELECT l.like_id, c.titre AS costume_name
+            FROM likes l
+            JOIN costumes c ON l.costume_id = c.costume_id
+            WHERE l.user_id = ?`, [userId]);
+        const suggestionsQuery = await db.execute(`
+            SELECT suggestion_id, suggestion_text
+            FROM suggestions
+            WHERE user_id = ?`, [userId]);
 
-        const query = await db.execute(
-            `SELECT langue,role FROM users WHERE user_id = ?`,
-            [userIdSession] 
-        );
+        const user = userQuery.rows[0];
+        const groups = groupsQuery.rows.map(row => row.nom);
+        const favorites = favoritesQuery.rows;
+        const likes = likesQuery.rows;
+        const suggestions = suggestionsQuery.rows;
 
-        const result = query.rows[0];
-        const userLangue = result.langue;
-        const userRole = result.role;
-        console.log("User's chosen language is:", userLangue);
-        if (userLangue === 'fr') {
-            res.render("monCompte", {
-                userResult,
-                group: groupResult.nom,
-                userRole
-            });
-          
-      } else {
-        res.render("modifierCompteEN", {
-            userResult,
-            group: groupResult.nom,
-            userRole
+        res.render("monCompte", {
+            user,
+            groups,
+            favorites,
+            likes,
+            suggestions,
+            userRole: req.session.user.role
         });
-      }
-       
-
-        
-        
     } catch (error) {
-        console.error("Erreur pendant l'opération DB :", error);
-        res.status(500).send("Erreur lors de la récupération des données utilisateur");
+        console.error("Error fetching user data:", error);
+        res.status(500).send("Error fetching user data");
     }
 });
 
-// Route for updating an existing user
-router.post("/modifier-user/:id", async (req, res) => {
-    const userIdSession = req.session.user.user_id;
-    const { username, email, password, role, language, groupName } = req.body;
-    console.log("User ID in POST:", userIdSession);
-    console.log("Form data:", req.body);
+// Route to handle password modification
+router.post("/modifier-mot-de-passe", ensureAuthenticated, async (req, res) => {
+    const userId = req.session.user.user_id;
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+
+    if (newPassword !== confirmPassword) {
+        return res.status(400).send("New passwords do not match");
+    }
 
     try {
-        let hashedPassword = null;
-        if (password) {
-            const saltRounds = 10;
-            hashedPassword = await bcrypt.hash(password, saltRounds);
+        const userQuery = await db.execute("SELECT password FROM users WHERE user_id = ?", [userId]);
+        const user = userQuery.rows[0];
+
+        const match = await bcrypt.compare(currentPassword, user.password);
+        if (!match) {
+            return res.status(400).send("Current password is incorrect");
         }
 
-        // Update the user's information
-        const userSql = `
-            UPDATE users SET 
-                username = ?, 
-                email = ?, 
-                ${hashedPassword ? "password = ?," : ""} 
-                role = ?, 
-                langue = ? 
-            WHERE user_id = ?`;
-        const userParams = hashedPassword
-            ? [username, email, hashedPassword, role, language, userIdSession]
-            : [username, email, role, language, userIdSession];
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
 
-        console.log("User update parameters:", userParams);
-        await db.execute(userSql, userParams);
+        await db.execute("UPDATE users SET password = ? WHERE user_id = ?", [hashedPassword, userId]);
 
-        // Check if the group exists for the user and either update or insert accordingly
-        const groupExists = await db.execute("SELECT * FROM groupes WHERE user_id = ?", [userIdSession]);
-
-        if (groupExists.rows.length > 0) {
-            // If group already exists, perform an update
-            const updateGroupSql = `
-                UPDATE groupes SET nom = ? WHERE user_id = ?`;
-            await db.execute(updateGroupSql, [groupName, userIdSession]);
-        } else {
-            // If group doesn't exist, perform an insert
-            const insertGroupSql = `
-                INSERT INTO groupes (nom, user_id) VALUES (?, ?)`;
-            await db.execute(insertGroupSql, [groupName, userIdSession]);
-        }
-        res.status(200).redirect("/admin");
+        res.status(200).redirect("/monCompte");
     } catch (error) {
-        console.error("Error updating user and group:", error);
-        res.status(500).send("Error updating user and group");
+        console.error("Error updating password:", error);
+        res.status(500).send("Error updating password");
     }
 });
 
+// Route to handle suggestions
+router.post("/envoyer-suggestion", ensureAuthenticated, async (req, res) => {
+    const userId = req.session.user.user_id;
+    const { suggestion } = req.body;
+
+    try {
+        await db.execute("INSERT INTO suggestions (user_id, suggestion_text) VALUES (?, ?)", [userId, suggestion]);
+        res.status(200).redirect("/monCompte");
+    } catch (error) {
+        console.error("Error sending suggestion:", error);
+        res.status(500).send("Error sending suggestion");
+    }
+});
+
+// Route to handle deleting a favorite
+router.delete("/supprimer-favori/:id", ensureAuthenticated, async (req, res) => {
+    const favoriteId = req.params.id;
+
+    try {
+        await db.execute("DELETE FROM favorites WHERE favorite_id = ?", [favoriteId]);
+        res.json({ success: true });
+    } catch (error) {
+        console.error("Error deleting favorite:", error);
+        res.status(500).json({ success: false });
+    }
+});
+
+// Route to handle deleting a like
+router.delete("/supprimer-like/:id", ensureAuthenticated, async (req, res) => {
+    const likeId = req.params.id;
+
+    try {
+        await db.execute("DELETE FROM likes WHERE like_id = ?", [likeId]);
+        res.json({ success: true });
+    } catch (error) {
+        console.error("Error deleting like:", error);
+        res.status(500).json({ success: false });
+    }
+});
 
 module.exports = router;
