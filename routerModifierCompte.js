@@ -8,7 +8,7 @@ const { ensureAuthenticated, restrictToRole } = require("./session");
 router.use(express.urlencoded({ extended: true }));
 
 // Route to render the account modification form
-router.get("/modifierCompte", ensureAuthenticated,restrictToRole("administrateur"), async (req, res) => {
+router.get("/modifierCompte", ensureAuthenticated, restrictToRole("administrateur"), async (req, res) => {
     const userIdSession = req.session.user.user_id;
     console.log("User id stored in session is", userIdSession); 
     const userId = req.params.id;
@@ -17,18 +17,16 @@ router.get("/modifierCompte", ensureAuthenticated,restrictToRole("administrateur
     try {
         // Obtenir les informations de l'utilisateur et du groupe directement
         const user = await db.execute("SELECT * FROM users WHERE user_id = ?", [userIdSession]);
-        const group = await db.execute("SELECT * FROM groupes WHERE user_id = ?", [userIdSession]);
+        const groups = await db.execute("SELECT nom FROM groupes WHERE user_id = ?", [userIdSession]);
         
         const userResult = user.rows[0];
-        const groupResult = group.rows[0];
+        const groupResults = groups.rows.map(row => row.nom);
         
         console.log("user result is ", userResult);
-        console.log("user result is ", groupResult);
+        console.log("group results are ", groupResults);
         
-        
-
         const query = await db.execute(
-            `SELECT langue,role FROM users WHERE user_id = ?`,
+            `SELECT langue, role FROM users WHERE user_id = ?`,
             [userIdSession] 
         );
 
@@ -39,21 +37,16 @@ router.get("/modifierCompte", ensureAuthenticated,restrictToRole("administrateur
         if (userLangue === 'fr') {
             res.render("modifierCompte", {
                 userResult,
-                group: groupResult.nom,
+                group: groupResults,
                 userRole
             });
-          
-      } else {
-        res.render("modifierCompteEN", {
-            userResult,
-            group: groupResult.nom,
-            userRole
-        });
-      }
-       
-
-        
-        
+        } else {
+            res.render("modifierCompteEN", {
+                userResult,
+                group: groupResults,
+                userRole
+            });
+        }
     } catch (error) {
         console.error("Erreur pendant l'opération DB :", error);
         res.status(500).send("Erreur lors de la récupération des données utilisateur");
@@ -63,7 +56,8 @@ router.get("/modifierCompte", ensureAuthenticated,restrictToRole("administrateur
 // Route for updating an existing user
 router.post("/modifier-user/:id", async (req, res) => {
     const userIdSession = req.session.user.user_id;
-    const { username, email, password, role, language, groupName } = req.body;
+    const { username, email, password, role, language } = req.body;
+    const groups = req.body.groups; // This will be an array
     console.log("User ID in POST:", userIdSession);
     console.log("Form data:", req.body);
 
@@ -90,26 +84,20 @@ router.post("/modifier-user/:id", async (req, res) => {
         console.log("User update parameters:", userParams);
         await db.execute(userSql, userParams);
 
-        // Check if the group exists for the user and either update or insert accordingly
-        const groupExists = await db.execute("SELECT * FROM groupes WHERE user_id = ?", [userIdSession]);
+        // Delete existing groups for the user
+        await db.execute("DELETE FROM groupes WHERE user_id = ?", [userIdSession]);
 
-        if (groupExists.rows.length > 0) {
-            // If group already exists, perform an update
-            const updateGroupSql = `
-                UPDATE groupes SET nom = ? WHERE user_id = ?`;
-            await db.execute(updateGroupSql, [groupName, userIdSession]);
-        } else {
-            // If group doesn't exist, perform an insert
-            const insertGroupSql = `
-                INSERT INTO groupes (nom, user_id) VALUES (?, ?)`;
-            await db.execute(insertGroupSql, [groupName, userIdSession]);
+        // Insert each group into the "groupes" table
+        const groupSql = `INSERT INTO groupes (nom, user_id) VALUES (?, ?)`;
+        for (const groupName of groups) {
+            await db.execute(groupSql, [groupName, userIdSession]);
         }
+
         res.status(200).redirect("/admin");
     } catch (error) {
         console.error("Error updating user and group:", error);
         res.status(500).send("Error updating user and group");
     }
 });
-
 
 module.exports = router;
