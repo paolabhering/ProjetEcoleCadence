@@ -60,6 +60,7 @@ const routerAdmin = require("./routerAdmin");
 const routerModifCostume = require("./routerModifCostume");
 const routerFiltreCatalogue = require("./routerFiltreCatalogue");
 const routerModifierCompte = require("./routerModifierCompte");
+const routerMonCompte = require("./routerMonCompte");
 
 app.use("/", routerAdmin);
 app.use("/", routerConnexion);
@@ -69,7 +70,7 @@ app.use("/", routerCostume);
 app.use("/", routerModifCostume);
 app.use("/", routerModifierCompte);
 app.use("/", routerFiltreCatalogue);
-
+app.use("/", routerMonCompte);
 
 app.listen(3001, function() {
 console.log(`Serveur sur le port 3001`);
