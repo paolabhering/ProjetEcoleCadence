@@ -1,0 +1,155 @@
+{{#if (eq userRole "administrateur")}}
+    {{> headerAdEN}}
+{{else if (eq userRole "professeur")}}
+    {{> headerEN}}
+{{/if}}
+
+<div class="container">
+    <div class="account-section">
+        <div class="account-info">
+            <h2>My account</h2>
+            <p><b>Username:</b> {{user.username}}</p>
+            <p><b>Email:</b> {{user.email}}</p>
+            <p><b>My groupes:</b></p>
+            <ul>
+                {{#each groups}}
+                    <li>{{this}}</li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="password-form">
+            <h2>Change password</h2>
+            <form action="/modifier-mot-de-passe" method="POST">
+                <label for="currentPassword"><b>Current password:</b></label>
+                <input type="password" id="currentPassword" name="currentPassword" required>
+                <label for="newPassword"><b>New password:</b></label>
+                <input type="password" id="newPassword" name="newPassword" required>
+                <label for="confirmPassword"><b>Confirm the new password:</b></label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <button type="submit" class="btn btn_roseFonce">Modify</button>
+            </form>
+        </div>
+    </div>
+    <div class="favorites-section">
+        <h2>My favorites</h2>
+        <ul>
+            {{#each favorites}}
+                <li>
+                    <span>{{this.costume_name}}</span>
+                    <span>{{this.group_name}}</span>
+                    <button class="delete-favorite" data-favorite-id="{{this.favorite_id}}">🗑️</button>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+    <div class="likes-section">
+        <h2>My ❤️</h2>
+        <ul>
+            {{#each likes}}
+                <li>
+                    <span>{{this.costume_name}}</span>
+                    <button class="delete-like" data-like-id="{{this.like_id}}">❤️</button>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+    <div class="my-suggestions-section">
+        <h2>My suggestions</h2>
+        <ul>
+            {{#each suggestions}}
+                <li>{{this.suggestion_text}}</li>
+            {{/each}}
+        </ul>
+    </div>
+    <div class="suggestions-section">
+        <h2>Suggestions</h2>
+        <form action="/envoyer-suggestion" method="POST">
+            <textarea name="suggestion" rows="5" placeholder="Écrivez vos suggestions ici..." required></textarea>
+            <button type="submit" class="btn btn_roseFonce">Send</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .container {
+        background-color: #f0f0f0;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .account-section {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+    .account-info, .password-form {
+        width: 48%;
+        background-color: lightgray;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .favorites-section, .likes-section, .my-suggestions-section, .suggestions-section {
+        background-color: lightgray;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    .favorites-section ul, .likes-section ul, .my-suggestions-section ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .favorites-section li, .likes-section li, .my-suggestions-section li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #ccc;
+    }
+    .suggestions-section textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+   
+</style>
+
+<script>
+    document.querySelectorAll('.delete-favorite').forEach(button => {
+        button.addEventListener('click', function() {
+            const favoriteId = this.getAttribute('data-favorite-id');
+            fetch(`/supprimer-favori/${favoriteId}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    this.parentElement.remove();
+                } else {
+                    alert('Erreur lors de la suppression du favori');
+                }
+            })
+            .catch(error => console.error('Erreur:', error));
+        });
+    });
+
+    document.querySelectorAll('.delete-like').forEach(button => {
+        button.addEventListener('click', function() {
+            const likeId = this.getAttribute('data-like-id');
+            fetch(`/supprimer-like/${likeId}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    this.parentElement.remove();
+                } else {
+                    alert('Erreur lors de la suppression du like');
+                }
+            })
+            .catch(error => console.error('Erreur:', error));
+        });
+    });
+</script>
