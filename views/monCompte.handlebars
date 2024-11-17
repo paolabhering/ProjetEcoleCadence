@@ -1,78 +1,65 @@
 {{#if (eq userRole "administrateur")}}
-    {{> headerAd}}
+    {{> headerAdEN}}
 {{else if (eq userRole "professeur")}}
-    {{> header}}
+    {{> headerEN}}
 {{/if}}
 
-
-<div class="connexion-form grey-container">
-    <h2>Mon Compte</h2>
+<form action="/modifier-user/{{userResult.user_id}}" method="POST" class="connexion-form">
+    <h2>Modify user</h2>
     <div class="flex-container">
-        <!-- Username Display -->
         <div class="flex-item">
-            <label for="username"><b>Nom :</b></label>
-            <input type="text" id="username" name="username" value="{{user.username}}" readonly>
+            <label for="username"><b>Name :</b></label>
+            <input type="text" id="username" name="username" value="{{userResult.username}}" required>
         </div>
-
-        <!-- Email Display -->
         <div class="flex-item">
             <label for="email"><b>Email :</b></label>
-            <input type="email" id="email" name="email" value="{{user.email}}" readonly>
+            <input type="email" id="email" name="email" value="{{userResult.email}}" required>
         </div>
-
-        <!-- Groups Display -->
+        <div class="flex-item">
+            <label for="password"><b>New password :</b></label>
+            <input type="password" id="password" name="password" placeholder="Laisser vide pour ne pas modifier">
+        </div>
         <div class="flex-item full-width">
-            <label for="groups"><b>Groupe(s) :</b></label>
-            <div id="userGroupsContainer">
-                {{#each user.groups}}
-                    <input type="text" value="{{this}}" readonly>
+            <label for="groups"><b>Group(s) :</b></label>
+            <div class="group-inputs">
+                {{#each group}}
+                    <input type="text" id="groupName" name="groups[]" value="{{this}}" required>
                 {{/each}}
-            </div>
-        </div>
-
-        <!-- Password Modification Section -->
-        <div class="flex-item full-width">
-            <h3>Modifier le mot de passe</h3>
-            <form action="/update-password" method="POST">
-                <div class="flex-item">
-                    <label for="currentPassword"><b>Mot de passe actuel :</b></label>
-                    <input type="password" id="currentPassword" name="currentPassword" placeholder="Entrez votre mot de passe actuel" required>
-                </div>
-                <div class="flex-item">
-                    <label for="newPassword"><b>Nouveau mot de passe :</b></label>
-                    <input type="password" id="newPassword" name="newPassword" placeholder="Entrez un nouveau mot de passe" required>
-                </div>
-                <div class="flex-item">
-                    <label for="confirmPassword"><b>Confirmer le nouveau mot de passe :</b></label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirmez le nouveau mot de passe" required>
-                </div>
-                <button type="submit" class="btn btn_roseFonce">Mettre à jour le mot de passe</button>
-            </form>
-        </div>
-
-        <!-- Optional Section to Add Groups -->
-        <div class="flex-item full-width">
-            <h3>Ajouter des Groupes</h3>
-            <form action="/add-group" method="POST">
-                <div id="groupFieldsContainer">
-                    <input type="text" id="newGroupName" name="groups[]" placeholder="Entrez le nom du groupe">
-                </div>
+                <div id="groupFieldsContainer"></div>
                 <div class="button-container">
                     <button type="button" class="add-group" onclick="addGroupField()">+</button>
                 </div>
-                <button type="submit" class="btn btn_roseFonce">Ajouter le(s) groupe(s)</button>
-            </form>
+            </div>
+        </div>
+        <div class="flex-item full-width">
+            <label for="role"><b>Role :</b></label>
+            <div class="radio-group">
+                <input type="radio" id="admin" name="role" value="administrateur" {{#if (eq user.role "administrateur")}}checked{{/if}} required><b>Administrator</b>
+                <input type="radio" id="professeur" name="role" value="professeur" {{#if (eq user.role "professeur")}}checked{{/if}} required><b>Professor</b>
+            </div>
+        </div>
+        <div class="flex-item full-width">
+            <label for="language"><b>Language :</b></label>
+            <div class="radio-group">
+                <input type="radio" id="french" name="language" value="fr" {{#if (eq user.langue "fr")}}checked{{/if}} required><b>French</b>
+                <input type="radio" id="english" name="language" value="en" {{#if (eq user.langue "en")}}checked{{/if}} required><b>English</b>
+            </div>
+        </div>
+        <div class="flex-item full-width">
+            <button type="submit" class="btn btn_roseFonce" id="boutonCompte">Save the modifications</button>
         </div>
     </div>
-</div>
+</form>
 
 <script>
     function addGroupField() {
         const groupFieldsContainer = document.getElementById("groupFieldsContainer");
         const newGroupInput = document.createElement("input");
         newGroupInput.type = "text";
-        newGroupInput.placeholder = "Entrez le nom du groupe";
-        newGroupInput.name = "groups[]";
+        newGroupInput.placeholder = "Enter group name";
+        newGroupInput.name = "groups[]";  // Updated to make it an array
+        newGroupInput.required = true;
+
         groupFieldsContainer.appendChild(newGroupInput);
     }
 </script>
