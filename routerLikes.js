@@ -5,7 +5,6 @@ const { ensureAuthenticated, restrictToRole } = require("./session");
 
 router.get("/likes", async function(req, res) {
     const userId = req.session.user.user_id;
-    console.log("User id is", userId); 
 
     if (!userId) {
         return res.status(401).send("Utilisateur non authentifié"); // Ajouter un contrôle d'authentification
@@ -18,8 +17,6 @@ router.get("/likes", async function(req, res) {
 
     const result = query.rows[0];
     const userLangue = result.langue;
-    const userRole = result.role;
-    console.log("User's chosen language is:", userLangue);
 
     try {
         const { rows: listeLikes } = await db.execute(`
@@ -30,28 +27,31 @@ router.get("/likes", async function(req, res) {
         `);
     
         if (listeLikes.length > 0) {
-            // Rending après avoir récupéré tous les likes
             if (userLangue === 'fr') {
                 res.render("listeLikes", { likes: listeLikes });
             } else {
                 res.render("listeLikesEN", { likes: listeLikes });
             }
         } else {
-            res.send("Aucun like trouvé");
+            if (userLangue === 'fr') {
+                res.render("listeLikes", { likes: [] });
+            } else {
+                res.render("listeLikesEN", { likes: [] }); 
+            }
         }
     
     } catch (error) {
         console.error(error);
-        res.status(500).send("Erreur lors de la récupération des likes");
+        res.status(500).send("Erreur lors de la récupération des ♥");
     }
     
 });
 
 router.delete("/likes", async function(req, res) {
-    const likesToDelete = req.body.likes; // Récupérer la liste des likes à supprimer
-
+    const likesToDelete = req.body.likes; 
+   
     if (!Array.isArray(likesToDelete) || likesToDelete.length === 0) {
-        return res.status(400).send("Aucun like à supprimer");
+        return res.status(400).send("Aucun ♥ à supprimer");
     }
 
     // Utilisation d'une query préparée pour supprimer les likes
@@ -59,11 +59,11 @@ router.delete("/likes", async function(req, res) {
     const query = `DELETE FROM likes WHERE like_id IN (${placeholders})`;
 
     try {
-        await db.execute(query, likesToDelete); // Exécution de la requête
-        res.status(204).send(); // Envoie une réponse avec le code 204 (No Content)
+        await db.execute(query, likesToDelete); 
+        res.status(204).send(); 
     } catch (error) {
         console.error(error);
-        res.status(500).send("Erreur lors de la suppression des likes");
+        res.status(500).send("Erreur lors de la suppression des ♥");
     }
 });
 

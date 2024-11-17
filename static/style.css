@@ -567,7 +567,7 @@ td:nth-child(1){
 }
 
 /*//////////////////////////////////////////////////////////*/
-/* Pour les pages listeLikes et listeFavoris*/
+/* Pour les pages listeLikes, listeFavoris, listeSuggestions*/
 /*//////////////////////////////////////////////////////////*/
 
 .lienRose {
@@ -575,12 +575,9 @@ td:nth-child(1){
     font-size:medium;
 }
 
-.corbeille_container{
-    margin-left: 67%;
-    margin-right:auto;
-}
+
 .corbeille{
-    width: 40px;
+    width: 50px;
     height: auto;   
 }
 

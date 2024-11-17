@@ -5,7 +5,6 @@ const { ensureAuthenticated, restrictToRole } = require("./session");
 
 router.get("/favoris", async function(req, res) {
     const userId = req.session.user.user_id;
-    console.log("User id is", userId); 
 
     if (!userId) {
         return res.status(401).send("Utilisateur non authentifié"); // Ajouter un contrôle d'authentification
@@ -27,18 +26,21 @@ router.get("/favoris", async function(req, res) {
             JOIN groupes g ON  f.group_id = g.groupe_id
             JOIN users u ON g.user_id = u.user_id
         `);
-    
+        
         if (listeFavoris.length > 0) {
-            // Rending après avoir récupéré tous les favoris
             if (userLangue === 'fr') {
                 res.render("listeFavoris", { favoris: listeFavoris });
             } else {
                 res.render("listeFavorisEN", { favoris: listeFavoris });
             }
         } else {
-            res.send("Aucun favori trouvé");
+            if (userLangue === 'fr') {
+                res.render("listeFavoris", { favoris: [] });
+            } else {
+                res.render("listeFavorisEN", { favoris: [] }); 
+            }
         }
-    
+
     } catch (error) {
         console.error(error);
         res.status(500).send("Erreur lors de la récupération des favoris");
@@ -47,7 +49,7 @@ router.get("/favoris", async function(req, res) {
 });
 
 router.delete("/favoris", async function(req, res) {
-    const favoritesToDelete = req.body.favoris; // Récupérer la liste des favoris à supprimer
+    const favoritesToDelete = req.body.favoris;
 
     if (!Array.isArray(favoritesToDelete) || favoritesToDelete.length === 0) {
         return res.status(400).send("Aucun favori à supprimer");
@@ -58,8 +60,8 @@ router.delete("/favoris", async function(req, res) {
     const query = `DELETE FROM favorites WHERE favorite_id IN (${placeholders})`;
 
     try {
-        await db.execute(query, favoritesToDelete); // Exécution de la requête
-        res.status(204).send(); // Envoie une réponse avec le code 204 (No Content)
+        await db.execute(query, favoritesToDelete);
+        res.status(204).send();
     } catch (error) {
         console.error(error);
         res.status(500).send("Erreur lors de la suppression des favoris");

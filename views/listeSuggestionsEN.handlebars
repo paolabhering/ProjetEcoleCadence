@@ -10,14 +10,20 @@
                     <th>Suggestion</th>
                     <th><input type="checkbox" id="select_all" name="select_all">Select all</th>
                 </tr>
-                {{#each suggestions}}
+                {{#if suggestions.length}} 
+                    {{#each suggestions}}
+                        <tr>
+                            <td>date</td>
+                            <td>{{this.professeur}}</td>
+                            <td>{{this.suggestion_text}}</td>
+                            <td><input type="checkbox" class="effacer" name="effacer" value="{{this.suggestion_id}}"></td>
+                        </tr>    
+                    {{/each}}
+                {{else}}
                     <tr>
-                        <td>date</td>
-                        <td>{{this.professeur}}</td>
-                        <td>{{this.suggestion}}</td>
-                        <td><input type="checkbox" class="effacer" name="effacer" value="{{this.suggestion_id}}"></td>
-                    </tr>    
-                {{/each}}
+                        <td colspan="4" style="text-align:center; background-color:white;"><b>No suggestion</b></td>
+                    </tr>
+                {{/if}}
             </table>
         </div>
         <div class="button-corbeille">

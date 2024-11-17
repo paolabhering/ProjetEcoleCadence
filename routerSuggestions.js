@@ -5,7 +5,6 @@ const { ensureAuthenticated, restrictToRole } = require("./session");
 
 router.get("/suggestions", async function(req, res) {
     const userId = req.session.user.user_id;
-    console.log("User id is", userId); 
 
     if (!userId) {
         return res.status(401).send("Utilisateur non authentifié"); // Ajouter un contrôle d'authentification
@@ -25,16 +24,18 @@ router.get("/suggestions", async function(req, res) {
             FROM suggestions s
             JOIN users u ON s.user_id = u.user_id
         `);
-    
         if (listeSuggestions.length > 0) {
-            // Rending après avoir récupéré tous les likes
             if (userLangue === 'fr') {
                 res.render("listeSuggestions", { suggestions: listeSuggestions });
             } else {
                 res.render("listeSuggestionsEN", { suggestions: listeSuggestions });
             }
         } else {
-            res.send("Aucune suggestion trouvée");
+            if (userLangue === 'fr') {
+                res.render("listeSuggestions", { suggestions: [] });
+            } else {
+                res.render("listeSuggestionsEN", { suggestions: [] }); 
+            }
         }
     
     } catch (error) {
@@ -44,20 +45,20 @@ router.get("/suggestions", async function(req, res) {
     
 });
 
-router.delete("/suggestion", async function(req, res) {
-    const suggestionToDelete = req.body.suggestion; // Récupérer la liste des suggestions à supprimer
-
+router.delete("/suggestions", async function(req, res) {
+    const suggestionsToDelete = req.body.suggestions; 
     if (!Array.isArray(suggestionsToDelete) || suggestionsToDelete.length === 0) {
         return res.status(400).send("Aucune suggestion à supprimer");
     }
 
     // Utilisation d'une query préparée pour supprimer les suggestions
     const placeholders = suggestionsToDelete.map(() => '?').join(',');
+    console.log(suggestionsToDelete);
     const query = `DELETE FROM suggestions WHERE suggestion_id IN (${placeholders})`;
-
+    
     try {
-        await db.execute(query, suggestionsToDelete); // Exécution de la requête
-        res.status(204).send(); // Envoie une réponse avec le code 204 (No Content)
+        await db.execute(query, suggestionsToDelete); 
+        res.status(204).send();
     } catch (error) {
         console.error(error);
         res.status(500).send("Erreur lors de la suppression des suggestions");
