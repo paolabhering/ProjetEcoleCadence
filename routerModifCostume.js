@@ -51,7 +51,6 @@ router.get("/modif/:costume_id", ensureAuthenticated,restrictToRole("administrat
   
 
         const userIdSession = req.session.user.user_id;
-        console.log("User id is", userIdSession); 
         const query = await db.execute(
             `SELECT langue,role FROM users WHERE user_id = ?`,
             [userIdSession] 
@@ -60,7 +59,7 @@ router.get("/modif/:costume_id", ensureAuthenticated,restrictToRole("administrat
         const result = query.rows[0];
         const userLangue = result.langue;
         const userRole = result.role;
-        console.log("User's chosen language is:", userLangue);
+
         if (userLangue === 'fr') {
             res.render("modifCostume", { 
                 costume: costume[0],
@@ -85,7 +84,6 @@ router.get("/modif/:costume_id", ensureAuthenticated,restrictToRole("administrat
 
 router.get("/confirmation", async (req,res) => {
     const userIdSession = req.session.user.user_id;
-        console.log("User id is", userIdSession); 
         const query = await db.execute(
             `SELECT langue,role FROM users WHERE user_id = ?`,
             [userIdSession] 
@@ -94,7 +92,7 @@ router.get("/confirmation", async (req,res) => {
         const result = query.rows[0];
         const userLangue = result.langue;
         const userRole = result.role;
-        console.log("User's chosen language is:", userLangue);
+
         if (userLangue === 'fr') {
           res.render("confirmation", {userLangue,userRole});  
           
@@ -107,9 +105,6 @@ router.get("/confirmation", async (req,res) => {
 
 router.post("/modif/:costume_id", upload.single('upload_photo'), async function(req,res) {
     try {
-         // Affichez le contenu de req.body et req.file pour le débogage
-         console.log(req.body);
-         console.log(req.file);
 
         const { costume_id } = req.params;
         let couleurs = [];

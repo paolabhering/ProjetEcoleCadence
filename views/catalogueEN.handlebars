@@ -135,8 +135,6 @@
                 const selectedGroupeId = event.target.value;
                 const selectedOption = event.target.options[event.target.selectedIndex];
                 const selectedGroupeNom = selectedOption.text; 
-
-                console.log(`Groupe sélectionné pour le costume ID ${costume_id}: ${selectedGroupeId} (${selectedGroupeNom})`);
                 
                 fetch('/ajouterFavori', {
                     method: 'POST',
@@ -147,7 +145,6 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data.message);
                     ajoutFavori.hidden = true; 
                     
                     favoriteCostumeGroups[costume_id] = {
@@ -170,9 +167,7 @@
             ajoutFavori.hidden = true; 
             groupeInfo.hidden = true;
 
-            console.log("favoriteCostumeGroups avant delete: ", favoriteCostumeGroups);
             const group_id = favoriteCostumeGroups[costume_id] ? favoriteCostumeGroups[costume_id].group_id : null;
-            console.log(costume_id, group_id)
 
              //send an ajax request to remove the favorite
             fetch('/enleverFavori', {
@@ -189,9 +184,7 @@
                 return response.json(); 
             }) 
             .then(data => {
-                console.log(data.message);
                 delete favoriteCostumeGroups[costume_id];
-                console.log("Liste après delete: ", favoriteCostumeGroups);
             })
             .catch((error) => {
                 console.error('erreur:', error);
@@ -225,7 +218,6 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data.message);
                 likedCostumeIds.push(costume_id);
             })
             .catch((error) => {
@@ -248,7 +240,6 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data.message);
                 likedCostumeIds = likedCostumeIds.filter(id => id !== costume_id);
             })
             .catch((error) => {

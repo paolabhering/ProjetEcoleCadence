@@ -136,9 +136,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data.message);
                 likedCostumeIds.push(costume_id);
-                console.log("bob");
             })
             .catch((error) => {
                 console.error('Erreur:', error);
@@ -160,9 +158,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data.message);
                 likedCostumeIds = likedCostumeIds.filter(id => id !== costume_id);
-                console.log("bob2");
             })
             .catch((error) => {
                 console.error('erreur:', error);

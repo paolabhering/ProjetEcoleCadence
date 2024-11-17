@@ -21,7 +21,6 @@ router.get("/groupes", async function(req, res) {
            where user_id = :user_id`, { user_id: userid });
 
        res.json(groupes);
-       console.log("groupes utilisateur:", groupes);
 
    } catch (error) {
        console.error(error);
@@ -34,7 +33,6 @@ router.get("/catalogue", ensureAuthenticated, async function(req,res) {
         
     const { user } = req.session;
     const userId = user ? user.user_id : null; 
-    console.log(userId);
 
     const {rows} = await db.execute (`
        SELECT c.*, SUM(g.quantity) AS quantite_totale 
@@ -52,11 +50,8 @@ router.get("/catalogue", ensureAuthenticated, async function(req,res) {
 
           groupesUser = groupes.map(groupe => groupe.nom);
 
-          console.log("Groupes noms:", groupesUser);
-          console.log("Groupes:", groupes);
           // Récupérer uniquement les Ids de groupe
           const IdsDeGroupes = groupes.map(groupe => groupe.groupe_id);
-          console.log("Groupes Ids:", IdsDeGroupes);
         }
 
         let likedCostumeIds = [];
@@ -88,8 +83,6 @@ router.get("/catalogue", ensureAuthenticated, async function(req,res) {
           }, {});
         }
 
-    console.log("Costumes favoris:", favoriteCostumeGroups);
-    console.log("Nom des groupes:", groupesUser);
 
       const userIdSession = req.session.user.user_id;
       
@@ -101,8 +94,7 @@ router.get("/catalogue", ensureAuthenticated, async function(req,res) {
         const result = query.rows[0];
         const userLangue = result.langue;
         const userRole = result.role;
-        console.log("User's chosen language is:", userLangue);
-        console.log("User role is:", userRole);
+
         if (userLangue === 'fr') {
           res.render("catalogue", {groupeCostume: rows, likedCostumeIds, userId, groupesUser, userLangue,  favoriteCostumeGroups, userRole});  
           
@@ -129,7 +121,6 @@ router.get("/detailsCostume/:costume_id", ensureAuthenticated, async function (r
       WHERE c.costume_id = :costume_id
     `, { costume_id: req.params.costume_id });
 
-    console.log(costume);
    
     if (costume.length === 0) {
       res.status(404).send("Costume non trouvé");
@@ -148,7 +139,6 @@ router.get("/detailsCostume/:costume_id", ensureAuthenticated, async function (r
     });
     
     const userId = req.session.user.user_id;
-        console.log("User id is", userId); 
         const query = await db.execute(
             `SELECT langue,role FROM users WHERE user_id = ?`,
             [userId] 
@@ -157,7 +147,6 @@ router.get("/detailsCostume/:costume_id", ensureAuthenticated, async function (r
         const result = query.rows[0];
         const userLangue = result.langue;
         const userRole = result.role;
-        console.log("User's chosen language is:", userLangue);
 
         if (userLangue === 'fr') {
           res.render("detailsCostume", { costume: costume[0], quantites: quantitesParGrandeur, quantiteTotale, userLangue,userRole });
@@ -180,7 +169,6 @@ router.get("/detailsCostume/:costume_id", ensureAuthenticated, async function (r
 
 // Ajouter un like
 router.post("/ajouterLike", async function(req, res) {
-  console.log(req.body);
   try {
     const { user_id, costume_id } = req.body;
     if (!user_id || !costume_id) {
@@ -200,7 +188,6 @@ router.post("/ajouterLike", async function(req, res) {
 
 // Enlever un like
 router.post("/enleverLike", async function(req, res) {
-  console.log(req.body);
   try {
     const { user_id, costume_id } = req.body;
 
@@ -222,8 +209,6 @@ router.post("/enleverLike", async function(req, res) {
 
 // Ajouter un favori
 router.post("/ajouterFavori", async function(req, res) {
-  console.log(req.body);
-  
   try {
       const { costume_id, group_id } = req.body;
       if (!costume_id || !group_id) {
@@ -243,10 +228,6 @@ router.post("/ajouterFavori", async function(req, res) {
 
 // Enlever un favori
 router.post("/enleverFavori", async function(req, res) {
-  console.log("Request Body:", req.body); 
-  console.log("allo");
-  console.log(req.body);
-  console.log("allo");
   try {
     const { group_id, costume_id } = req.body;
 
@@ -261,7 +242,6 @@ router.post("/enleverFavori", async function(req, res) {
        { group_id, costume_id });
 
     res.status(200).json({ message: "Favori enlevé avec succès" });
-    console.log('favori supprimé', group_id, costume_id)
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Erreur lors du retrait du favori" });

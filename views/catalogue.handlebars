@@ -75,15 +75,12 @@
     let likedCostumeIds = {{{json likedCostumeIds}}};
     let groupes = {{{json groupesUser}}};
     let favoriteCostumeGroups = {{{json favoriteCostumeGroups}}};
-
-    console.log(typeof favoriteCostumeGroups, favoriteCostumeGroups);
           
      //Envoyer une requête AJAX pour ajouter les groupes au favori
 
     fetch('/groupes')
         .then(response => response.json())
         .then(groupes => {
-            console.log('Données des groupes récupérées:', groupes);
             // Mettre à jour le select avec les groupes récupérés
             const selectGroupes = document.querySelectorAll('.select-group');
             selectGroupes.forEach(select => {
@@ -139,8 +136,6 @@
                 const selectedGroupeId = event.target.value;
                 const selectedOption = event.target.options[event.target.selectedIndex];
                 const selectedGroupeNom = selectedOption.text; // Récupère le nom du groupe à partir de l'option sélectionnée
-
-                console.log(`Groupe sélectionné pour le costume ID ${costume_id}: ${selectedGroupeId} (${selectedGroupeNom})`);
                 
                 fetch('/ajouterFavori', {
                     method: 'POST',
@@ -151,7 +146,6 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data.message);
                     ajoutFavori.hidden = true; 
                     
                     favoriteCostumeGroups[costume_id] = {
@@ -174,9 +168,7 @@
             ajoutFavori.hidden = true; 
             groupeInfo.hidden = true;
 
-            console.log("favoriteCostumeGroups avant delete: ", favoriteCostumeGroups);
             const group_id = favoriteCostumeGroups[costume_id] ? favoriteCostumeGroups[costume_id].group_id : null;
-            console.log(costume_id, group_id)
              // envoyer une requête ajax pour enlever le favori
 
             fetch('/enleverFavori', {
@@ -186,18 +178,14 @@
                 },
                 body: JSON.stringify({ costume_id, group_id }),
             })
-            //console.log(costume_id, group_id);
-            //console.log("Réponse du serveur:", response);
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Erreur lors de la suppression du favori'); // traiter les erreurs de réponse
+                    throw new Error('Erreur lors de la suppression du favori'); 
                 }
                 return response.json(); 
             }) 
             .then(data => {
-                console.log(data.message);
                 delete favoriteCostumeGroups[costume_id];
-                console.log("Liste après delete: ", favoriteCostumeGroups);
             })
             .catch((error) => {
                 console.error('erreur:', error);
@@ -233,7 +221,6 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data.message);
                 likedCostumeIds.push(costume_id);
             })
             .catch((error) => {
@@ -258,7 +245,6 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data.message);
                 likedCostumeIds = likedCostumeIds.filter(id => id !== costume_id);
             })
             .catch((error) => {

@@ -18,7 +18,6 @@ router.get("/filtre", ensureAuthenticated, async (req, res) => {
 
     const userLangue = await getUserLanguage(userId);
 
-    console.log("User's chosen language is:", userLangue);
     if (userLangue === 'fr') {
         res.render("filtreCatalogue", { userLangue });
     } else {

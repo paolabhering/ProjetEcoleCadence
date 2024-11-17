@@ -53,7 +53,6 @@ router.delete("/suggestions", async function(req, res) {
 
     // Utilisation d'une query préparée pour supprimer les suggestions
     const placeholders = suggestionsToDelete.map(() => '?').join(',');
-    console.log(suggestionsToDelete);
     const query = `DELETE FROM suggestions WHERE suggestion_id IN (${placeholders})`;
     
     try {

@@ -22,7 +22,6 @@ const upload = multer({storage : storage});
 router.get("/ajout", ensureAuthenticated, restrictToRole("administrateur"), async (req, res) => {   
     try {
         const userId = req.session.user.user_id;
-        console.log("User id is", userId); 
         const query = await db.execute(
             `SELECT langue,role FROM users WHERE user_id = ?`,
             [userId] 
@@ -31,8 +30,6 @@ router.get("/ajout", ensureAuthenticated, restrictToRole("administrateur"), asyn
         const result = query.rows[0];
         const userLangue = result.langue;
         const userRole = result.role;
-        console.log("User's chosen language is:", userLangue);
-        console.log("User role is:", userRole);
 
         if (userLangue === 'fr') {
             
@@ -49,7 +46,6 @@ router.get("/ajout", ensureAuthenticated, restrictToRole("administrateur"), asyn
 
 router.get("/confirmation", async (req,res) => {
     const userIdSession = req.session.user.user_id;
-    console.log("User id is", userIdSession); 
         const query = await db.execute(
             `SELECT langue,role FROM users WHERE user_id = ?`,
             [userIdSession] 
@@ -58,7 +54,7 @@ router.get("/confirmation", async (req,res) => {
         const result = query.rows[0];
         const userLangue = result.langue;
         const userRole = result.role;
-        console.log("User's chosen language is:", userLangue);
+        
         if (userLangue === 'fr') {
           res.render("confirmation", {userLangue, userRole});  
           
@@ -84,18 +80,7 @@ router.post("/ajout", upload.single('upload_photo'), async function(req,res) {
         if (req.body.multicolore) couleurs.push("multicolore");
 
     let colorString = couleurs.length > 0 ? couleurs.join(", "): null;
-    console.log("Couleurs sélectionnées:", colorString);
     
-    console.log({
-        titre: req.body.titre, 
-        category: req.body.category,
-        age_group: req.body.age_group,
-        couleurs: colorString,
-        notes: req.body.notes,
-        localisation: req.body.localisation,
-        boite: req.body.boite,
-        image: req.file.filename,
-    })
     const result = await db.execute({
         sql: "INSERT INTO costumes(titre, category, age_group, color, notes, localisation, boite, image) VALUES(:titre, :category, :age_group, :color, :notes, :localisation, :boite,:image)",
         args:{
@@ -134,14 +119,7 @@ router.post("/ajout", upload.single('upload_photo'), async function(req,res) {
 
         for (const taille of grandeurs) {
            
-            if (parseInt(taille.quantite) > 0) { 
-
-                console.log({
-                    costume_id: Number(costumeId), 
-                    grandeur: taille.taille,
-                    quantity: taille.quantite,
-                })
-    
+            if (parseInt(taille.quantite) > 0) {
                 try{
                     await db.execute({
                         sql: "INSERT INTO grandeurs(costume_id, grandeur, quantity) VALUES(:costume_id, :grandeur, :quantity)",
