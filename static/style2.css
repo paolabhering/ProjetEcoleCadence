@@ -46,6 +46,9 @@ ul.navbar-nav {
     margin: 0 75px; /* Espacement horizontal entre les boutons */ 
     margin-top: -20px;  
 }
+/* .nav-item:first-child {
+    margin-right: auto;
+} */
 
 .btn {
     border-radius: 15px;
@@ -359,7 +362,7 @@ td:nth-child(1){
 /*//////////////////////////////////////////////////////////*/
 
 .grid-container {
-    margin: 10px; 
+    margin: 10px auto; 
     padding: 10px;
     max-width: 1600px; 
     display: grid;
@@ -371,7 +374,7 @@ td:nth-child(1){
     position: relative; 
 }
 
-.imageCatalogue{
+.grid-item img{
     border: 1px solid black;
     width: 100%; 
     height: auto; 
@@ -388,56 +391,49 @@ td:nth-child(1){
     opacity: 0.5;
 }
 
-
-.plusB {
-    position: absolute; 
-    width: 50px; 
-    height: auto; 
-    cursor: pointer; 
-    top: 85px; 
-    left: 25px; 
+#plusB{
+    position: relative;
+    width: 50px;
+    height: auto;
+    margin-top: -120px;
+    margin-right: 65%;
+    border: none;
 }
-
-.plusR {
-    position: absolute; 
-    width: 50px; 
-    height: auto; 
-    cursor: pointer; 
-    top: 85px; 
-    left: 25px; 
+#plusR{
+    position: relative;
+    width: 50px;
+    height: auto;
+    margin-top: -120px;
+    margin-right:65%;
+    border: none;
 }
-
-
-.coeurB {
-    position: absolute; 
-    width: 50px; 
-    height: auto; 
-    cursor: pointer; 
-    top: 85px; 
-    right: 25px; 
+#coeurB{
+    position: relative;
+    width: 50px;
+    height: auto;
+    margin-top: -165px;
+    margin-left: 65%;
+    border: none;
 }
-.coeurR {
-    position: absolute; 
-    width: 50px; 
-    height: auto; 
-    cursor: pointer; 
-    top: 85px; 
-    right: 25px; 
+#coeurR{
+    position: relative;
+    width: 50px;
+    height: auto;
+    margin-top: -165px;
+    margin-left: 65%;
+    border: none;
 }
-
 .info-container {
     background-color: #f0b8c8;
-    color: black;
     border: 1px solid black;
     border-radius: 15px;
     display: none; /* Cacher par défaut */
     position: absolute; /* Positionner par rapport au conteneur */
     top: 40%;
-    left: 45%;
-    transform: translate(-40%, -45%);
+    left: 50%;
+    transform: translate(-40%, -50%);
     padding: 20px;
     text-align: center;
-    cursor: pointer; 
 }
 .container-ajoutFavori{   
     position: relative;
@@ -447,23 +443,7 @@ td:nth-child(1){
     border-radius: 15px;
     padding: 10px;
     text-align: center;
-    bottom: 70px;
-}
-.groupe-info {
-    width: 80%;
-    height: auto;
-    padding: 0;
-    border: 1px solid #d44687;
-    border-radius: 15px;
-    margin-left: 10%;
-    margin-right:auto;
-    background-color: #f0b8c8;
-    font-family: 'Verdana', 'Geneva', 'Tahoma', sans-serif;
-    font-size: large;
-    color:#d44687;
-    position:relative;
-    text-align: center;
-    bottom: 70px;
+    margin-top: -50px;
 }
 
 /*//////////////////////////////////////////////////////////*/
@@ -488,7 +468,7 @@ td:nth-child(1){
     position: relative; 
 }
 
- .image-options {
+.image-options {
     display: flex; 
     justify-content: space-between;
     position: absolute; 
@@ -496,7 +476,13 @@ td:nth-child(1){
     right: 0; 
     bottom: 58%; 
     padding: 0 25px; 
-} 
+}
+
+.image-options img {
+    width: 45px; 
+    height: auto; 
+    cursor: pointer; 
+}
 
 .imgCostume{
     border: 1px solid black;
@@ -566,23 +552,6 @@ td:nth-child(1){
     pointer-events: none; /* L'image ne doit pas interférer avec les clics */
 }
 
-/*//////////////////////////////////////////////////////////*/
-/* Pour les pages listeLikes et listeFavoris*/
-/*//////////////////////////////////////////////////////////*/
-
-.lienRose {
-    color:#d44687;
-    font-size:medium;
-}
-
-.corbeille_container{
-    margin-left: 67%;
-    margin-right:auto;
-}
-.corbeille{
-    width: 40px;
-    height: auto;   
-}
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /* Instructions de mise en page pour les différentes grandeurs d'écrans */
@@ -741,4 +710,74 @@ td:nth-child(1){
         padding-right: 10px; 
     }
 }
- 
+    
+/* envoyer une requête ajax pour ajouter le like
+console.log("user_id:", user_id);
+console.log("costume_id:", costume_id);
+
+fetch('/enleverLike', {
+    method: 'post',
+    headers: {
+        'content-type': 'application/json',
+    },
+    body: JSON.stringify({ user_id, costume_id }),
+})
+.then(response => response.json())
+.then(data => {
+    console.log(data.message);
+})
+.catch((error) => {
+    console.error('erreur:', error);
+});
+});
+
+ if (likedCostumeIds.includes(costume_id)) {
+            coeurBlanc.hidden = true;  
+            coeurRose.hidden = false;   
+        } else {
+            coeurBlanc.hidden = false;  
+            coeurRose.hidden = true;     
+        }
+            
+        // Enlever un like
+router.post("/enleverLike", async function(req, res) {
+  console.log(req.body);
+  try {
+    const { user_id, costume_id } = req.body;
+
+    if (!user_id || !costume_id) {
+      console.error("User ID ou Costume ID est manquant");
+      return; 
+  }
+    await db.execute(`
+      DELETE FROM likes 
+      WHERE user_id = :user_id AND costume_id = :costume_id`,
+       { user_id, costume_id });
+
+    res.status(200).json({ message: "Like enlevé avec succès" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur lors du retrait du like" });
+  }
+});
+
+  let likedCostumeIds = [];
+        // Si l'utilisateur est connecté, récupérez ses likes
+        if(userId) {
+        const { rows: likes } = await db.execute(`
+          SELECT costume_id 
+          FROM likes
+          WHERE user_id = :user_id`, { user_id: userId });
+        likedCostumeIds = likes.map(like => like.costume_id);
+    }*/
+
+    
+form {
+    background-color: lightgrey;
+    margin-top: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 2%;
+    text-align: center;
+    border-radius: 20px;
+}
