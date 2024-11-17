@@ -1,0 +1,109 @@
+{{> headerAd}}
+
+<form action="/suggestions"  method="POST" id="listeSuggestions">
+    <h3>Liste des suggestions</h3>
+        <div class="flex-container">
+            <table id="tabSuggestions">
+                <tr>
+                    <th>Date</th>
+                    <th>Professeur</th>
+                    <th>Suggestion</th>
+                    <th><input type="checkbox" id="select_all" name="select_all">Sélectionner tout</th>
+                </tr>
+                {{#each suggestions}}
+                    <tr>
+                        <td>date</td>
+                        <td>{{this.professeur}}</td>
+                        <td>{{this.suggestion}}</td>
+                        <td><input type="checkbox" class="effacer" name="effacer" value="{{this.like_id}}"></td>
+                    </tr>    
+                {{/each}}
+            </table>
+        </div>
+        <div class="button-corbeille">
+            <button type="button" class="corbeille_container" onclick="confirmSuppression()"><img src="/static/img/corbeille.jpg" alt="corbeille" class="corbeille"> </button>
+        </div>
+         <!-- Modal -->
+            <div id="deleteModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" id="modalClose">&times;</span>
+                    <h2>Confirmation de Suppression</h2>
+                    <p>Êtes-vous certain de vouloir supprimer ce(s) suggestion(s) définitivement?</p>
+                    <button id="confirmDeleteSuggestions" class="btn btn_roseFonce">Oui, supprimer</button><br>
+                    <button type="button" id="cancelDeleteSuggestions" class="btn btn_grisFonce">Non, annuler</button>
+                </div>
+            </div>
+</form>
+
+<script>
+
+    document.getElementById('select_all').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.effacer');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
+        });
+    });
+
+    function confirmSuppression() {
+        const modal = document.getElementById("deleteModal");
+        modal.style.display = "block"; // Affiche le modal
+
+        const confirmButton = document.getElementById("confirmDeleteSuggestions");
+        const cancelButton = document.getElementById("cancelDeleteSuggestions");
+        const modalClose = document.getElementById("modalClose");
+
+        confirmButton.onclick = function() {
+            const selectedSuggestions = [];
+            const checkboxes = document.querySelectorAll('.effacer:checked');
+    
+            checkboxes.forEach(checkbox => {
+                selectedSuggestions.push(checkbox.value);
+            });
+            if (selectedSuggestions.length === 0) {
+                alert("Aucune suggestion sélectionnée pour suppression.");
+                return;
+            }
+    
+            fetch('/suggestions', {
+                method: 'DELETE', // Utiliser DELETE pour supprimer les suggestions
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ suggestions: selectedSuggestions }) // Envoyer la liste des suggestions sélectionnées
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Suggestions supprimées avec succès !");
+                    window.location.reload(); // Recharger la page
+                } else {
+                    alert("Erreur lors de la suppression des suggestions !");
+                }
+            })
+            .catch(error => {
+                console.error("Erreur:", error);
+                alert("Erreur lors de la suppression des suggestions !");
+            });
+        }
+
+        const resetSelection = function() {
+            modal.style.display = "none";
+            const selectAllCheckbox = document.getElementById('select_all');
+            selectAllCheckbox.checked = false; // Déselectionne "Sélectionner tout"
+            const checkboxes = document.querySelectorAll('.effacer:checked');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false; 
+            });
+        };
+
+        cancelButton.onclick = resetSelection;
+
+        modalClose.onclick = resetSelection;
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                resetSelection();
+            }
+        }
+    }
+
+</script>

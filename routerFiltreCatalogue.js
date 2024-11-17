@@ -78,18 +78,41 @@ router.post("/filtre", ensureAuthenticated, async (req, res) => {
                 WHERE user_id = ?`, [userId]); // Correction de la liaison de paramètres
             likedCostumeIds = likes.map(like => like.costume_id);
         }
+        if (user) {
+            const userId = user.user_id;
+            
+            const { rows: favorites } = await db.execute(`
+                SELECT f.costume_id, f.group_id, g.nom AS group_name
+                FROM favorites f
+                JOIN groupes g ON f.group_id = g.groupe_id
+                WHERE g.user_id = ?`, [userId]);
+            
+            favoriteCostumeGroups = favorites.reduce((acc, favorite) => {
+                acc[favorite.costume_id] = {
+                    group_id: favorite.group_id,
+                    group_name: favorite.group_name
+                };
+                return acc;
+            }, {});
+        }
 
         const userLangue = await getUserLanguage(user.user_id); // Appel correct pour récupérer la langue
 
         if (userLangue === 'fr') {
             res.render("catalogue", { 
-                groupeCostume: rows, likedCostumeIds, userId: user ? user.user_id : null,
+                groupeCostume: rows,
+                likedCostumeIds,
+                favoriteCostumeGroups,
+                userId: user ? user.user_id : null,
                 filters: { category, quantityMin, age_group, filtreMot, color: color.join(', ') },
                 hasFilters: rows.length > 0
             });
         } else {
             res.render("catalogueEN", { 
-                groupeCostume: rows, likedCostumeIds, userId: user ? user.user_id : null,
+                groupeCostume: rows,
+                likedCostumeIds,
+                favoriteCostumeGroups,
+                userId: user ? user.user_id : null,
                 filters: { category, quantityMin, age_group, filtreMot, color: color.join(', ') },
                 hasFilters: rows.length > 0
             });
@@ -100,5 +123,7 @@ router.post("/filtre", ensureAuthenticated, async (req, res) => {
         res.status(500).send("Erreur interne du serveur");
     }
 });
+
+
 
 module.exports = router;

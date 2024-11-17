@@ -566,6 +566,23 @@ td:nth-child(1){
     pointer-events: none; /* L'image ne doit pas interférer avec les clics */
 }
 
+/*//////////////////////////////////////////////////////////*/
+/* Pour les pages listeLikes et listeFavoris*/
+/*//////////////////////////////////////////////////////////*/
+
+.lienRose {
+    color:#d44687;
+    font-size:medium;
+}
+
+.corbeille_container{
+    margin-left: 67%;
+    margin-right:auto;
+}
+.corbeille{
+    width: 40px;
+    height: auto;   
+}
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /* Instructions de mise en page pour les différentes grandeurs d'écrans */
