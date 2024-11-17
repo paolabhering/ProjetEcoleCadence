@@ -1,65 +1,165 @@
 {{#if (eq userRole "administrateur")}}
-    {{> headerAdEN}}
+    {{> headerAd}}
 {{else if (eq userRole "professeur")}}
-    {{> headerEN}}
+    {{> header}}
 {{/if}}
 
-<form action="/modifier-user/{{userResult.user_id}}" method="POST" class="connexion-form">
-    <h2>Modify user</h2>
-    <div class="flex-container">
-        <div class="flex-item">
-            <label for="username"><b>Name :</b></label>
-            <input type="text" id="username" name="username" value="{{userResult.username}}" required>
-        </div>
-        <div class="flex-item">
-            <label for="email"><b>Email :</b></label>
-            <input type="email" id="email" name="email" value="{{userResult.email}}" required>
-        </div>
-        <div class="flex-item">
-            <label for="password"><b>New password :</b></label>
-            <input type="password" id="password" name="password" placeholder="Laisser vide pour ne pas modifier">
-        </div>
-        <div class="flex-item full-width">
-            <label for="groups"><b>Group(s) :</b></label>
-            <div class="group-inputs">
-                {{#each group}}
-                    <input type="text" id="groupName" name="groups[]" value="{{this}}" required>
+<div class="container">
+    <div class="account-section">
+        <div class="account-info">
+            <h2>Mon compte</h2>
+            <p><b>Nom d'utilisateur:</b> {{user.username}}</p>
+            <p><b>Email:</b> {{user.email}}</p>
+            <p><b>Mes groupes:</b></p>
+            <ul>
+                {{#each groups}}
+                    <li>{{this}}</li>
                 {{/each}}
-                <div id="groupFieldsContainer"></div>
-                <div class="button-container">
-                    <button type="button" class="add-group" onclick="addGroupField()">+</button>
-                </div>
-            </div>
+            </ul>
         </div>
-        <div class="flex-item full-width">
-            <label for="role"><b>Role :</b></label>
-            <div class="radio-group">
-                <input type="radio" id="admin" name="role" value="administrateur" {{#if (eq user.role "administrateur")}}checked{{/if}} required><b>Administrator</b>
-                <input type="radio" id="professeur" name="role" value="professeur" {{#if (eq user.role "professeur")}}checked{{/if}} required><b>Professor</b>
-            </div>
-        </div>
-        <div class="flex-item full-width">
-            <label for="language"><b>Language :</b></label>
-            <div class="radio-group">
-                <input type="radio" id="french" name="language" value="fr" {{#if (eq user.langue "fr")}}checked{{/if}} required><b>French</b>
-                <input type="radio" id="english" name="language" value="en" {{#if (eq user.langue "en")}}checked{{/if}} required><b>English</b>
-            </div>
-        </div>
-        <div class="flex-item full-width">
-            <button type="submit" class="btn btn_roseFonce" id="boutonCompte">Save the modifications</button>
+        <div class="password-form">
+            <h2>Modifier le mot de passe</h2>
+            <form action="/modifier-mot-de-passe" method="POST">
+                <label for="currentPassword"><b>Mot de passe actuel:</b></label>
+                <input type="password" id="currentPassword" name="currentPassword" required>
+                <label for="newPassword"><b>Nouveau mot de passe:</b></label>
+                <input type="password" id="newPassword" name="newPassword" required>
+                <label for="confirmPassword"><b>Confirmer le nouveau mot de passe:</b></label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <button type="submit" class="btn btn_roseFonce">Modifier</button>
+            </form>
         </div>
     </div>
-</form>
+    <div class="favorites-section">
+        <h2>Mes favoris</h2>
+        <ul>
+            {{#each favorites}}
+                <li>
+                    <span>{{this.costume_name}}</span>
+                    <span>{{this.group_name}}</span>
+                    <button class="delete-favorite" data-favorite-id="{{this.favorite_id}}">🗑️</button>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+    <div class="likes-section">
+        <h2>Mes likes</h2>
+        <ul>
+            {{#each likes}}
+                <li>
+                    <span>{{this.costume_name}}</span>
+                    <button class="delete-like" data-like-id="{{this.like_id}}">❤️</button>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+    <div class="my-suggestions-section">
+        <h2>Mes suggestions</h2>
+        <ul>
+            {{#each suggestions}}
+                <li>{{this.suggestion_text}}</li>
+            {{/each}}
+        </ul>
+    </div>
+    <div class="suggestions-section">
+        <h2>Suggestions</h2>
+        <form action="/envoyer-suggestion" method="POST">
+            <textarea name="suggestion" rows="5" placeholder="Écrivez vos suggestions ici..." required></textarea>
+            <button type="submit" class="btn btn_roseFonce">Envoyer</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .container {
+        background-color: #f0f0f0;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .account-section {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+    .account-info, .password-form {
+        width: 48%;
+        background-color: lightgray;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .favorites-section, .likes-section, .my-suggestions-section, .suggestions-section {
+        background-color: lightgray;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    .favorites-section ul, .likes-section ul, .my-suggestions-section ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .favorites-section li, .likes-section li, .my-suggestions-section li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #ccc;
+    }
+    .suggestions-section textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+    .btn {
+        background-color: #ff69b4;
+        color: #ffffff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn:hover {
+        background-color: #ff1493;
+    }
+</style>
 
 <script>
-    function addGroupField() {
-        const groupFieldsContainer = document.getElementById("groupFieldsContainer");
-        const newGroupInput = document.createElement("input");
-        newGroupInput.type = "text";
-        newGroupInput.placeholder = "Enter group name";
-        newGroupInput.name = "groups[]";  // Updated to make it an array
-        newGroupInput.required = true;
+    document.querySelectorAll('.delete-favorite').forEach(button => {
+        button.addEventListener('click', function() {
+            const favoriteId = this.getAttribute('data-favorite-id');
+            fetch(`/supprimer-favori/${favoriteId}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    this.parentElement.remove();
+                } else {
+                    alert('Erreur lors de la suppression du favori');
+                }
+            })
+            .catch(error => console.error('Erreur:', error));
+        });
+    });
 
-        groupFieldsContainer.appendChild(newGroupInput);
-    }
+    document.querySelectorAll('.delete-like').forEach(button => {
+        button.addEventListener('click', function() {
+            const likeId = this.getAttribute('data-like-id');
+            fetch(`/supprimer-like/${likeId}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    this.parentElement.remove();
+                } else {
+                    alert('Erreur lors de la suppression du like');
+                }
+            })
+            .catch(error => console.error('Erreur:', error));
+        });
+    });
 </script>
