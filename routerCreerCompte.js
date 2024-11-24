@@ -13,24 +13,27 @@ router.get("/creerCompte", (req, res) => {
 
 // Route for creating a new user
 router.post("/add-user", async (req, res) => {
-    const { username, email, password, role, language } = req.body;
+    const { username, email, password, role, language, secretQuestion, secretAnswer } = req.body;
     const groups = req.body.groups; // This will be an array
 
-    // Log the request body
+    // Log the request body for debugging
     console.log("Request Body:", req.body);
 
     // Validate the request body
-    if (!username || !email || !password || !role || !language || !groups || groups.length === 0) {
+    if (!username || !email || !password || !role || !language || !secretQuestion || !secretAnswer || !groups || groups.length === 0) {
         return res.status(400).send("All fields are required");
     }
 
     try {
+        // Hash the password and the secret answer
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
+        const hashedSecretAnswer = await bcrypt.hash(secretAnswer, saltRounds);
 
         // Insert the user into the database
-        const userSql = `INSERT INTO users (username, email, password, role, langue) VALUES (?, ?, ?, ?, ?)`;
-        const result = await db.execute(userSql, [username, email, hashedPassword, role, language]);
+        const userSql = `INSERT INTO users (username, email, password, role, langue, secret_question, secret_answer_hash) 
+                         VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        const result = await db.execute(userSql, [username, email, hashedPassword, role, language, secretQuestion, hashedSecretAnswer]);
 
         // Get the newly created user's ID
         const userId = result.lastInsertRowid;
@@ -38,9 +41,12 @@ router.post("/add-user", async (req, res) => {
         // Insert each group into the "groupes" table
         const groupSql = `INSERT INTO groupes (nom, user_id) VALUES (?, ?)`;
         for (const groupName of groups) {
-            await db.execute(groupSql, [groupName, userId]);
+            if (groupName) { // Ensure groupName is not undefined or empty
+                await db.execute(groupSql, [groupName, userId]);
+            }
         }
 
+        // Redirect to login page with success message
         res.status(201).redirect("/connexion?userCreated=true");
     } catch (error) {
         console.error(error);
