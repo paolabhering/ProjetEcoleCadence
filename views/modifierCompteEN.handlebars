@@ -1,11 +1,11 @@
 {{#if (eq userRole "administrateur")}}
-    {{> headerAdEN}}
+    {{> headerAd}}
 {{else if (eq userRole "professeur")}}
-    {{> headerEN}}
+    {{> header}}
 {{/if}}
 
 <form action="/modifier-user/{{userResult.user_id}}" method="POST" class="connexion-form">
-    <h2>Modify user</h2>
+    <h2>Modify username</h2>
     <div class="flex-container">
         <div class="flex-item">
             <label for="username"><b>Name :</b></label>
@@ -21,29 +21,37 @@
         </div>
         <div class="flex-item full-width">
             <label for="groups"><b>Group(s) :</b></label>
-            <div class="group-inputs">
+            <div id="groupsContainer">
                 {{#each group}}
-                    <input type="text" id="groupName" name="groups[]" value="{{this}}" required>
-                {{/each}}
-                <div id="groupFieldsContainer"></div>
-                <div class="button-container">
-                    <button type="button" class="add-group" onclick="addGroupField()">+</button>
+                <div class="group-input">
+                    <input type="text" name="groupName[]" value="{{this}}" required>
+                    <button type="button" class="remove-group">Remove</button>
                 </div>
+                {{/each}}
             </div>
+            <button type="button" id="addGroup" class="btn">Add a group</button>
         </div>
         <div class="flex-item full-width">
             <label for="role"><b>Role :</b></label>
             <div class="radio-group">
-                <input type="radio" id="admin" name="role" value="administrateur" {{#if (eq user.role "administrateur")}}checked{{/if}} required><b>Administrator</b>
-                <input type="radio" id="professeur" name="role" value="professeur" {{#if (eq user.role "professeur")}}checked{{/if}} required><b>Professor</b>
+                <input type="radio" id="admin" name="role" value="administrateur" {{#if (eq userResult.role "administrateur")}}checked{{/if}} required><b>Administrator</b>
+                <input type="radio" id="professeur" name="role" value="professeur" {{#if (eq userResult.role "professeur")}}checked{{/if}} required><b>Professor</b>
             </div>
         </div>
         <div class="flex-item full-width">
             <label for="language"><b>Language :</b></label>
             <div class="radio-group">
-                <input type="radio" id="french" name="language" value="fr" {{#if (eq user.langue "fr")}}checked{{/if}} required><b>French</b>
-                <input type="radio" id="english" name="language" value="en" {{#if (eq user.langue "en")}}checked{{/if}} required><b>English</b>
+                <input type="radio" id="french" name="language" value="fr" {{#if (eq userResult.langue "fr")}}checked{{/if}} required><b>French</b>
+                <input type="radio" id="english" name="language" value="en" {{#if (eq userResult.langue "en")}}checked{{/if}} required><b>English</b>
             </div>
+        </div>
+        <div class="flex-item full-width">
+            <label for="secretQuestion"><b>Secret question :</b></label>
+            <input type="text" id="secretQuestion" name="secretQuestion" value="{{userResult.secret_question}}" required>
+        </div>
+        <div class="flex-item full-width">
+            <label for="secretAnswer"><b>Secret answer :</b></label>
+            <input type="text" id="secretAnswer" name="secretAnswer" value="{{userResult.secret_answer}}" required>
         </div>
         <div class="flex-item full-width">
             <button type="submit" class="btn btn_roseFonce" id="boutonCompte">Save the modifications</button>
@@ -52,14 +60,20 @@
 </form>
 
 <script>
-    function addGroupField() {
-        const groupFieldsContainer = document.getElementById("groupFieldsContainer");
-        const newGroupInput = document.createElement("input");
-        newGroupInput.type = "text";
-        newGroupInput.placeholder = "Enter group name";
-        newGroupInput.name = "groups[]";  // Updated to make it an array
-        newGroupInput.required = true;
+    document.getElementById('addGroup').addEventListener('click', function () {
+        const container = document.getElementById('groupsContainer');
+        const groupInput = document.createElement('div');
+        groupInput.className = 'group-input';
+        groupInput.innerHTML = `
+            <input type="text" name="groupName[]" placeholder="Nouveau groupe" required>
+            <button type="button" class="remove-group">Supprimer</button>
+        `;
+        container.appendChild(groupInput);
+    });
 
-        groupFieldsContainer.appendChild(newGroupInput);
-    }
+    document.getElementById('groupsContainer').addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-group')) {
+            e.target.parentElement.remove();
+        }
+    });
 </script>
