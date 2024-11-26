@@ -1,45 +1,90 @@
+{{> headerAd}} 
+<br/>
+<style>
+    table {
+        width: 90%; /* Adjust for smaller screens */
+        max-width: 1200px; /* Limit the width on larger screens */
+        margin: 0 auto;
+        border-collapse: collapse;
+        background-color: white;
+        border: none;
+    }
 
-    {{> headerAd}}
-   <br/>
-    <style>
+    .buttonAdmin {
+        width: 100%; /* Allow buttons to resize */
+        max-width: 400px; /* Maintain a max size */
+        height: 60px;
+        font-size: 16px;
+    }
 
+    td {
+        border: none;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .heart-symbol {
+        color: white;
+        font-size: 30px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
         table {
-            width: 70%;
-            margin: 0 auto;
-            border-collapse: collapse;
-            background-color: white;
-            border: none;
+            width: 100%; /* Full width on smaller screens */
         }
 
-        .buttonAdmin {
-            width: 400px;
-            height: 60px;
+        tr {
+            display: block; /* Stack rows vertically */
         }
 
         td {
-            border: none;
-            padding: 10px;
-            text-align: center;
+            display: block; /* Stack cells */
+            width: 100%; /* Full width for buttons */
+            margin-bottom: 10px; /* Space between rows */
         }
 
-          .heart-symbol {
-            color: white;
-            font-size: 30px; 
-            
+        .buttonAdmin {
+            max-width: none; /* Remove button width restriction */
+            height: auto; /* Adjust height dynamically */
         }
-      
-    </style>
+    }
+</style>
 
-   <table>
+<table>
     <tr>
-        <td style="background-color:white"><a href="/creerCompte"><button class="btn btn_roseFonce buttonAdmin" id="ajoutUser">Ajouter un utilisateur</button></a></td>
-        <td><a href="/ajout"> <button class="btn btn_roseFonce buttonAdmin" style="background-color: gray" id="ajoutCostume">Ajouter un costume</button></a></td>
-        <td><a href="/likes"><button class="btn btn_roseFonce buttonAdmin" id="listeLikes">Liste des <span class="heart-symbol">♥</span></button></a></td>
+        <td style="background-color:white">
+            <a href="/creerCompte">
+                <button class="btn btn_roseFonce buttonAdmin" id="ajoutUser">Ajouter un utilisateur</button>
+            </a>
+        </td>
+        <td>
+            <a href="/ajout">
+                <button class="btn btn_roseFonce buttonAdmin" style="background-color: gray" id="ajoutCostume">Ajouter un costume</button>
+            </a>
+        </td>
+        <td>
+            <a href="/likes">
+                <button class="btn btn_roseFonce buttonAdmin" id="listeLikes">Liste des <span class="heart-symbol">♥</span></button>
+            </a>
+        </td>
     </tr>
     <tr>
-        <td style="background-color:white"><a href="/modifierCompte"><button class="btn btn_roseFonce buttonAdmin" id="ajoutCostume">Modifier ou supprimer un utilisateur</button></a></td>
-        <td><a href="/favoris"><button class="btn btn_roseFonce buttonAdmin" id="listeFavoris">Liste des favoris</button></a></td>
-        <td><a href="/suggestions"><button class="btn btn_roseFonce buttonAdmin" id="listeSuggestions">Liste des suggestions</button></a></td>
+        <td style="background-color:white">
+            <a href="/modifierCompte">
+                <button class="btn btn_roseFonce buttonAdmin" id="ajoutCostume">Modifier ou supprimer un utilisateur</button>
+            </a>
+        </td>
+        <td>
+            <a href="/favoris">
+                <button class="btn btn_roseFonce buttonAdmin" id="listeFavoris">Liste des favoris</button>
+            </a>
+        </td>
+        <td>
+            <a href="/suggestions">
+                <button class="btn btn_roseFonce buttonAdmin" id="listeSuggestions">Liste des suggestions</button>
+            </a>
+        </td>
     </tr>
-   
 </table>
+
