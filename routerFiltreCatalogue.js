@@ -4,13 +4,19 @@ const db = require("./db");
 const { ensureAuthenticated } = require("./session"); // correction: assurez-vous que vous importez la fonction correcte
 
 async function getUserLanguage(userId) {
-    const query = await db.execute(`SELECT langue FROM users WHERE user_id = ?`, [userId]);
-    const result = query.rows[0];
-    if (result) {
-        return result.langue; // Renvoie la langue si l'utilisateur existe
+    try{
+        const query = await db.execute(`SELECT langue FROM users WHERE user_id = ?`, [userId]);
+        const result = query.rows[0];
+        if (result) {
+            return result.langue; // Renvoie la langue si l'utilisateur existe
+        }
+        return null;
+    }catch (error) {
+        console.error("Erreur lors de la récupération de la langue de l'utilisateur :", error);
+        return null;
     }
-    return null; // ou une valeur par défaut
 }
+
 
 router.get("/filtre", ensureAuthenticated, async (req, res) => {
     const { user } = req.session;
@@ -70,17 +76,25 @@ router.post("/filtre", ensureAuthenticated, async (req, res) => {
         const { user } = req.session;
         const userRole = req.session.user.role;
         let likedCostumeIds = [];
+        let favoriteCostumeGroups = {};
+        let groupesUser = [];
+
 
         if (user) {
             const userId = user.user_id;
+
+            const { rows: groupes } = await db.execute(`
+                SELECT nom, groupe_id
+                FROM groupes
+                WHERE user_id = :user_id`, { user_id: userId });
+
+            groupesUser = groupes.map(groupe => groupe.nom);
+
             const { rows: likes } = await db.execute(`
                 SELECT costume_id
                 FROM likes
                 WHERE user_id = ?`, [userId]); // Correction de la liaison de paramètres
             likedCostumeIds = likes.map(like => like.costume_id);
-        }
-        if (user) {
-            const userId = user.user_id;
             
             const { rows: favorites } = await db.execute(`
                 SELECT f.costume_id, f.group_id, g.nom AS group_name
@@ -94,13 +108,14 @@ router.post("/filtre", ensureAuthenticated, async (req, res) => {
                     group_name: favorite.group_name
                 };
                 return acc;
-            }, {});
+            }, {});    
         }
 
         const userLangue = await getUserLanguage(user.user_id); // Appel correct pour récupérer la langue
 
         if (userLangue === 'fr') {
             res.render("catalogue", { 
+                groupesUser,
                 groupeCostume: rows,
                 likedCostumeIds,
                 favoriteCostumeGroups,
@@ -112,6 +127,7 @@ router.post("/filtre", ensureAuthenticated, async (req, res) => {
             });
         } else {
             res.render("catalogueEN", { 
+                groupesUser,
                 groupeCostume: rows,
                 likedCostumeIds,
                 favoriteCostumeGroups,
