@@ -64,7 +64,7 @@ router.post("/filtre", ensureAuthenticated, async (req, res) => {
     }
 
     if (Array.isArray(color) && color.length > 0) {
-        let colorConditions = color.map(c => `c.color LIKE ?`).join(' OR '); // Changed AND to OR to allow any matching color
+        let colorConditions = color.map(c => `c.color LIKE ?`).join(' AND ');
         costumeQuery += ` AND (${colorConditions})`;
         params.push(...color.map(c => `%${c}%`));
     }
