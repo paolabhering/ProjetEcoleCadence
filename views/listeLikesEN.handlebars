@@ -4,9 +4,8 @@
 <form action="/likes"  method="POST" id="listeLikes">
     <h3>List of ♥</h3>
         <div class="flex-container">
-            <table id="tabLikes">
+            <table class="liste">
                 <tr>
-                    <th>Date</th>
                     <th>Costume</th>
                     <th>Professor</th>
                     <th><input type="checkbox" id="select_all" name="select_all">Select all</th>
@@ -14,7 +13,6 @@
                 {{#if likes.length}} 
                     {{#each likes}}
                         <tr>
-                            <td>date</td>
                             <td><a href="detailsCostume/{{this.costume_id}}" class="lienRose"><b>{{this.costume}}</b></a></td>
                             <td>{{this.professeur}}</td>
                             <td><input type="checkbox" class="effacer" name="effacer" value="{{this.like_id}}"></td>
@@ -22,11 +20,11 @@
                     {{/each}}
                  {{else}}
                     <tr>
-                        <td colspan="4" style="text-align:center; background-color:white;"><b>No ♥</b></td>
+                        <td colspan="3" style="text-align:center; background-color:white;"><b>No ♥</b></td>
                     </tr>
                 {{/if}}
             </table>
-        </div>
+        </div><br>
         <div class="button-corbeille">
             <button type="button" class="corbeille_container" onclick="confirmSuppression()">🗑️</button>
         </div>

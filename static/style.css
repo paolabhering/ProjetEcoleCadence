@@ -571,6 +571,10 @@ td:nth-child(1){
 /* Pour les pages listeLikes, listeFavoris, listeSuggestions*/
 /*//////////////////////////////////////////////////////////*/
 
+.liste td:nth-child(1) {
+    background-color: transparent !important;
+}
+
 .lienRose {
     color:#d44687;
     font-size:medium;
@@ -578,7 +582,7 @@ td:nth-child(1){
 
 
 .corbeille{
-    width: 50px;
+    width: 30px;
     height: auto;   
 }
 

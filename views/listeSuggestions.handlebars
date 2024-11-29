@@ -3,9 +3,8 @@
 <form action="/suggestions"  method="POST" id="listeSuggestions">
     <h3>Liste des suggestions</h3>
         <div class="flex-container">
-            <table id="tabSuggestions">
+            <table class="liste">
                 <tr>
-                    <th>Date</th>
                     <th>Professeur</th>
                     <th>Suggestion</th>
                     <th><input type="checkbox" id="select_all" name="select_all">Sélectionner tout</th>
@@ -13,7 +12,6 @@
                 {{#if suggestions.length}} 
                     {{#each suggestions}}
                         <tr>
-                            <td>date</td>
                             <td>{{this.professeur}}</td>
                             <td>{{this.suggestion_text}}</td>
                             <td><input type="checkbox" class="effacer" name="effacer" value="{{this.suggestion_id}}"></td>
@@ -21,11 +19,11 @@
                     {{/each}}
                 {{else}}
                     <tr>
-                        <td colspan="4" style="text-align:center; background-color:white;"><b>Pas de suggestion</b></td>
+                        <td colspan="3" style="text-align:center; background-color:white;"><b>Pas de suggestion</b></td>
                     </tr>
                 {{/if}}
             </table>
-        </div>
+        </div><br>
         <div class="button-corbeille">
             <button type="button" class="corbeille_container" onclick="confirmSuppression()"><img src="/static/img/corbeille.jpg" alt="corbeille" class="corbeille"> </button>
         </div>

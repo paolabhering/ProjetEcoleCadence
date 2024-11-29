@@ -3,7 +3,7 @@
 <form action="/favoris"  method="POST" id="listeFavoris">
     <h3>Favorites List</h3>
         <div class="flex-container">
-            <table id="tabFavoris">
+            <table class="liste">
                 <tr>
                     <th>Date</th>
                     <th>Costume</th>
@@ -27,7 +27,7 @@
                     </tr>
                 {{/if}}
             </table>
-        </div>
+        </div><br>
         <div class="button-corbeille">
             <button type="button" class="corbeille_container" onclick="confirmSuppression()"><img src="/static/img/corbeille.jpg" alt="corbeille" class="corbeille"> </button>
         </div>

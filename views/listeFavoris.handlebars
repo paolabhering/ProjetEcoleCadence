@@ -3,9 +3,8 @@
 <form action="/favoris"  method="POST" id="listeFavoris">
     <h3>Liste des favoris</h3>
         <div class="flex-container">
-            <table id="tabFavoris">
+            <table class="liste">
                 <tr>
-                    <th>Date</th>
                     <th>Costume</th>
                     <th>Professeur</th>
                     <th>Groupe</th>
@@ -14,7 +13,6 @@
                 {{#if favoris.length}} 
                     {{#each favoris}}
                         <tr>
-                            <td>date</td>
                             <td><a href="detailsCostume/{{this.costume_id}}" class="lienRose"><b>{{this.costume}}</b></a></td>
                             <td>{{this.professeur}}</td>
                             <td>{{this.groupe}}</td>
@@ -23,12 +21,13 @@
                     {{/each}}
                 {{else}}
                     <tr>
-                        <td colspan="5" style="text-align:center; background-color:white;"><b>Pas de favori</b></td>
+                        <td colspan="4" style="text-align:center; background-color:white;"><b>Pas de favori</b></td>
                     </tr>
                 {{/if}}
                 
             </table>
-        </div>
+        </div><br>
+
         <div class="button-corbeille">
             <button type="button" class="corbeille_container" onclick="confirmSuppression()"><img src="/static/img/corbeille.jpg" alt="corbeille" class="corbeille"> </button>
         </div>
