@@ -54,7 +54,6 @@ ul.navbar-nav {
     cursor: pointer; 
 }
 
-
 .btn-rose {
     background-color: #f0b8c8 !important;
 }
@@ -64,12 +63,15 @@ ul.navbar-nav {
     color: white !important;
 }
 
-.btn-rose:hover {
+.btn-rose:hover, .btn-dark:hover {
     background-color: #7a7a7a !important;
 }
-.btn-rose:active {
-    background-color: #ffffff;
+
+.btn.active {
+    background-color: white !important;
+    border: none
 }
+
 
 #navbarScrollingDropdown{
     background-color: #f0b8c8;
@@ -105,6 +107,17 @@ ul.navbar-nav {
     font-family:Verdana, Geneva, Tahoma, sans-serif;     
 }
 .btn_grisFonce:hover{background-color: black;
+    color:white;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;     
+}
+
+.btn_rosePale{
+    background-color: #f0b8c8;
+    color:black;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;     
+}
+.btn_rosePale:hover{
+    background-color: black;
     color:white;
     font-family:Verdana, Geneva, Tahoma, sans-serif;     
 }
@@ -160,6 +173,10 @@ input:read-only{
     background-color: #9a9a9a;
 }
 
+h2{
+    text-align: center;
+}
+
 /*//////////////////////////////////////////////////////////*/
 /* pour le formulaire de connexion*/
 /*//////////////////////////////////////////////////////////*/
@@ -179,6 +196,53 @@ input:read-only{
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 16px;
+}
+
+.userLabel {
+    text-align: center;
+    color: #d44687;
+}
+
+/*//////////////////////////////////////////////////////////*/
+/* pour le formulaire de réinitialisation de mot de passe*/
+/*//////////////////////////////////////////////////////////*/
+
+.form-container{
+    background-color: lightgrey;
+    margin: 20px auto; 
+    padding: 10px;
+    border-radius: 20px;
+    max-width: 600px; 
+    display: grid;
+    justify-items: center;
+}
+
+/*//////////////////////////////////////////////////////////*/
+/* pour la page menu Administrateur*/
+/*//////////////////////////////////////////////////////////*/
+
+.grid-containerAdmin {
+    margin: 10px; 
+    padding: 10px;
+    max-width: 1800px; 
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px; 
+    justify-items:center;
+}
+
+.grid-itemAdmin {
+    position: relative; 
+}
+
+.buttonAdmin {
+    width: 390px; 
+    height: 75px;
+    font-size: 18px;
+}
+
+.heart-symbol {
+    font-size: 30px;
 }
 
 /*//////////////////////////////////////////////////////////*/
@@ -597,15 +661,40 @@ td:nth-child(1){
 @media (max-width: 1300px) {
     /*position image de la loupe dans le filtre par mot*/
     .placeholder-image {
+        top: 5%; /* Centrer verticalement */
+        transform: translateY(-70%); /* Ajuster pour centrer vraiment l'image */
+        width: 22px; /* Largeur de l'image */
+        height: auto; /* Garder les proportions */
+    }
+}   
+
+/*//////////////////////////////////////////////////////////*/
+/* Pour les écrans largeur max:1100px*/
+/*//////////////////////////////////////////////////////////*/
+
+@media (max-width: 1100px) {
+    #barreNavig .navbar-nav {
+        flex-direction: column; /* Alignement vertical pour les petits écrans */
+        align-items: center; /* Alignez les éléments au centre */
+    }
+    .nav-item {
+        margin: 10px 0; /* Espacement vertical entre les éléments du menu */
+    }
+    /*position image de la loupe dans le filtre par mot*/
+    .grid-containerAdmin {
+        grid-template-columns: repeat(2,1fr); 
+    }
+    /*position image de la loupe dans le filtre par mot*/
+    .placeholder-image {
         position: absolute;
         left: 5px; /* Positionnement à gauche */
-        top: 10%; /* Centrer verticalement */
-        transform: translateY(-60%); /* Ajuster pour centrer vraiment l'image */
+        top: 0%; /* Centrer verticalement */
+        transform: translateY(-50%); /* Ajuster pour centrer vraiment l'image */
         width: 22px; /* Largeur de l'image */
         height: auto; /* Garder les proportions */
         pointer-events: none; /* L'image ne doit pas interférer avec les clics */
     }
-}   
+}  
 
 /*//////////////////////////////////////////////////////////*/
 /* Pour les écrans largeur max: 900px */
@@ -629,12 +718,16 @@ td:nth-child(1){
     .placeholder-image {
         position: absolute;
         left: 5px; /* Positionnement à gauche */
-        top: 0%; /* Centrer verticalement */
-        transform: translateY(-15%); /* Ajuster pour centrer vraiment l'image */
+        top: 5%; /* Centrer verticalement */
+        transform: translateY(-20%); /* Ajuster pour centrer vraiment l'image */
         width: 22px; /* Largeur de l'image */
         height: auto; /* Garder les proportions */
         pointer-events: none; /* L'image ne doit pas interférer avec les clics */
     }
+    .grid-containerAdmin {
+        grid-template-columns: 1fr; 
+    }
+  
 }
 
 /*//////////////////////////////////////////////////////////*/
@@ -648,7 +741,7 @@ td:nth-child(1){
     
     .grid-item-detail {
         flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
-        text-align:center; /* Centrage du contenu textuel */
+        text-align:center; 
     }
     
     .color-checkbox {
@@ -717,7 +810,17 @@ td:nth-child(1){
 .radio-group b {
     margin-left: 10px;
 }
-  
+/*position image de la loupe dans le filtre par mot*/
+.placeholder-image {
+    position: absolute;
+    left: 5px; /* Positionnement à gauche */
+    top: 0%; /* Centrer verticalement */
+    transform: translateY(-10%); /* Ajuster pour centrer vraiment l'image */
+    width: 22px; /* Largeur de l'image */
+    height: auto; /* Garder les proportions */
+    pointer-events: none; /* L'image ne doit pas interférer avec les clics */
+}
+
 } 
 
 /*//////////////////////////////////////////////////////////*/
@@ -727,7 +830,7 @@ td:nth-child(1){
 @media (max-width: 480px) {
       /* Instructions pour petits écrans */
     .nav-item {
-        margin: 0 5px; 
+        margin: 5px 0; 
         flex-basis: 100%;
     }
     .imageEntete{
@@ -742,5 +845,6 @@ td:nth-child(1){
         padding-left: 10px; 
         padding-right: 10px; 
     }
+ 
 }
  

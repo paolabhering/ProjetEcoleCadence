@@ -9,116 +9,25 @@
     <!-- Login form -->
     <form action="/login" method="POST" class="connexion-form">
         <div class="form-group">
-            <h3 id="userLabel">NOM D'UTILISATEUR</h3>
+            <h3 class="userLabel">NOM D'UTILISATEUR</h3>
         </div>
         <div class="form-group">
             <input type="text" id="username" name="username" placeholder="Entrez votre nom d'utilisateur" required>
         </div>
         <div class="form-group">
-            <h3 id="mdp">MOT DE PASSE</h3>
+            <h3 class="userLabel">MOT DE PASSE</h3>
         </div>
         <div class="form-group">
             <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
         </div>
-        <button type="submit" class="btn btn-roseFonce">ENTRER</button>
+        <!-- Forgot password link -->
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/reset-password" class="lienRose">Mot de passe oublié ?</a>
+        </div><br>
+        <button type="submit" class="btn btn_roseFonce">ENTRER</button>
     </form>
-
-    <!-- Forgot password link -->
-    <div style="text-align: center; margin-top: 20px;">
-        <a href="/reset-password" class="btn">Mot de passe oublié ?</a>
-    </div>
 </div>
 
-<style>
-
-    h2 {
-        text-align: center;
-  
-    }
-    #userLabel {
-        text-align: center;
-        padding-left: 20%;
-        color: #d44687;
-    }
-
-    #mdp {
-         text-align: center;
-        padding-left: 30%;
-        color: #d44687;
-    }
-
-    #usernameLabel {
-        margin-left: 35%;
-    }
-    .form-container {
-        background-color: lightgrey;
-        margin: 20px auto;
-        padding: 30px; /* Vous pouvez ajuster cette valeur */
-        width: 40%; /* Ajustez la largeur selon vos besoins */
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-group {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .form-group label {
-        flex: 0 0 150px; /* Largeur du label */
-        text-align: left; /* Alignement à gauche */
-        margin-right: 10px;
-    }
-
-    .radio-group {
-        display: flex;
-        gap: 15px; /* Espacement entre les boutons radio */
-        align-items: center;
-        margin-left: 10px; /* Alignement avec le champ précédent */
-    }
-
-    label {
-        text-align: center;
-    }
-
-    .connexion-form input[type="text"],
-    .connexion-form input[type="email"],
-    .connexion-form input[type="password"] {
-        flex: 1;
-        padding: 10px; /* Ajoutez du padding pour le champ de texte */
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        font-size: 16px;
-    }
-
-    .btn {
-        display: block;
-        margin: 0 auto; /* Centrer le bouton */
-        border-radius: 20px;
-        padding: 10px 20px;
-        background-color: #d44687;
-        cursor: pointer;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-    }
-
-    .btn:hover {
-        background-color: #7a7a7a;
-        color: white;
-    }
-
-    .btn-rose {
-    background-color: #d44687; 
-}
-
-.btn-rose:hover {
-    background-color: #7a7a7a; 
-}
-.btn-rose:active {
-    background-color: #ffffff;
-}
-</style>
 
 <script>
     // Check if the URL contains the query parameter `userCreated=true`

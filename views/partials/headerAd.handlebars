@@ -1,7 +1,6 @@
  
  <div class="entete"> 
         <img src="../../static/img/imageEnteteLogo.png" alt="Logo" class="imageEntete">  
-        <img src="../../static/img/logoNoir.png" alt="Logo" class="logoNoir" width="190" height="140" hidden>
  </div>  
 
  
@@ -16,14 +15,14 @@
                         <a type="button" class="btn btn-rose" id="btn-admin" onclick="window.location.href='/admin'"><b>Menu Administrateur</b></a>
                     </li>
                     <li class="nav-item">
-                        <a type="button" class="btn btn-rose"href="/monCompte"><b>Mon compte</b></a>
+                        <a type="button" class="btn btn-rose" onclick="window.location.href='/monCompte'"><b>Mon compte</b></a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a type="button" class="btn btn-rose nav-link dropdown-toggle active" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a type="button" class="btn btn-rose nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <b>Costumes</b></a>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-					            <li><a class="dropdown-item" href="/catalogue"><b>Tous</b></a></li>
-					            <li><a class="dropdown-item" href="/filtre"><b>Filtre</b></a></li>
+					            <li><a class="dropdown-item" onclick="window.location.href='/catalogue'"><b>Tous</b></a></li>
+					            <li><a class="dropdown-item" onclick="window.location.href='/filtre'"><b>Filtre</b></a></li>
                             </ul>
                     </li>
                     <li class="nav-item">
@@ -33,3 +32,23 @@
             </div>
         </div>
     </nav>
+
+ 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let currentPath = window.location.pathname;
+        let buttons = document.querySelectorAll('.navbar-nav .btn');
+
+        buttons.forEach(function(button) {
+            // Vérifiez si le bouton correspond à l'URL actuelle
+            if (button.getAttribute('onclick') && button.getAttribute('onclick').includes(currentPath)) {
+                button.classList.add('active'); 
+            }
+        });
+        // Vérifiez si nous sommes sur la page catalogue ou filtre
+        if (currentPath.includes('/catalogue') || currentPath.includes('/filtre')) {
+            let costumesButton = document.querySelector('#navbarScrollingDropdown');
+            costumesButton.classList.add('active'); 
+        }
+    });
+</script>

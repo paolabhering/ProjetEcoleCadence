@@ -1,7 +1,6 @@
  
  <div class="entete"> 
         <img src="../../static/img/imageEnteteLogo.png" alt="Logo" class="imageEntete">  
-        <img src="../../static/img/logoNoir.png" alt="Logo" class="logoNoir" width="190" height="140" hidden>
  </div>  
 
  
@@ -33,3 +32,22 @@
             </div>
         </div>
     </nav>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let currentPath = window.location.pathname;
+        let buttons = document.querySelectorAll('.navbar-nav .btn');
+
+        buttons.forEach(function(button) {
+            // Vérifiez si le bouton correspond à l'URL actuelle
+            if (button.getAttribute('onclick') && button.getAttribute('onclick').includes(currentPath)) {
+                button.classList.add('active'); 
+            }
+        });
+        // Vérifiez si nous sommes sur la page catalogue ou filtre
+        if (currentPath.includes('/catalogue') || currentPath.includes('/filtre')) {
+            let costumesButton = document.querySelector('#navbarScrollingDropdown');
+            costumesButton.classList.add('active'); 
+        }
+    });
+</script>

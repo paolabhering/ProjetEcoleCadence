@@ -1,89 +1,37 @@
 {{> headerAdEN}}
 <br/>
-<style>
-    table {
-        width: 90%; /* Adjust for smaller screens */
-        max-width: 1200px; /* Limit the width on larger screens */
-        margin: 0 auto;
-        border-collapse: collapse;
-        background-color: white;
-        border: none;
-    }
 
-    .buttonAdmin {
-        width: 100%; /* Allow buttons to resize */
-        max-width: 400px; /* Maintain a max size */
-        height: 60px;
-        font-size: 16px;
-    }
-
-    td {
-        border: none;
-        padding: 10px;
-        text-align: center;
-    }
-
-    .heart-symbol {
-        color: white;
-        font-size: 30px;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        table {
-            width: 100%; /* Full width on smaller screens */
-        }
-
-        tr {
-            display: block; /* Stack rows vertically */
-        }
-
-        td {
-            display: block; /* Stack cells */
-            width: 100%; /* Full width for buttons */
-            margin-bottom: 10px; /* Space between rows */
-        }
-
-        .buttonAdmin {
-            max-width: none; /* Remove button width restriction */
-            height: auto; /* Adjust height dynamically */
-        }
-    }
-</style>
-
-<table>
-    <tr>
-        <td style="background-color:white">
+<br>
+<div class="grid-container">
+        <div class="grid-item">
             <a href="/creerCompte">
                 <button class="btn btn_roseFonce buttonAdmin" id="ajoutUser">Add a user</button>
             </a>
-        </td>
-        <td>
+        </div>
+        <div class="grid-item">
             <a href="/ajout">
-                <button class="btn btn_roseFonce buttonAdmin" style="background-color: gray" id="ajoutCostume">Add a costume</button>
+                <button class="btn btn_grisFonce buttonAdmin" id="ajoutCostume">Add a costume</button>
             </a>
-        </td>
-        <td>
+        </div>
+        <div class="grid-item">
             <a href="/likes">
-                <button class="btn btn_roseFonce buttonAdmin" id="listeLikes">List of <span class="heart-symbol">♥</span></button>
+                <button class="btn btn_rosePale buttonAdmin" id="listeLikes">List of <span class="heart-symbol">♥</span></button>
             </a>
-        </td>
-    </tr>
-    <tr>
-        <td style="background-color:white">
+        </div>  
+       <div class="grid-item">
             <a href="/modifierCompte">
                 <button class="btn btn_roseFonce buttonAdmin" id="ajoutCostume">Modify or remove a user</button>
             </a>
-        </td>
-        <td>
+        </div>
+        <div class="grid-item">
             <a href="/favoris">
-                <button class="btn btn_roseFonce buttonAdmin" id="listeFavoris">Favorites list</button>
+                <button class="btn btn_grisFonce buttonAdmin" id="listeFavoris">Favorites list</button>
             </a>
-        </td>
-        <td>
+        </div>
+       <div class="grid-item">
             <a href="/suggestions">
-                <button class="btn btn_roseFonce buttonAdmin" id="listeSuggestions">List of suggestions</button>
+                <button class="btn btn_rosePale buttonAdmin" id="listeSuggestions">List of suggestions</button>
             </a>
-        </td>
-    </tr>
-</table>
+        </div>
+ </div>    
+
