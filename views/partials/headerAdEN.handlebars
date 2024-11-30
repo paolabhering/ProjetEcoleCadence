@@ -15,14 +15,14 @@
                         <button type="button" class="btn btn-rose" id="btn-admin" onclick="window.location.href='/admin'"><b>Administrator Menu</b></button>
                     </li>
                     <li class="nav-item">
-                        <a type="button" class="btn btn-rose"href="/monCompte"><b>My account</b></a>
+                        <a type="button" class="btn btn-rose" onclick="window.location.href='/monCompte'"><b>My account</b></a>
                     </li>
                     <li class="nav-item dropdown">
-                        <button type="button" class="btn btn-rose nav-link dropdown-toggle active" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button type="button" class="btn btn-rose nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <b>Costumes</b></button>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-					            <li><a class="dropdown-item" href="/catalogue"><b>All</b></a></li>
-					            <li><a class="dropdown-item" href="/filtre"><b>Filter</b></a></li>
+					            <li><a class="dropdown-item" onclick="window.location.href='/catalogue'"><b>All</b></a></li>
+					            <li><a class="dropdown-item" onclick="window.location.href='/filtre'"><b>Filter</b></a></li>
                             </ul>
                     </li>
                     <li class="nav-item">
@@ -32,7 +32,7 @@
             </div>
         </div>
     </nav>
-
+  
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         let currentPath = window.location.pathname;
