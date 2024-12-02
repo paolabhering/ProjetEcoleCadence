@@ -53,7 +53,6 @@ app.use(express.json());
 // pour lier les routers
 const routerAjoutCostume = require("./routerAjoutCostume");
 const routerCostume = require("./routerCostume");
-//const routerAccueil = require("./routerAccueil");
 const routerConnexion = require("./routerConnexion");
 const routerCreerCompte = require("./routerCreerCompte");
 const routerAdmin = require("./routerAdmin");

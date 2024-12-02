@@ -91,7 +91,9 @@ router.post("/reset-password", async (req, res) => {
     }
 });
 
-
+router.get("/confMDP", (req, res) => {
+    res.render("confMDP"); 
+});
 
 
 router.post("/reset-password-form", async (req, res) => {
@@ -134,13 +136,11 @@ router.post("/reset-password-form", async (req, res) => {
         const updateSql = "UPDATE users SET password = ? WHERE email = ?";
         await db.execute(updateSql, [hashedPassword, email]);
 
-        res.status(200).send("Mot de passe réinitialisé avec succès");
+        res.redirect("/confMDP");
     } catch (error) {
         console.error(error);
         res.status(500).send("Erreur lors de la réinitialisation du mot de passe");
     }
 });
-
-
 
 module.exports = router;

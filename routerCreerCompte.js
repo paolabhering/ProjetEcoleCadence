@@ -10,6 +10,9 @@ router.use(express.urlencoded({ extended: true }));
 router.get("/creerCompte", (req, res) => {
     res.render("creerCompte"); // Renders the "creerCompte" view
 });
+router.get("/confirmation", (req, res) => {
+    res.render("confirmation"); 
+});
 
 // Route for creating a new user
 router.post("/add-user", async (req, res) => {
@@ -47,7 +50,7 @@ router.post("/add-user", async (req, res) => {
         }
 
         // Redirect to login page with success message
-        res.status(201).redirect("/connexion?userCreated=true");
+        res.redirect("confirmation");
     } catch (error) {
         console.error(error);
         res.status(500).send("Error creating user and group");

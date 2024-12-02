@@ -24,12 +24,14 @@
             <div id="groupsContainer">
                 {{#each group}}
                 <div class="group-input">
-                    <input type="text" name="groupName[]" value="{{this}}" required>
-                    <button type="button" class="remove-group">Remove</button>
+                    <input type="text" name="groupName[]" value="{{this}}" required><br><br>
+                    <button type="button" class="remove-group">-</button><br><br>
                 </div>
                 {{/each}}
             </div>
-            <button type="button" id="addGroup" class="btn">Add a group</button>
+            <div class="button-container">
+                            <button type="button" class="add-group">+</button>
+                        </div>
         </div>
         <div class="flex-item full-width">
             <label for="role"><b>Role :</b></label>
@@ -60,20 +62,23 @@
 </form>
 
 <script>
-    document.getElementById('addGroup').addEventListener('click', function () {
-        const container = document.getElementById('groupsContainer');
-        const groupInput = document.createElement('div');
-        groupInput.className = 'group-input';
-        groupInput.innerHTML = `
-            <input type="text" name="groupName[]" placeholder="Nouveau groupe" required>
-            <button type="button" class="remove-group">Supprimer</button>
-        `;
-        container.appendChild(groupInput);
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('.add-group').addEventListener('click', function () {
+            const container = document.getElementById('groupsContainer');
+            const groupInput = document.createElement('div');
+            groupInput.className = 'group-input';
+            groupInput.innerHTML = `
+                <input type="text" name="groupName[]" placeholder="Nouveau groupe" required>
+                <button type="button" class="remove-group">-</button>
+            `;
+            container.appendChild(groupInput);
+        });
+
+        document.getElementById('groupsContainer').addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-group')) {
+                e.target.parentElement.remove();
+            }
+        });
     });
 
-    document.getElementById('groupsContainer').addEventListener('click', function (e) {
-        if (e.target.classList.contains('remove-group')) {
-            e.target.parentElement.remove();
-        }
-    });
 </script>

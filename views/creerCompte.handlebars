@@ -1,75 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Créer un compte</title>
 
-</head>
-<body>
-    <div>
-        {{> headerAd}}
-    </div>
 
-       <div class="form-container">
-        <form action="/add-user" method="POST" class="connexion-form">
-            <h2>Formulaire d'ajout d'utilisateur</h2>
-            <div class="flex-container">
-                <div class="flex-item">
-                    <label for="username"><b>Nom :</b></label>
-                    <input type="text" id="username" name="username" placeholder="Entrez le nom d'utilisateur" required>
-                </div>
-                <div class="flex-item">
-                    <label for="email"><b>Email :</b></label>
-                    <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
-                </div>
-                <div class="flex-item colonneCache"></div>
-                <div class="flex-item">
-                    <label for="password"><b>Mot de passe :</b></label>
-                    <input type="password" id="password" name="password" placeholder="Entrez le mot de passe" required>
-                </div>
+{{> headerAd}}
 
-                <!-- Secret Question and Answer Fields -->
-                <div class="flex-item full-width">
-                    <label for="secretQuestion"><b>Question secrète :</b></label>
-                    <input type="text" id="secretQuestion" name="secretQuestion" placeholder="Entrez votre question secrète" required>
-                </div>
-
-                <div class="flex-item full-width">
-                    <label for="secretAnswer"><b>Réponse secrète :</b></label>
-                    <input type="password" id="secretAnswer" name="secretAnswer" placeholder="Entrez la réponse secrète" required>
-                </div>
-
-                <div class="flex-item full-width">
-                    <label for="groups"><b>Groupe(s) :</b></label>
-                    <div class="group-inputs">
-                        <input type="text" id="groupName" name="groups[]" placeholder="Entrez le nom du groupe" required>
-                        <div id="groupFieldsContainer"></div>
-                        <div class="button-container">
-                            <button type="button" class="add-group" onclick="addGroupField()">+</button>
-                        </div>
+    <form action="/add-user" method="POST" class="connexion-form">
+        <h2>Formulaire d'ajout d'utilisateur</h2>
+        <div class="flex-container">
+            <div class="flex-item">
+                <label for="username"><b>Nom :</b></label>
+                <input type="text" id="username" name="username" placeholder="Entrez le nom d'utilisateur" required>
+            </div>
+            <div class="flex-item">
+                <label for="email"><b>Email :</b></label>
+                <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
+            </div>         
+            <div class="flex-item">
+                <label for="password"><b>Mot de passe :</b></label>
+                <input type="password" id="password" name="password" placeholder="Entrez le mot de passe" required>
+            </div>
+            <div class="flex-item full-width">
+                <label for="groups"><b>Groupe(s) :</b></label>
+                <div class="group-inputs">
+                    <input type="text" id="groupName" name="groups[]" placeholder="Entrez le nom du groupe" required><br>
+                    <div id="groupFieldsContainer"></div>
+                    <div class="button-container">
+                        <button type="button" class="add-group" onclick="addGroupField()">+</button>
                     </div>
                 </div>
-                <div class="flex-item full-width">
-                    <label for="role"><b>Rôle :</b></label>
+            </div>
+            <div class="flex-item full-width">
+                <label for="role"><b>Rôle :</b></label>
                     <div class="radio-group">
                         <input type="radio" id="admin" name="role" value="administrateur" required><b>Administrateur</b>
                         <input type="radio" id="professeur" name="role" value="professeur" required><b>Professeur</b>
-                    </div>
                 </div>
-                <div class="flex-item full-width">
-                    <label for="language"><b>Langue :</b></label>
+            </div>
+            <div class="flex-item full-width">
+                <label for="language"><b>Langue :</b></label>
                     <div class="radio-group">
                         <input type="radio" id="french" name="language" value="fr" required><b>Français</b>
                         <input type="radio" id="english" name="language" value="en" required><b>Anglais</b>
-                    </div>
-                </div>
-                <div class="flex-item full-width">
-                    <button type="submit" class="btn btn_roseFonce" id="boutonCompte">Enregistrer</button>
                 </div>
             </div>
-        </form>
-    </div>
+            <div class="flex-item full-width">
+                <label for="secretQuestion"><b>Question secrète :</b></label>
+                <input type="text" id="secretQuestion" name="secretQuestion" placeholder="Entrez votre question secrète" required>
+            </div>
+
+            <div class="flex-item full-width">
+                <label for="secretAnswer"><b>Réponse secrète :</b></label>
+                <input type="password" id="secretAnswer" name="secretAnswer" placeholder="Entrez la réponse secrète" required>
+            </div>
+            <div class="flex-item full-width">
+                <button type="submit" class="btn btn_roseFonce" id="boutonCompte">Enregistrer</button>
+            </div>
+        </div>
+    </form>
+
 
     <script>
         function addGroupField() {
@@ -82,6 +68,7 @@
 
             groupFieldsContainer.appendChild(newGroupInput);
         }
+
     </script>
-</body>
-</html>
+
+

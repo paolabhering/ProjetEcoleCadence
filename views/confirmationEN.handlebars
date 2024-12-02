@@ -5,11 +5,7 @@
     }
 </script>
 
-{{#if (eq userRole "administrateur")}}
-    {{> headerAdEN}}
-{{else if (eq userRole "professeur")}}
-    {{> headerEN}}
-{{/if}}
+{{> headerEN}}
 
 <div class="container-confirmation">
     <b>Successful registration!</b><br>

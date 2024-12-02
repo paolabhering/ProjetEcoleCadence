@@ -7,7 +7,7 @@
 <div class="container">
     <div class="account-section">
         <div class="account-info">
-            <h2>Mon compte</h2>
+            <h2>Mon compte</h2><br>
             <p><b>Nom d'utilisateur:</b> {{user.username}}</p>
             <p><b>Email:</b> {{user.email}}</p>
             <p><b>Mes groupes:</b></p>
@@ -25,7 +25,7 @@
                 <label for="newPassword"><b>Nouveau mot de passe:</b></label>
                 <input type="password" id="newPassword" name="newPassword" required>
                 <label for="confirmPassword"><b>Confirmer le nouveau mot de passe:</b></label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
                 <button type="submit" class="btn btn_roseFonce">Modifier</button>
             </form>
         </div>
@@ -37,18 +37,29 @@
                 <li>
                     <span>{{this.costume_name}}</span>
                     <span>{{this.group_name}}</span>
-                    <button class="delete-favorite" data-favorite-id="{{this.favorite_id}}">🗑️</button>
+                    <div class="button-corbeille">
+                        <button class="delete-favorite" data-favorite-id="{{this.favorite_id}}">
+                            <img src="/static/img/corbeille.jpg" alt="corbeille" class="corbeille">
+                        </button>
+                    </div>
                 </li>
             {{/each}}
         </ul>
     </div>
     <div class="likes-section">
-        <h2>Mes ❤️</h2>
+        <h2>Mes</h2>
+            <div>
+                <img src="/static/img/coeurRosePlein.png" alt="coeur" class="coeurRose"> 
+            </div>
         <ul>
             {{#each likes}}
                 <li>
                     <span>{{this.costume_name}}</span>
-                    <button class="delete-like" data-like-id="{{this.like_id}}">❤️</button>
+                    <div class="button-corbeille">
+                        <button class="delete-like" data-like-id="{{this.like_id}}">
+                            <img src="/static/img/corbeille.jpg" alt="corbeille" class="corbeille">
+                        </button>
+                    </div>
                 </li>
             {{/each}}
         </ul>
@@ -70,55 +81,11 @@
     </div>
 </div>
 
-<style>
-    .container {
-        background-color: #f0f0f0;
-        padding: 20px;
-        border-radius: 10px;
-    }
-    .account-section {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
-    }
-    .account-info, .password-form {
-        width: 48%;
-        background-color: lightgray;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    .favorites-section, .likes-section, .my-suggestions-section, .suggestions-section {
-        background-color: lightgray;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-    }
-    .favorites-section ul, .likes-section ul, .my-suggestions-section ul {
-        list-style-type: none;
-        padding: 0;
-    }
-    .favorites-section li, .likes-section li, .my-suggestions-section li {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 0;
-        border-bottom: 1px solid #ccc;
-    }
-    .suggestions-section textarea {
-        width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        margin-bottom: 10px;
-    }
-   
-</style>
 
 <script>
     document.querySelectorAll('.delete-favorite').forEach(button => {
         button.addEventListener('click', function() {
+            event.stopPropagation(); // Prévenir la propagation de l'événement
             const favoriteId = this.getAttribute('data-favorite-id');
             fetch(`/supprimer-favori/${favoriteId}`, {
                 method: 'DELETE'
@@ -126,7 +93,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    this.parentElement.remove();
+                    this.closest('li').remove(); // Supprimer l'élément li parent
                 } else {
                     alert('Erreur lors de la suppression du favori');
                 }
@@ -137,6 +104,7 @@
 
     document.querySelectorAll('.delete-like').forEach(button => {
         button.addEventListener('click', function() {
+            event.stopPropagation(); // Prévenir la propagation de l'événement
             const likeId = this.getAttribute('data-like-id');
             fetch(`/supprimer-like/${likeId}`, {
                 method: 'DELETE'
@@ -144,7 +112,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    this.parentElement.remove();
+                    this.closest('li').remove(); // Supprimer l'élément li parent
                 } else {
                     alert('Erreur lors de la suppression du like');
                 }
