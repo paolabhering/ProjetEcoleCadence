@@ -78,6 +78,6 @@ app.use("/", routerLikes);
 app.use("/", routerFavoris);
 app.use("/", routerSuggestions);
 
-app.listen(3000, function() {
-console.log(`Serveur sur le port 300`);
+app.listen(3001, function() {
+console.log(`Serveur sur le port 3001`);
 });
