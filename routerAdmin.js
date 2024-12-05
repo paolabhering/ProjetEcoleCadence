@@ -11,7 +11,6 @@ router.use(express.urlencoded({ extended: true }));
 router.get("/admin", ensureAuthenticated, restrictToRole("administrateur"), async (req, res) => {
     try {
         const userId = req.session.user.user_id;
-        console.log("User id stored in session is", userId); 
         const query = await db.execute(
             `SELECT langue FROM users WHERE user_id = ?`,
             [userId] 
@@ -19,7 +18,6 @@ router.get("/admin", ensureAuthenticated, restrictToRole("administrateur"), asyn
 
         const result = query.rows[0];
         const userLangue = result.langue;
-        console.log("User's chosen language is:", userLangue);
 
         if (userLangue === 'fr') {
             
