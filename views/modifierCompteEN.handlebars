@@ -1,7 +1,7 @@
 {{#if (eq userRole "administrateur")}}
-    {{> headerAd}}
+    {{> headerAdEN}}
 {{else if (eq userRole "professeur")}}
-    {{> header}}
+    {{> headerEN}}
 {{/if}}
 
 <form action="/modifier-user/{{userResult.user_id}}" method="POST" class="connexion-form">
