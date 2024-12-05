@@ -19,9 +19,6 @@ router.post("/add-user", async (req, res) => {
     const { username, email, password, role, language, secretQuestion, secretAnswer } = req.body;
     const groups = req.body.groups; // This will be an array
 
-    // Log the request body for debugging
-    console.log("Request Body:", req.body);
-
     // Validate the request body
     if (!username || !email || !password || !role || !language || !secretQuestion || !secretAnswer || !groups || groups.length === 0) {
         return res.status(400).send("All fields are required");

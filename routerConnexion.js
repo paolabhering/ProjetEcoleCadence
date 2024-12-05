@@ -10,6 +10,10 @@ router.get("/connexion", (req, res) => {
     res.render("connexion"); 
 });
 
+router.get("/erreurConnexion", (req, res) => {
+    res.render("erreurConnexion"); 
+});
+
 // Route to render the reset password form
 
 // Route for login
@@ -20,14 +24,14 @@ router.post("/login", async (req, res) => {
         const result = await db.execute(query, [username]);
 
         if (result.rows.length === 0) {
-            return res.status(400).send("Nom d'utilisateur ou mot de passe incorrect");
+            return res.redirect("/erreurConnexion");
         }
 
         const user = result.rows[0];
         const match = await bcrypt.compare(password, user.password);
 
         if (!match) {
-            return res.status(400).send("Nom d'utilisateur ou mot de passe incorrect");
+            return res.redirect("/erreurConnexion");
         }
 
         // Save user details in the session
@@ -42,13 +46,13 @@ router.post("/login", async (req, res) => {
         if (user.role === "administrateur") {
             res.redirect("/admin");
         } else if (user.role === "professeur") {
-            res.redirect("/catalogue");
+            return res.redirect("/catalogue");
         } else {
-            res.status(400).send("Role non reconnu");
+            return res.status(400).send("Role non reconnu");
         }
     } catch (error) {
         console.error(error);
-        res.status(500).send("Erreur lors de la connexion");
+        return res.status(500).send("Erreur lors de la connexion");
     }
 });
 
@@ -62,8 +66,6 @@ router.get("/reset-password", (req, res) => {
 // Route for handling the reset password logic
 router.post("/reset-password", async (req, res) => {
     const { email } = req.body;  // Get the email from the form submission
-
-    console.log("Email is ", email);  // Log the email value to make sure it's passed in the request body
 
     if (!email) {
         return res.status(400).send("Veuillez entrer un email");
