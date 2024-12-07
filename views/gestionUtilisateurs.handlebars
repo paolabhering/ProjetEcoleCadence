@@ -1,0 +1,45 @@
+
+    {{> headerAd}}
+
+
+<form class="connexion-form">
+
+
+<h2>Gestion des utilisateurs</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each users}}
+        <tr>
+            <td>{{this.username}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.role}}</td>
+            <td>
+                <a href="/modifier-user/{{this.user_id}}" class="btn btn_roseFonce">Modifier</a>
+                    <form action="/supprimer-user/{{this.user_id}}" method="POST" style="display:inline;" id="supprimerButton">
+                        <button type="submit" class="btn btn_roseFonce">Supprimer</button>
+                    </form>
+
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+</form>
+
+<style>
+    #supprimerButton {
+        background-color: white !important;
+        margin-left: 1%;
+        margin-right: 2%;
+        padding: 0;
+    }
+</style>
