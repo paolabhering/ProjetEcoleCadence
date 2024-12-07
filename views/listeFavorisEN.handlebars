@@ -5,7 +5,6 @@
         <div class="flex-container">
             <table class="liste">
                 <tr>
-                    <th>Date</th>
                     <th>Costume</th>
                     <th>Professor</th>
                     <th>Group</th>
@@ -14,7 +13,6 @@
                 {{#if favoris.length}} 
                     {{#each favoris}}
                         <tr>
-                            <td>date</td>
                             <td><a href="detailsCostume/{{this.costume_id}}" class="lienRose"><b>{{this.costume}}</b></a></td>
                             <td>{{this.professeur}}</td>
                             <td>{{this.groupe}}</td>
