@@ -8,22 +8,35 @@ router.use(express.urlencoded({ extended: true }));
 
 // Route to render the account creation form
 router.get("/creerCompte", async (req, res) => {
-    const userId = req.session.user.user_id;
-        const query = await db.execute(
-            `SELECT langue FROM users WHERE user_id = ?`,
-            [userId] 
-        );
+    try {
+        if (req.session && req.session.user) { // Vérifie si une session active existe
+            const userId = req.session.user.user_id;
 
-        const result = query.rows[0];
-        const userLangue = result.langue;
+            // Récupère la langue de l'utilisateur connecté
+            const query = await db.execute(
+                `SELECT langue FROM users WHERE user_id = ?`,
+                [userId]
+            );
 
-        if (userLangue === 'fr') {
-            
-            res.render("creerCompte", { userLangue });
-        } else {
-            res.render("creerCompteEN", { userLangue });
+            const result = query.rows[0];
+            const userLangue = result.langue;
+
+            // Rend la page avec la langue de l'utilisateur
+            if (userLangue === 'fr') {
+                return res.render("creerCompte", { userLangue });
+            } else {
+                return res.render("creerCompteEN", { userLangue });
+            }
         }
+
+        // Si aucune session n'est active, affiche la page par défaut (en français)
+        res.render("creerCompte", { userLangue: 'fr' });
+    } catch (error) {
+        console.error('Erreur lors de la récupération des données utilisateur:', error);
+        res.status(500).send('Erreur interne du serveur');
+    }
 });
+
 router.get("/confirmation", (req, res) => {
     res.render("confirmation"); 
 });
