@@ -7,8 +7,22 @@ const db = require("./db"); // Import the db client from db.js
 router.use(express.urlencoded({ extended: true }));
 
 // Route to render the account creation form
-router.get("/creerCompte", (req, res) => {
-    res.render("creerCompte"); // Renders the "creerCompte" view
+router.get("/creerCompte", async (req, res) => {
+    const userId = req.session.user.user_id;
+        const query = await db.execute(
+            `SELECT langue FROM users WHERE user_id = ?`,
+            [userId] 
+        );
+
+        const result = query.rows[0];
+        const userLangue = result.langue;
+
+        if (userLangue === 'fr') {
+            
+            res.render("creerCompte", { userLangue });
+        } else {
+            res.render("creerCompteEN", { userLangue });
+        }
 });
 router.get("/confirmation", (req, res) => {
     res.render("confirmation"); 

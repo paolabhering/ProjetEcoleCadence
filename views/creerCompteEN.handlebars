@@ -1,0 +1,74 @@
+
+
+{{> headerAdEN}}
+
+    <form action="/add-user" method="POST" class="connexion-form">
+        <h2>Add user form</h2>
+        <div class="flex-container">
+            <div class="flex-item">
+                <label for="username"><b>Name :</b></label>
+                <input type="text" id="username" name="username" placeholder="Enter the username" required>
+            </div>
+            <div class="flex-item">
+                <label for="email"><b>Email :</b></label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>         
+            <div class="flex-item">
+                <label for="password"><b>Password :</b></label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="flex-item full-width">
+                <label for="groups"><b>Group(s) :</b></label>
+                <div class="group-inputs">
+                    <input type="text" id="groupName" name="groups[]" placeholder="Enter the name of the group" required><br>
+                    <div id="groupFieldsContainer"></div>
+                    <div class="button-container">
+                        <button type="button" class="add-group" onclick="addGroupField()">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-item full-width">
+                <label for="role"><b>Role :</b></label>
+                    <div class="radio-group">
+                        <input type="radio" id="admin" name="role" value="administrateur" required><b>Administrator</b>
+                        <input type="radio" id="professeur" name="role" value="professeur" required><b>Professor</b>
+                </div>
+            </div>
+            <div class="flex-item full-width">
+                <label for="language"><b>Language :</b></label>
+                    <div class="radio-group">
+                        <input type="radio" id="french" name="language" value="fr" required><b>French</b>
+                        <input type="radio" id="english" name="language" value="en" required><b>English</b>
+                </div>
+            </div>
+            <div class="flex-item full-width">
+                <label for="secretQuestion"><b>Secret question :</b></label>
+                <input type="text" id="secretQuestion" name="secretQuestion" placeholder="Enter the secret question" required>
+            </div>
+
+            <div class="flex-item full-width">
+                <label for="secretAnswer"><b>Secret answer :</b></label>
+                <input type="password" id="secretAnswer" name="secretAnswer" placeholder="Enter the secret answer" required>
+            </div>
+            <div class="flex-item full-width">
+                <button type="submit" class="btn btn_roseFonce" id="boutonCompte">Save</button>
+            </div>
+        </div>
+    </form>
+
+
+    <script>
+        function addGroupField() {
+            const groupFieldsContainer = document.getElementById("groupFieldsContainer");
+            const newGroupInput = document.createElement("input");
+            newGroupInput.type = "text";
+            newGroupInput.placeholder = "Entrez le nom du groupe";
+            newGroupInput.name = "groups[]";  // Updated to make it an array
+            newGroupInput.required = true;
+
+            groupFieldsContainer.appendChild(newGroupInput);
+        }
+
+    </script>
+
+
