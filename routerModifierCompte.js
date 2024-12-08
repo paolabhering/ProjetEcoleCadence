@@ -131,16 +131,17 @@ router.post('/modifier-user/:id', ensureAuthenticated, restrictToRole('administr
             }
         }
 
-        res.redirect(`/modifierCompte?id=${id}`);
+        res.redirect(`/gestion-utilisateurs`);
     } catch (error) {
         console.error('Error updating user and groups:', error);
         res.status(500).send("Erreur lors de la modification de l'utilisateur");
     }
 });
 
+
 router.post('/supprimer-user/:id', ensureAuthenticated, restrictToRole('administrateur'), async (req, res) => {
     const { id } = req.params;
-
+    
     try {
         await db.execute('DELETE FROM groupes WHERE user_id = ?', [id]);
         await db.execute('DELETE FROM users WHERE user_id = ?', [id]);

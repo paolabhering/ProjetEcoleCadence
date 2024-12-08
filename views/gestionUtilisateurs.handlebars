@@ -2,8 +2,7 @@
     {{> headerAd}}
 
 
-<form class="connexion-form">
-
+<form class="connexion-form" id="modifUser">
 
 <h2>Gestion des utilisateurs</h2>
 <table>
@@ -23,23 +22,78 @@
             <td>{{this.role}}</td>
             <td>
                 <a href="/modifier-user/{{this.user_id}}" class="btn btn_roseFonce">Modifier</a>
-                    <form action="/supprimer-user/{{this.user_id}}" method="POST" style="display:inline;" id="supprimerButton">
-                        <button type="submit" class="btn btn_roseFonce">Supprimer</button>
-                    </form>
-
+                    <button type="button" class="btn btn_grisFonce" onclick="confirmSuppression(event, {{this.user_id}})">Supprimer</button>
             </td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+<!-- Modal -->
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="modalCloseUser">&times;</span>
+                    <h2>Confirmation de Suppression</h2>
+                    <p>Êtes-vous certain de vouloir supprimer cet utilisateur définitivement?</p>
+                    <button id="confirmDeleteUser" class="btn btn_roseFonce">Oui, supprimer</button><br>
+                    <button type="button" id="cancelDeleteUser" class="btn btn_grisFonce">Non, annuler</button>
+            </div>
+         </div>
 
 </form>
 
-<style>
-    #supprimerButton {
-        background-color: white !important;
-        margin-left: 1%;
-        margin-right: 2%;
-        padding: 0;
+<script>
+    let userIdToDelete;
+
+function confirmSuppression(event, userId) {
+    event.preventDefault();
+    userIdToDelete = userId;
+    const modal = document.getElementById("deleteModal");
+    modal.style.display = "block"; 
+
+    const confirmButton = document.getElementById("confirmDeleteUser");
+
+    confirmButton.onclick = async function() {
+
+        if (!userIdToDelete) {
+            console.error("userIdToDelete est indéfini");
+            return; 
+        }
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/supprimer-user/${userIdToDelete}`;
+        document.body.appendChild(form);
+
+        
+
+        try {
+            await fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            location.reload();
+        } catch (error) {
+            console.error("Erreur lors de la suppression :", error);
+        }
     }
-</style>
+
+    const cancelButton = document.getElementById("cancelDeleteUser");
+    cancelButton.onclick = function() {
+        modal.style.display = "none"; 
+    }
+
+    const modalClose = document.getElementById("modalCloseUser");
+    modalClose.onclick = function() {
+        modal.style.display = "none"; 
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none"; 
+        }
+    }
+}
+
+</script>
