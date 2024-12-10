@@ -810,7 +810,13 @@ td:nth-child(1){
     .grid-containerAdmin {
         grid-template-columns: 1fr; 
     }
-  
+    .account-section {
+        flex-direction: column; /* Empiler verticalement */
+    }
+    .account-info, .password-form {
+        width: 100%; 
+        margin-top: 15px;
+    }
 }
 
 /*//////////////////////////////////////////////////////////*/
@@ -821,89 +827,75 @@ td:nth-child(1){
      .grid-container-detail {
         flex-direction: column; /* Empiler les éléments pour les petits écrans */
     } 
-    
     .grid-item-detail {
         flex: 1 1 100%; /* Chaque item prend 100% de la largeur */
         text-align:center; 
     }
-    
     .color-checkbox {
         width: 10%; /* Ajuster la largeur pour 3 colonnes */
         margin: 5px; /* Marge entre les cases */
     }
-
     .color-label {
         width: 10%;
         height: 10%; /*Pour donner une hauteur uniforme */
         display:inline-block;  /*Permettre la disposition horizontal */
     } 
-
     .flex-container {
         flex-direction:column; /* Empiler les éléments verticalement */
         align-items: center; /* Centrer les éléments */
     }
-  
     .flex-item {
         flex:1 1 100%; /* Chaque item prend 100% de la largeur */
       
     }
-
     table {
         display:flexbox; /* Affichage en bloc sur les écrans mobiles */
         overflow-x: auto; /* Ajouter un défilement horizontal si nécessaire */
         -webkit-overflow-scrolling:touch; /* Défilement fluide sur les appareils tactiles */
     }
-
     table th {
         display: none; /* Masquer l'en-tête du tableau */
     }
-
     /* Utiliser des divs pour chaque ligne sur les petits écrans */
     tr {
         display:flex; /* Utilisation de flexbox */
         flex-direction:column; /* Chaque ligne s'affiche comme un colonne */  
         margin-bottom: 0; 
     }
-    
     td {
         display: block; /* Chaque cellule prendra toute la largeur */
         text-align: left; /* Alignement à gauche pour les cellules */
         border: none; /* Supprimer les bordures des cellules */
     }
-
     td::before {
         content: attr(data-label); /* Affiche l'étiquette pour chaque cellule */
         font-weight: bold; /* Mettre en valeur l'étiquette */
         display: inline-block; /* L'afficher comme un bloc en ligne */
         padding: 10px;
+        margin-right: 100px;
     }
-
-    
-.radio-group {
-    display:flow-root;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.radio-group input {
-    margin-left: 10px;  
-}
-
-.radio-group b {
-    margin-left: 10px;
-}
-/*position image de la loupe dans le filtre par mot*/
-.placeholder-image {
-    position: absolute;
-    left: 5px; /* Positionnement à gauche */
-    top: 0%; /* Centrer verticalement */
-    transform: translateY(-10%); /* Ajuster pour centrer vraiment l'image */
-    width: 22px; /* Largeur de l'image */
-    height: auto; /* Garder les proportions */
-    pointer-events: none; /* L'image ne doit pas interférer avec les clics */
-}
-
+    .radio-group {
+        display:flow-root;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .radio-group input {
+        margin-left: 10px;  
+    }
+    .radio-group b {
+        margin-left: 10px;
+    }
+    /*position image de la loupe dans le filtre par mot*/
+    .placeholder-image {
+        position: absolute;
+        left: 5px; /* Positionnement à gauche */
+        top: 0%; /* Centrer verticalement */
+        transform: translateY(-10%); /* Ajuster pour centrer vraiment l'image */
+        width: 22px; /* Largeur de l'image */
+        height: auto; /* Garder les proportions */
+        pointer-events: none; /* L'image ne doit pas interférer avec les clics */
+    }
 } 
 
 /*//////////////////////////////////////////////////////////*/
@@ -928,6 +920,10 @@ td:nth-child(1){
         padding-left: 10px; 
         padding-right: 10px; 
     }
- 
+    .buttonAdmin {
+        width: 300px; 
+        height: 75px;
+        font-size: 18px;
+    }
 }
  
