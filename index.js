@@ -50,11 +50,6 @@ app.use(session({
 
 app.use(express.json());
 
-// Redirection de la route "/" vers "/connexion"
-app.get('/', (req, res) => {
-    res.redirect('/connexion');
-});
-
 // pour lier les routers
 const routerAjoutCostume = require("./routerAjoutCostume");
 const routerCostume = require("./routerCostume");
