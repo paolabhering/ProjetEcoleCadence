@@ -28,14 +28,13 @@
 
         document.getElementById("quantity").value = grandTotal;
     }
-     // Fonction pour ajouter des écouteurs d'événements à chaque champ de saisie
+    
     function addEventListeners() {
         const inputs = document.querySelectorAll('.bte_tableau');
         inputs.forEach(input => {
-            input.addEventListener('input', additionner); // Écouteur d'événement sur chaque champ d'entrée
+            input.addEventListener('input', additionner); 
         });
     }
-    // Appeler la fonction pour ajouter les écouteurs d'événements après le chargement de la page
     window.onload = addEventListeners;
 </script> 
 

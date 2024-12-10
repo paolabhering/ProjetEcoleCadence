@@ -75,7 +75,7 @@
     let likedCostumeIds = {{{json likedCostumeIds}}};
     let groupes = {{{json groupesUser}}};
     let favoriteCostumeGroups = {{{json favoriteCostumeGroups}}};
-     //Envoyer une requête AJAX pour ajouter les groupes au favori
+     
 
     fetch('/groupes')
         .then(response => response.json())
@@ -117,11 +117,11 @@
             plusBlanc.hidden = true;  
             plusRose.hidden = false; 
             groupeInfo.textContent = ` Costume favori pour groupe: ${favoriteCostumeGroups[costume_id].group_name}`;
-            groupeInfo.hidden = false; // Assurez-vous que l'information est visible
+            groupeInfo.hidden = false; 
         } else {
             plusBlanc.hidden = false;  
             plusRose.hidden = true;     
-            groupeInfo.hidden = true; // Cachez l'info si le costume n'est pas favori
+            groupeInfo.hidden = true; 
         }
 
         plusBlanc.addEventListener('click', () => {
@@ -152,7 +152,7 @@
                         group_name: selectedGroupeNom
                     };
                     groupeInfo.textContent = `Costume favori pour groupe: ${selectedGroupeNom}`;
-                    groupeInfo.hidden = false; // Assurez-vous que l'information est visible
+                    groupeInfo.hidden = false; 
                 })
                 .catch((error) => {
                     console.error('Erreur:', error);

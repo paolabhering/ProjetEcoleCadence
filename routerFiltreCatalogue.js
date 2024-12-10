@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const db = require("./db");
-const { ensureAuthenticated } = require("./session"); // correction: assurez-vous que vous importez la fonction correcte
+const { ensureAuthenticated } = require("./session"); 
 
 async function getUserLanguage(userId) {
     try{
         const query = await db.execute(`SELECT langue FROM users WHERE user_id = ?`, [userId]);
         const result = query.rows[0];
         if (result) {
-            return result.langue; // Renvoie la langue si l'utilisateur existe
+            return result.langue; 
         }
         return null;
     }catch (error) {

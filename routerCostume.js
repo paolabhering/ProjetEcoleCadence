@@ -173,7 +173,7 @@ router.post("/ajouterLike", async function(req, res) {
     const { user_id, costume_id } = req.body;
     if (!user_id || !costume_id) {
       console.error("User ID ou Costume ID est manquant");
-      return; // Ou retournez une réponse indiquant l'erreur
+      return; 
   }
     await db.execute(`
       INSERT INTO likes (user_id, costume_id) 

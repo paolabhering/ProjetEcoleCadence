@@ -49,8 +49,15 @@
     });
 
     function confirmSuppression() {
+        const checkboxes = document.querySelectorAll('.effacer:checked');
+    
+        if (checkboxes.length === 0) {
+            alert("No suggestions selected for deletion.");
+            return; 
+        }
+
         const modal = document.getElementById("deleteModal");
-        modal.style.display = "block"; // Affiche le modal
+        modal.style.display = "block";
 
         const confirmButton = document.getElementById("confirmDeleteSuggestions");
         const cancelButton = document.getElementById("cancelDeleteSuggestions");
@@ -58,27 +65,21 @@
 
         confirmButton.onclick = function() {
             const selectedSuggestions = [];
-            const checkboxes = document.querySelectorAll('.effacer:checked');
-    
             checkboxes.forEach(checkbox => {
                 selectedSuggestions.push(checkbox.value);
             });
-            if (selectedSuggestions.length === 0) {
-                alert("No suggestions selected for deletion.");
-                return;
-            }
     
             fetch('/suggestions', {
-                method: 'DELETE', // Utiliser DELETE pour supprimer les suggestions
+                method: 'DELETE', 
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ suggestions: selectedSuggestions }) // Envoyer la liste des suggestions sélectionnées
+                body: JSON.stringify({ suggestions: selectedSuggestions }) 
             })
             .then(response => {
                 if (response.ok) {
                     alert("Suggestions successfully deleted!");
-                    window.location.reload(); // Recharger la page
+                    window.location.reload(); 
                 } else {
                     alert("Error deleting suggestions!");
                 }
@@ -92,15 +93,13 @@
         const resetSelection = function() {
             modal.style.display = "none";
             const selectAllCheckbox = document.getElementById('select_all');
-            selectAllCheckbox.checked = false; // Déselectionne "Sélectionner tout"
-            const checkboxes = document.querySelectorAll('.effacer:checked');
+            selectAllCheckbox.checked = false; 
             checkboxes.forEach(checkbox => {
                 checkbox.checked = false; 
             });
         };
 
         cancelButton.onclick = resetSelection;
-
         modalClose.onclick = resetSelection;
 
         window.onclick = function(event) {
