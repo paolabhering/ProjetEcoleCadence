@@ -14,14 +14,14 @@
                     {{#each favoris}}
                         <tr>
                             <td><a href="detailsCostume/{{this.costume_id}}" class="lienRose"><b>{{this.costume}}</b></a></td>
-                            <td>{{this.professeur}}</td>
+                            <td><b>{{this.professeur}}</b></td>
                             <td>{{this.groupe}}</td>
                             <td><input type="checkbox" class="effacer" name="effacer" value="{{this.favorite_id}}"></td>
                         </tr>    
                     {{/each}}
                 {{else}}
                     <tr>
-                        <td colspan="5" style="text-align:center; background-color:white;"><b>No favorite</b></td>
+                        <td colspan="4" style="text-align:center; background-color:white;"><b>No favorite</b></td>
                     </tr>
                 {{/if}}
             </table>

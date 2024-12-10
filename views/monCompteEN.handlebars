@@ -35,7 +35,7 @@
         <ul>
             {{#each favorites}}
                 <li>
-                    <span>{{this.costume_name}}</span>
+                    <span><b>{{this.costume_name}}</b></span>
                     <span>{{this.group_name}}</span>
                     <div class="button-corbeille">
                         <button class="delete-favorite" data-favorite-id="{{this.favorite_id}}">
@@ -54,7 +54,7 @@
         <ul>
             {{#each likes}}
                 <li>
-                    <span>{{this.costume_name}}</span>
+                    <span><b>{{this.costume_name}}</b></span>
                     <div class="button-corbeille">
                         <button class="delete-like" data-like-id="{{this.like_id}}">
                             <img src="/static/img/corbeille.jpg" alt="corbeille" class="corbeille">

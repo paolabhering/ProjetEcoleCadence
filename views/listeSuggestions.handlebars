@@ -12,7 +12,7 @@
                 {{#if suggestions.length}} 
                     {{#each suggestions}}
                         <tr>
-                            <td>{{this.professeur}}</td>
+                            <td><b>{{this.professeur}}</b></td>
                             <td>{{this.suggestion_text}}</td>
                             <td><input type="checkbox" class="effacer" name="effacer" value="{{this.suggestion_id}}"></td>
                         </tr>    
