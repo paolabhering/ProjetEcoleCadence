@@ -31,6 +31,67 @@ router.get('/modifierCompte', ensureAuthenticated, restrictToRole('administrateu
     }
 });
 
+router.get('/gestion-utilisateurs', ensureAuthenticated, restrictToRole('administrateur'), async (req, res) => {
+    try {
+        const users = await db.execute('SELECT user_id, username, email, role FROM users');
+        const userRole = req.session.user.role;
+        const connectedUserId = req.session.user.user_id;
+        const userId = req.session.user.user_id;
+
+            // Récupère la langue de l'utilisateur connecté
+            const query = await db.execute(
+                `SELECT langue FROM users WHERE user_id = ?`,
+                [userId]
+            );
+
+            const result = query.rows[0];
+            const userLangue = result.langue;
+
+        if (userLangue === 'fr') {
+            return res.render('gestionUtilisateurs', {
+                users: users.rows,
+                userRole,
+                connectedUserId,
+                userLangue
+            });
+        } else {
+            return res.render('gestionUtilisateursEN', {
+                users: users.rows,
+                userRole,
+                connectedUserId,
+                userLangue
+            });
+        }
+        
+    } catch (error) {
+        console.error('Erreur lors de la récupération des utilisateurs :', error);
+        res.status(500).send('Erreur interne du serveur');
+    }
+});
+
+router.get('/modifier-user/:id', ensureAuthenticated, restrictToRole('administrateur'), async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const user = await db.execute('SELECT * FROM users WHERE user_id = ?', [id]);
+        const groups = await db.execute('SELECT nom FROM groupes WHERE user_id = ?', [id]);
+
+        if (user.rows.length === 0) {
+            return res.status(404).send('Utilisateur non trouvé');
+        }
+
+        const userResult = user.rows[0];
+        const groupResults = groups.rows.map(row => row.nom);
+        const userRole = req.session.user.role;
+
+        res.render('modifierCompte', { userResult, group: groupResults, userRole });
+    } catch (error) {
+        console.error('Erreur lors de la récupération des données utilisateur :', error);
+        res.status(500).send("Erreur lors de l'accès aux données utilisateur");
+    }
+});
+
+
 // Route to handle form submission
 router.post('/modifier-user/:id', ensureAuthenticated, restrictToRole('administrateur'), async (req, res) => {
     const { id } = req.params;
@@ -70,11 +131,27 @@ router.post('/modifier-user/:id', ensureAuthenticated, restrictToRole('administr
             }
         }
 
-        res.redirect(`/modifierCompte?id=${id}`);
+        res.redirect(`/gestion-utilisateurs`);
     } catch (error) {
         console.error('Error updating user and groups:', error);
         res.status(500).send("Erreur lors de la modification de l'utilisateur");
     }
 });
+
+
+router.post('/supprimer-user/:id', ensureAuthenticated, restrictToRole('administrateur'), async (req, res) => {
+    const { id } = req.params;
+    
+    try {
+        await db.execute('DELETE FROM groupes WHERE user_id = ?', [id]);
+        await db.execute('DELETE FROM users WHERE user_id = ?', [id]);
+
+        res.redirect('/gestion-utilisateurs');
+    } catch (error) {
+        console.error("Erreur lors de la suppression de l'utilisateur :", error);
+        res.status(500).send("Erreur lors de la suppression de l'utilisateur");
+    }
+});
+
 
 module.exports = router;

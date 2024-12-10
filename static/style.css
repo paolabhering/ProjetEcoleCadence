@@ -872,7 +872,7 @@ td:nth-child(1){
         font-weight: bold; /* Mettre en valeur l'étiquette */
         display: inline-block; /* L'afficher comme un bloc en ligne */
         padding: 10px;
-        margin-right: 100px;
+        margin-right: 75px;
     }
     .radio-group {
         display:flow-root;
