@@ -5,32 +5,6 @@ const { ensureAuthenticated, restrictToRole } = require('./session'); // Middlew
 
 const router = express.Router();
 
-// Route to render modifierCompte page
-router.get('/modifierCompte', ensureAuthenticated, restrictToRole('administrateur'), async (req, res) => {
-    const userIdSession = req.session.user.user_id;
-
-    try {
-        // Fetch user and groups
-        const user = await db.execute('SELECT * FROM users WHERE user_id = ?', [userIdSession]);
-        const groups = await db.execute('SELECT nom FROM groupes WHERE user_id = ?', [userIdSession]);
-
-        const userResult = user.rows[0];
-        const groupResults = groups.rows.map(row => row.nom);
-
-        const query = await db.execute('SELECT langue, role FROM users WHERE user_id = ?', [userIdSession]);
-        const { langue: userLangue, role: userRole } = query.rows[0];
-
-        if (userLangue === 'fr') {
-            res.render('modifierCompte', { userResult, group: groupResults, userRole });
-        } else {
-            res.render('modifierCompteEN', { userResult, group: groupResults, userRole });
-        }
-    } catch (error) {
-        console.error('Error fetching user data:', error);
-        res.status(500).send('Erreur lors de la récupération des données utilisateur');
-    }
-});
-
 router.get('/gestion-utilisateurs', ensureAuthenticated, restrictToRole('administrateur'), async (req, res) => {
     try {
         const users = await db.execute('SELECT user_id, username, email, role FROM users');
@@ -69,10 +43,15 @@ router.get('/gestion-utilisateurs', ensureAuthenticated, restrictToRole('adminis
     }
 });
 
+
 router.get('/modifier-user/:id', ensureAuthenticated, restrictToRole('administrateur'), async (req, res) => {
+    const userIdSession = req.session.user.user_id;
     const { id } = req.params;
 
     try {
+        const query = await db.execute('SELECT langue, role FROM users WHERE user_id = ?', [userIdSession]);
+        const { langue: userLangue } = query.rows[0];
+
         const user = await db.execute('SELECT * FROM users WHERE user_id = ?', [id]);
         const groups = await db.execute('SELECT nom FROM groupes WHERE user_id = ?', [id]);
 
@@ -82,15 +61,17 @@ router.get('/modifier-user/:id', ensureAuthenticated, restrictToRole('administra
 
         const userResult = user.rows[0];
         const groupResults = groups.rows.map(row => row.nom);
-        const userRole = req.session.user.role;
 
-        res.render('modifierCompte', { userResult, group: groupResults, userRole });
+        if (userLangue === 'fr') {
+            res.render('modifierCompte', { userResult, group: groupResults, userRole: req.session.user.role });
+        } else {
+            res.render('modifierCompteEN', { userResult, group: groupResults, userRole: req.session.user.role });
+        }
     } catch (error) {
-        console.error('Erreur lors de la récupération des données utilisateur :', error);
-        res.status(500).send("Erreur lors de l'accès aux données utilisateur");
+        console.error('Error fetching user data:', error);
+        res.status(500).send('Erreur lors de la récupération des données utilisateur');
     }
 });
-
 
 // Route to handle form submission
 router.post('/modifier-user/:id', ensureAuthenticated, restrictToRole('administrateur'), async (req, res) => {

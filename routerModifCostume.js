@@ -82,25 +82,29 @@ router.get("/modif/:costume_id", ensureAuthenticated,restrictToRole("administrat
   });
     
 
-router.get("/confirmation", async (req,res) => {
-    const userIdSession = req.session.user.user_id;
-        const query = await db.execute(
-            `SELECT langue,role FROM users WHERE user_id = ?`,
-            [userIdSession] 
-        );
+router.get("/confirmation", ensureAuthenticated, restrictToRole('administrateur'), async (req,res) => {
+    try {
+        const userId = req.session.user.user_id; 
 
-        const result = query.rows[0];
-        const userLangue = result.langue;
-        const userRole = result.role;
+            // Récupère la langue de l'utilisateur connecté
+            const query = await db.execute(
+                `SELECT langue FROM users WHERE user_id = ?`,
+                [userId]
+            );
+
+            const result = query.rows[0];
+            const userLangue = result.langue;
 
         if (userLangue === 'fr') {
-          res.render("confirmation", {userLangue,userRole});  
-          
-      } else {
-        res.render("confirmationEN", {userLangue,userRole});
-      }
-
- })
+            return res.render('confirmation');
+        } else {
+            return res.render('confirmationEN');
+        }       
+    } catch (error) {
+        console.error('Erreur lors de la récupération des utilisateurs :', error);
+        res.status(500).send('Erreur interne du serveur');
+    }
+});
 
 
 router.post("/modif/:costume_id", upload.single('upload_photo'), async function(req,res) {
@@ -228,3 +232,5 @@ router.post("/delete/:costume_id", async function(req, res) {
 });
 
 module.exports = router;
+
+
