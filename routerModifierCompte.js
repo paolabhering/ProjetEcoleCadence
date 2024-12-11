@@ -88,13 +88,26 @@ router.post('/modifier-user/:id', ensureAuthenticated, restrictToRole('administr
     } = req.body;
 
     try {
+        // Retrieve the current user data
+        const user = await db.execute('SELECT password FROM users WHERE user_id = ?', [id]);
+
+        if (user.rows.length === 0) {
+            return res.status(404).send('Utilisateur non trouvé');
+        }
+
+        // Determine the password to save
+        const newPassword = password
+            ? bcrypt.hashSync(password, 10) // Hash new password if provided
+            : user.rows[0].password; // Keep the current password if not provided
+
         // Update user data
         await db.execute(
-            `UPDATE users SET username = ?, email = ?, role = ?, langue = ?, secret_question = ?, secret_answer_hash = ?
+            `UPDATE users SET username = ?, email = ?, password = ?, role = ?, langue = ?, secret_question = ?, secret_answer_hash = ?
              WHERE user_id = ?`,
             [
                 username,
                 email,
+                newPassword,
                 role,
                 language,
                 secretQuestion,
@@ -112,12 +125,13 @@ router.post('/modifier-user/:id', ensureAuthenticated, restrictToRole('administr
             }
         }
 
-        res.redirect(`/gestion-utilisateurs`);
+        res.redirect(`/modifierCompte?id=${id}`);
     } catch (error) {
         console.error('Error updating user and groups:', error);
         res.status(500).send("Erreur lors de la modification de l'utilisateur");
     }
 });
+
 
 
 router.post('/supprimer-user/:id', ensureAuthenticated, restrictToRole('administrateur'), async (req, res) => {
