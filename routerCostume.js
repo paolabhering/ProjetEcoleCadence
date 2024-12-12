@@ -3,8 +3,6 @@ const router = express.Router();
 const db = require("./db");
 const { ensureAuthenticated, restrictToRole } = require("./session");
 
-//pour importer la liste des costumes du fichier costume
-const { groupeCostume } = require('./costume');
 
 router.get("/groupes", async function(req, res) {
    const { user } = req.session;
@@ -41,7 +39,7 @@ router.get("/catalogue", ensureAuthenticated, async function(req,res) {
         GROUP BY c.costume_id`)
 
         let groupesUser = [];
-        // Si l'utilisateur est connecté, récupérer ses groupes
+        // récupérer les groupes de l'utilisateur
         if(userId) {
           const { rows: groupes } = await db.execute(`
             SELECT nom, groupe_id
@@ -50,12 +48,10 @@ router.get("/catalogue", ensureAuthenticated, async function(req,res) {
 
           groupesUser = groupes.map(groupe => groupe.nom);
 
-          // Récupérer uniquement les Ids de groupe
-          const IdsDeGroupes = groupes.map(groupe => groupe.groupe_id);
         }
 
         let likedCostumeIds = [];
-        // Si l'utilisateur est connecté, récupérer ses likes
+        // récupérer les likes de l'utilisateur
         if(userId) {
         const { rows: likes } = await db.execute(`
           SELECT costume_id 
@@ -65,7 +61,7 @@ router.get("/catalogue", ensureAuthenticated, async function(req,res) {
         }
 
         let favoriteCostumeGroups = [];
-        // si l'utilsateur est connecté, récupérer ses favoris
+        // récupérer les favoris de l'utilisateur
         if(userId) {
           const { rows: favorites } = await db.execute(`
             SELECT f.costume_id, f.group_id, g.nom AS group_name
@@ -73,13 +69,15 @@ router.get("/catalogue", ensureAuthenticated, async function(req,res) {
             JOIN costumes c ON f.costume_id = c.costume_id
             JOIN groupes g ON f.group_id = g.groupe_id
             WHERE g.user_id = :user_id`, {user_id: userId});
-          
+
+            //transforme le tableau en un objet
+            //pour chaque favorite(costume_id), on ajoute à l'objet(groupe_id,group_name)
           favoriteCostumeGroups = favorites.reduce((acc,favorite) => {
             acc[favorite.costume_id] = {
               group_id: favorite.group_id,
               group_name: favorite.group_name
             };
-            return acc;
+            return acc; //retourne chaque costume_id dans favorites avec sa valeur(group_id,group_name) toujours selon l'utilisateur connecté
           }, {});
         }
 

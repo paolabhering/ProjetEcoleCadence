@@ -84,10 +84,10 @@
             const selectGroupes = document.querySelectorAll('.select-group');
             selectGroupes.forEach(select => {
                 groupes.forEach(groupe => {
-                const option = document.createElement('option');
-                    option.value = groupe.groupe_id;
-                    option.textContent = groupe.nom;
-                    select.appendChild(option);
+                const option = document.createElement('option'); //crée l'option
+                    option.value = groupe.groupe_id; //groupe_id
+                    option.textContent = groupe.nom; //nom du groupe qui sera affiché
+                    select.appendChild(option); //ajoute l'option
                 });
             });
         })
